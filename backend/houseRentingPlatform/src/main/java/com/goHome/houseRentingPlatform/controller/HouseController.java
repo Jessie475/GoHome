@@ -39,4 +39,5 @@ public class HouseController {
     public List<House> getAllHouses(){
         return houseService.getAllHouses();
     }
+    
 }
