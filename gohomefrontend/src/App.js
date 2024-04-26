@@ -92,9 +92,19 @@ const App = () => {
             />
           ))}
         </Map>
+        <button type="submit" class="btn btn-primary mt-4">Login</button>
       </Wrapper>
     </div>
   );
 };
 
 export default App;
+
+document.querySelector('.btn.btn-primary').addEventListener('click', function(event) {
+  // 阻止按钮默认行为，比如提交表单或者链接跳转
+  event.preventDefault();
+
+  // 或者在页面上显示 "ok"
+  document.body.innerHTML += '<p>ok</p>';
+});
+
