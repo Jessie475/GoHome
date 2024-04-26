@@ -9,6 +9,14 @@ import java.util.List;
 
 @Service
 public class HouseServiceImpl implements HouseService{
+    @Override
+    public void updateHouse(House house) {
+        houseRepository.save(house);
+    }
+    @Override
+    public List<House> getHousesWithBlankLatLng() {
+        return houseRepository.findByLatIsNullAndLngIsNull();
+    }
     @Autowired
     private HouseRepository houseRepository;
     @Override

@@ -1,6 +1,8 @@
 /* global google */
 import { Wrapper } from '@googlemaps/react-wrapper';
 import React, { useEffect, useRef, useState } from 'react';
+import GoogleMap from './component/GoogleMap';
+import House from './component/House';
 
 const googleApiKey = 'AIzaSyAyqdIvF6Rk1UROBq9cuieBahgD7adDb0k';
 
@@ -59,11 +61,12 @@ const Marker = ({ map, position, title }) => {
 
 const App = () => {
   const [locations, setLocations] = useState([]);
+  const [allData, setAllData] = useState([]);
   const center = { lat: 25.0330, lng: 121.5645 };
   const zoom = 12;
 
   useEffect(() => {
-    fetch('http://localhost/kokonut/location/api.php')
+    fetch('http://localhost:8080/house/getAllHouses')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -83,7 +86,7 @@ const App = () => {
     <div className="container">
       <h1>Access Google Maps API in PHP</h1>
       <Wrapper apiKey={googleApiKey} render={(status) => <h1>{status}</h1>}>
-        <Map center={center} zoom={zoom}>
+        <GoogleMap center={center} zoom={zoom}>
           {locations.map((location) => (
             <Marker
               key={location.id}
@@ -91,9 +94,11 @@ const App = () => {
               title={location.name}
             />
           ))}
-        </Map>
+        </GoogleMap>
       </Wrapper>
+      <House />
     </div>
+    
   );
 };
 
