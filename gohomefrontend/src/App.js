@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import GoogleMap from './component/GoogleMap';
 import House from './component/House';
 
-const googleApiKey = 'AIzaSyAyqdIvF6Rk1UROBq9cuieBahgD7adDb0k';
+const googleApiKey = 'AIzaSyAyq';
 
 const App = () => {
     const googleMapRef = useRef(null); // Reference for the GoogleMap component
