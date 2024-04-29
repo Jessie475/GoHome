@@ -24,7 +24,7 @@ const GoogleMap = ({ center, zoom, children, data }, ref) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(house),
-        }).then((response) => {
+        }).then((response) => { 
             if (response.ok) {
                 // 請求成功的邏輯
                 geocodeData(geocoder.current, locations);
@@ -104,10 +104,10 @@ const GoogleMap = ({ center, zoom, children, data }, ref) => {
                 />;
             });
             
-            // Geocode the provided data and show all house locations
-            showAllHouses(map.current, locations);
+            // Geocode the provided data and show all house location
             console.log('Locations before geocodeData:', locations);
             geocodeData(geocoder.current, locations);
+            showAllHouses(map.current, locations);
             
         }
     }, [center, zoom, data, locations]);
@@ -120,27 +120,30 @@ const GoogleMap = ({ center, zoom, children, data }, ref) => {
     const geocodeData = (geocoder, data) => {
         if (!Array.isArray(data)) {
             console.error('Error: locations is not an array');
-            
             return;
         }
     
         data.forEach((location) => {
-            const address = `${location.name} ${location.address}`;
-            geocoder.geocode({ address }, (results, status) => {
-                if (status === 'OK') {
-                    const points = {
-                        id: location.id,
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng(),
-                    };
-
-                    updateMarkerWithLatLng(points);
-                } else {
-                    console.error('Geocode was not successful for the following reason:', status);
-                }
-            });
+            // 只處理那些還沒有經緯度的房屋地址
+            if (location.lat == null || location.lng == null) {
+                const address = `${location.name} ${location.address}`;
+                geocoder.geocode({ address }, (results, status) => {
+                    if (status === 'OK') {
+                        const points = {
+                            id: location.id,
+                            lat: results[0].geometry.location.lat(),
+                            lng: results[0].geometry.location.lng(),
+                        };
+    
+                        updateMarkerWithLatLng(points);
+                    } else {
+                        console.error('Geocode was not successful for the following reason:', status);
+                    }
+                });
+            }
         });
     };
+    
 
     // Function to display markers for all house locations
     const showAllHouses = (map, data) => {
