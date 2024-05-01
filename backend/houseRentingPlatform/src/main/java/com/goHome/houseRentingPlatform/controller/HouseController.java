@@ -15,14 +15,8 @@ public class HouseController {
     private HouseService houseService;
 
     @PutMapping("/{id}")
-    public void updateHouse(@PathVariable Integer id, @RequestBody House updatedHouse) {
-        House existingHouse = houseService.getAllHouses().stream()
-                .filter(house -> house.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("House not found"));
-        existingHouse.setLat(updatedHouse.getLat());
-        existingHouse.setLng(updatedHouse.getLng());
-        houseService.updateHouse(existingHouse);
+    public House updateHouse(@PathVariable Integer id, @RequestBody House housedetail) {
+        return houseService.updateHouse(id, housedetail);
     }
 
     @GetMapping("/")

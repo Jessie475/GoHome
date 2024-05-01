@@ -7,7 +7,7 @@ import java.util.List;
 public interface HouseService {
     public House saveHouse(House house);
     public List<House> getAllHouses();
-    public void updateHouse(House house);
+    public House updateHouse(Integer id,House house);
     public List<House> getHousesWithBlankLatLng();
-
+    public void deleteHouse(Integer id);
 }
