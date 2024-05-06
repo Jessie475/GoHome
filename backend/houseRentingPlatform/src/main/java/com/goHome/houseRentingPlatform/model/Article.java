@@ -94,9 +94,10 @@ public class Article {
     public void setDescription(String description) {
         this.description = description;
     }
-}
 
-enum ArticleType {
+
+public enum ArticleType {
     HOUSE_REVIEW, ROOMMATE_SEARCH
 }
 
+}

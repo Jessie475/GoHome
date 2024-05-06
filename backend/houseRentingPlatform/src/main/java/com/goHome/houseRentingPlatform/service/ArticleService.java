@@ -1,8 +1,13 @@
+package com.goHome.houseRentingPlatform.service;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.goHome.houseRentingPlatform.model.Article;
+import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 import com.goHome.houseRentingPlatform.repository.ArticleRepository;
-import com.goHome.houseRentingPlatform.repository.HouseRepository;
 
 @Service
 public class ArticleService {
@@ -10,7 +15,15 @@ public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
-    // 添加文章
+    public ArticleService(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
+    }
+
+    public List<Article> getArticlesByType(ArticleType type) {
+        return articleRepository.findByTag(type);
+    }
+
+    // 新增文章
 public Article addArticle(Article newArticle) {
     validateArticle(newArticle);
     return articleRepository.save(newArticle);
@@ -31,7 +44,7 @@ public Article updateArticle(Long articleId, Article articleDetails) {
     return articleRepository.save(article);
 }
 
-// 验证文章信息
+// 分類文章：找室內與評價
 private void validateArticle(Article article) {
     if (article.getTag() == ArticleType.HOUSE_REVIEW && article.getRate() == null) {
         throw new IllegalArgumentException("Rating must be provided for house review articles.");
