@@ -3,6 +3,9 @@ package com.goHome.houseRentingPlatform.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.goHome.houseRentingPlatform.model.Article;
@@ -19,8 +22,31 @@ public class ArticleService {
         this.articleRepository = articleRepository;
     }
 
+      // filter:根據tag
     public List<Article> getArticlesByType(ArticleType type) {
         return articleRepository.findByTag(type);
+    }
+
+    // filter:根據評分
+    public List<Article> getArticlesByRatingRange(Double minRate, Double maxRate) {
+        return articleRepository.findByRateBetween(minRate, maxRate); 
+    }
+
+    // sorting
+    public Page<Article> getArticlesSortedByNewest(int page, int size) {
+        return articleRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(page, size));
+    }
+
+    public Page<Article> getArticlesSortedByMostComments(int page, int size) {
+        return articleRepository.findAllByCommentCountDesc(PageRequest.of(page, size));
+    }
+
+    public Page<Article> getArticlesSortedByHighestRating(int page, int size) {
+        return articleRepository.findAllByRateDesc(PageRequest.of(page, size, Sort.by("rate").descending()));
+    }
+
+    public Page<Article> getArticlesSortedByMostFavorites(int page, int size) {
+        return articleRepository.findAllByFavoriteCountDesc(PageRequest.of(page, size));
     }
 
     // 新增文章

@@ -1,6 +1,7 @@
 package com.goHome.houseRentingPlatform.controller;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,31 @@ public class ArticleController {
         return articleService.getArticlesByType(type);
     }
 
+    @GetMapping("/articles/rating")
+    public List<Article> getArticlesByRating(@RequestParam Double minRate, @RequestParam Double maxRate) {
+        return articleService.getArticlesByRatingRange(minRate, maxRate);
+    }
+
+    @GetMapping("/articles/sorted/newest")
+    public Page<Article> getArticlesByNewest(@RequestParam int page, @RequestParam int size) {
+        return articleService.getArticlesSortedByNewest(page, size);
+    }
+
+    @GetMapping("/articles/sorted/most-comments")
+    public Page<Article> getArticlesByMostComments(@RequestParam int page, @RequestParam int size) {
+        return articleService.getArticlesSortedByMostComments(page, size);
+    }
+
+    @GetMapping("/articles/sorted/highest-rating")
+    public Page<Article> getArticlesByHighestRating(@RequestParam int page, @RequestParam int size) {
+        return articleService.getArticlesSortedByHighestRating(page, size);
+    }
+
+    @GetMapping("/articles/sorted/most-favorites")
+    public Page<Article> getArticlesByMostFavorites(@RequestParam int page, @RequestParam int size) {
+        return articleService.getArticlesSortedByMostFavorites(page, size);
+    }
+    
     @PostMapping("/articles/{articleId}/comments")
     public void addComment(@PathVariable Long articleId,
                            @RequestParam Long userId,
