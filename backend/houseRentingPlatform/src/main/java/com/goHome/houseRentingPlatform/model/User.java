@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id")
-    private Integer id;
+    private Integer userId;
 
     @Column(name = "identity", nullable = false, length = 225)
     private String identity;
@@ -105,17 +105,18 @@ public class User {
     public Set<House> getFavHouses() {
         return favoriteHouses;
     }
+//看文章跟房屋要不要知道被誰收藏
 
-    // 添加收藏房屋的方法
+    // 添加收藏房屋
     public void addFavHouse(House house) {
         favoriteHouses.add(house);
-        house.getFavoritedBy().add(this);
+        //house.getFavoritedBy().add(this);
     }
 
-    // 移除收藏房屋的方法
+    // 移除收藏房屋
     public void removeFavHouse(House house) {
         favoriteHouses.remove(house);
-        house.getFavoritedBy().remove(this);
+        //house.getFavoritedBy().remove(this);
     }
 
 
@@ -126,16 +127,16 @@ public class User {
         return favoriteArticles;
     }
 
-    // 添加收藏文章的方法
+    // 添加收藏文章
     public void addFavArticle(Article article) {
         favoriteArticles.add(article);
-        article.getFavoritedBy().add(this);
+        //article.getFavoritedBy().add(this);
     }
 
-    // 移除收藏文章的方法
+    // 移除收藏文章
     public void removeFavArticle(Article article) {
         favoriteArticles.remove(article);
-        article.getFavoritedBy().remove(this);
+        //article.getFavoritedBy().remove(this);
     }
 
 

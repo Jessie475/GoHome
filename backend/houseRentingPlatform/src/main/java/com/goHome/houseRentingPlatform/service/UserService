@@ -1,0 +1,5 @@
+package com.goHome.houseRentingPlatform.service;
+
+public class UserService {
+    
+}
