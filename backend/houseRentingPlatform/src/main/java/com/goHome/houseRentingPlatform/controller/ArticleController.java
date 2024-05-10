@@ -27,13 +27,13 @@ public class ArticleController {
     private ArticleService articleService;
 
     //新增文章
-    @PostMapping
+    @PostMapping("/addArticle")
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         return ResponseEntity.ok(articleService.saveArticle(article));
     }
 
     //更新文章
-    @PutMapping("/{id}")
+    @PutMapping("/Update{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article article) {
         return ResponseEntity.ok(articleService.updateArticle(id, article));
     }
@@ -61,7 +61,7 @@ public class ArticleController {
         return ResponseEntity.ok(articles);
     }
 
-    @GetMapping
+     @GetMapping("/getAllArticle")
     public ResponseEntity<List<Article>> getAllArticles() {
         List<Article> articles = articleService.getAllArticles();
         return ResponseEntity.ok(articles);
