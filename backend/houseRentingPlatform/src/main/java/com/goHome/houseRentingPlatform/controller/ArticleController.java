@@ -49,9 +49,9 @@ public class ArticleController {
     @GetMapping("/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
         Article article = articleService.getAllArticles().stream()
-            .filter(a -> a.getId().equals(id))
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("Article not found!"));
+                .filter(a -> a.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Article not found!"));
         return ResponseEntity.ok(article);
     }
 
@@ -72,7 +72,7 @@ public class ArticleController {
         List<Article> articles = articleService.searchArticlesByAddress(address);
         return ResponseEntity.ok(articles);
     }
-    
+
     @GetMapping("/filterbyRate")
     public ResponseEntity<List<Article>> filterArticlesByTypeAndRate(
             @RequestParam ArticleType type,
