@@ -1,5 +1,4 @@
 package com.goHome.houseRentingPlatform.model;
-
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -18,41 +17,26 @@ import jakarta.persistence.TemporalType;
 @Table(name = "comment")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_id", nullable = false)
-    private Article article;
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "article_id", nullable = false)
+        private Article article;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "user_id", nullable = false)
-    private User userId;
+        @ManyToOne(fetch = FetchType.LAZY)
+        @Column(name = "user_id", nullable = false)
+        private User userId;
 
-    @Column(name = "content", nullable = false, length = 500)
-    private String content;
-
-    @Column(name = "comment_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date commentTime;
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
+        @Column(name = "content", nullable = false, length = 500)
+        private String content;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
-
+public Comment(Long id, Article article, User userId, String content) {
+    this.id = id;
+    this.article = article;
+    this.userId = userId;
+    this.content = content;
+}
     public User getUserId() {
         return userId;
     }
@@ -76,4 +60,5 @@ public class Comment {
     public void setCommentTime(Date commentTime) {
         this.commentTime = commentTime;
     }
+
 }
