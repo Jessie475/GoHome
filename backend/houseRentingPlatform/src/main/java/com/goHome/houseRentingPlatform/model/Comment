@@ -53,11 +53,11 @@ public class Comment {
         this.article = article;
     }
 
-    public House getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(House userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 
