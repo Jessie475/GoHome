@@ -38,7 +38,7 @@ public class User {
     private String gender;
 
     public User(int id, String identity, String name, int phone, String nationaility, String gender){
-        this.id = id;
+        this.userId = id;
         this.identity = identity;
         this.name = name;
         this.phone = phone;
@@ -47,10 +47,10 @@ public class User {
     }
 
     public void setid(int id){
-        this.id = id;
+        this.userId = id;
     }
     public Integer getid() {
-        return id;
+        return userId;
     }
     public void setIdentity(String identity){
         this.identity = identity;
