@@ -1,19 +1,44 @@
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private HouseRepository houseRepository;
-
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository) {
+        this.userRepository = userRepository;
+        this.houseRepository = houseRepository;
+        this.articleRepository = articleRepository;
+    }
+
+    public User registerUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = findUserByIdentity(username);
+        return org.springframework.security.core.userdetails.User
+                .withUsername(username)
+                .password(user.getPassword())
+                .roles("USER")
+                .build();
+    }
 
     public User addUser(User user) {
         return userRepository.save(user);
@@ -23,63 +48,51 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    //加入FavHouse
     public void addFavHouseToUser(Integer userId, Integer houseId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            
-            House house = houseRepository.findById(houseId)
-                    .orElseThrow(() -> new ResourceNotFoundException("House not found with id: " + houseId));
-            user.addFavHouse(house);
-            userRepository.save(user);
-        } else {
-            throw new ResourceNotFoundException("User not found with id: " + userId);
-        }
+        User user = findUserById(userId);
+        House house = findHouseById(houseId);
+        user.addFavHouse(house);
+        userRepository.save(user);
     }
 
-    //移除FavHouse
     public void removeFavHouseFromUser(Integer userId, Integer houseId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-
-            House house = houseRepository.findById(houseId)
-                    .orElseThrow(() -> new ResourceNotFoundException("House not found with id: " + houseId));
-            user.removeFavHouse(house);
-            userRepository.save(user);
-        } else {
-            throw new ResourceNotFoundException("User not found with id: " + userId);
-        }
+        User user = findUserById(userId);
+        House house = findHouseById(houseId);
+        user.removeFavHouse(house);
+        userRepository.save(user);
     }
 
-    //加入FavArticle
     public void addFavArticleToUser(Integer userId, Integer articleId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-
-            Article article = articleRepository.findById(articleId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Article not found with id: " + articleId));
-            user.addFavArticle(article);
-            userRepository.save(user);
-        } else {
-            throw new ResourceNotFoundException("User not found with id: " + userId);
-        }
+        User user = findUserById(userId);
+        Article article = findArticleById(articleId);
+        user.addFavArticle(article);
+        userRepository.save(user);
     }
 
-    //刪除FavArticle
     public void removeFavArticleFromUser(Integer userId, Integer articleId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+        User user = findUserById(userId);
+        Article article = findArticleById(articleId);
+        user.removeFavArticle(article);
+        userRepository.save(user);
+    }
 
-            Article article = articleRepository.findById(articleId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Article not found with id: " + articleId));
-            user.removeFavArticle(article);
-            userRepository.save(user);
-        } else {
-            throw new ResourceNotFoundException("User not found with id: " + userId);
-        }
+    private User findUserById(Integer userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+    }
+
+    private House findHouseById(Integer houseId) {
+        return houseRepository.findById(houseId)
+                .orElseThrow(() -> new ResourceNotFoundException("House not found with id: " + houseId));
+    }
+
+    private Article findArticleById(Integer articleId) {
+        return articleRepository.findById(articleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Article not found with id: " + articleId));
+    }
+
+    private User findUserByIdentity(String identity) {
+        return userRepository.findByIdentity(identity)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with identity: " + identity));
     }
 }

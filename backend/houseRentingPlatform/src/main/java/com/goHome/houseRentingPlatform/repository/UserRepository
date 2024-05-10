@@ -1,18 +1,15 @@
 package com.goHome.houseRentingPlatform.repository;
 
 import com.goHome.houseRentingPlatform.model.User;
-
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Integer> {
-    
-    @SuppressWarnings("null")
+public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByIdentity(String identity);
     List<User> findByName(String name);
-    List<User> findByPhone(Integer phone);
+    List<User> findByPhone(String phone);  // 修正类型为String，与User类中的定义一致
+    List<User> findByEmail(String email);  // 假设你想根据邮箱查找用户
 }
