@@ -9,9 +9,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Email;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,35 +21,24 @@ public class User {
     @Column(name = "id")
     private Integer id;
 
-    @NotNull
-    @Size(min = 3, max = 50)
     @Column(name = "identity", nullable = false, length = 50)
     private String identity;
 
-    @NotNull
-    @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Size(max = 15)
     @Column(name = "phone", nullable = true, length = 15)
     private String phone;
 
-    @Size(max = 100)
     @Column(name = "nationality", nullable = true, length = 100)
     private String nationality;
 
-    @Size(max = 50)
     @Column(name = "gender", nullable = true, length = 50)
     private String gender;
 
-    @Email
-    @NotNull
     @Column(name = "email", nullable = false, unique = true, length = 255)
     private String email;
 
-    @NotNull
-    @Size(min = 8)
     @Column(name = "password", nullable = false)
     private String password;
 
