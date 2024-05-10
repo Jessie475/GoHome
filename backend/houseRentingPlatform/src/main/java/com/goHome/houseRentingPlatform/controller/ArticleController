@@ -38,6 +38,7 @@ public class ArticleController {
     }
 
     //刪除文章
+    @DeleteMapping("/delete{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
         articleService.deleteArticle(id);
         return ResponseEntity.ok().build();
