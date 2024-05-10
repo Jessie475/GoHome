@@ -27,7 +27,7 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Column(name = "user_id", nullable = false)
-    private House userId;
+    private User userId;
 
     @Column(name = "content", nullable = false, length = 500)
     private String content;
@@ -54,11 +54,7 @@ public class Comment {
     }
 
     public User getUserId() {
-<<<<<<< Updated upstream:backend/houseRentingPlatform/src/main/java/com/goHome/houseRentingPlatform/model/Comment
         return userId;
-=======
-        return id;
->>>>>>> Stashed changes:backend/houseRentingPlatform/src/main/java/com/goHome/houseRentingPlatform/model/Comment.java
     }
 
     public void setUserId(User userId) {
