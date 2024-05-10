@@ -7,7 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+<<<<<<< HEAD:backend/houseRentingPlatform/src/main/java/com/goHome/houseRentingPlatform/repository/UserRepository
 public interface UserRepository extends JpaRepository<User, Integer> {
+=======
+public interface UserRepository extends JpaRepository<User,Integer> {
+
+    @SuppressWarnings("null")
+>>>>>>> 2c18288a4532c59970cde1aefb125002c8753493:backend/houseRentingPlatform/src/main/java/com/goHome/houseRentingPlatform/repository/UserRepository.java
     List<User> findByIdentity(String identity);
     List<User> findByName(String name);
     List<User> findByPhone(String phone);  // 修正类型为String，与User类中的定义一致

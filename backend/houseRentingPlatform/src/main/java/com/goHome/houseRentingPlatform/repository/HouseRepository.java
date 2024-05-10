@@ -3,17 +3,19 @@ package com.goHome.houseRentingPlatform.repository;
 import com.goHome.houseRentingPlatform.model.House;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@EnableJpaRepositories
 public interface HouseRepository extends JpaRepository<House,Integer> {
     
     @SuppressWarnings("null")
     List<House> findAll();
 
-    @Query("SELECT new com.example.HouseSummary(h.name, h.price, h.roomtype) FROM House h")
+    @Query("SELECT h.name, h.price, h.roomType FROM House AS h")
     List<House> findAllHouseSummaries();
 
     //List<House> findByUserId(Integer userId);
@@ -32,17 +34,17 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
     List<House> findBySizeBetween(Integer minSize, Integer maxSize);
 
-    List<House> findAllByOrderByPriceDesc(Integer price);
+    List<House> findAllByOrderByPriceDesc();
 
-    List<House> findAllByOrderByPriceAsc(Integer price);
+    List<House> findAllByOrderByPriceAsc();
 
-    List<House> findAllByOrderByRateDesc(Integer rate);
+    List<House> findAllByOrderByRateDesc();
 
-    List<House> findAllByOrderByRateAsc(Integer rate);
+    List<House> findAllByOrderByRateAsc();
 
-    List<House> findAllByOrderBySizeDesc(Integer size);
+    List<House> findAllByOrderBySizeDesc();
 
-    List<House> findAllByOrderBySizeAsc(Integer size);
+    List<House> findAllByOrderBySizeAsc();
 
 
 }

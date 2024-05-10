@@ -82,12 +82,12 @@ public class HouseController {
     }
 
     @GetMapping("/sortbyPrice")//以房價高低排列
-    public List<House> sortPrice(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection, @RequestParam Integer price) {
+    public List<House> sortPrice(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection) {
         if (sortDirection != null && sortDirection.matches("^(asc|desc)$")) {
             if (sortDirection.equals("asc")) {
-                return houseRepository.findAllByOrderByPriceAsc(price);
+                return houseRepository.findAllByOrderByPriceAsc();
             } else {
-                return houseRepository.findAllByOrderByPriceDesc(price);
+                return houseRepository.findAllByOrderByPriceDesc();
             }
         }else {
             return houseService.getAllHouses();
@@ -95,12 +95,12 @@ public class HouseController {
     }
 
     @GetMapping("/sortbyRate")//以評分高低排列
-    public List<House> sortRate(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection, @RequestParam Integer rate) {
+    public List<House> sortRate(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection) {
         if (sortDirection != null && sortDirection.matches("^(asc|desc)$")) {
             if (sortDirection.equals("asc")) {
-                return houseRepository.findAllByOrderByRateAsc(rate);
+                return houseRepository.findAllByOrderByRateAsc();
             } else {
-                return houseRepository.findAllByOrderByRateDesc(rate);
+                return houseRepository.findAllByOrderByRateDesc();
             }
         }else {
             return houseService.getAllHouses();
@@ -108,12 +108,12 @@ public class HouseController {
     }
     
     @GetMapping("/sortbySize")//以房屋大小排列
-    public List<House> sortSizee(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection, @RequestParam Integer size) {
+    public List<House> sortSize(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection) {
         if (sortDirection != null && sortDirection.matches("^(asc|desc)$")) {
             if (sortDirection.equals("asc")) {
-                return houseRepository.findAllByOrderBySizeAsc(size);
+                return houseRepository.findAllByOrderBySizeAsc();
             } else {
-                return houseRepository.findAllByOrderBySizeDesc(size);
+                return houseRepository.findAllByOrderBySizeDesc();
             }
         }else {
             return houseService.getAllHouses();

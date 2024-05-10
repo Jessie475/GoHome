@@ -36,13 +36,13 @@ public class HouseServiceImpl implements HouseService{
                     house.setName(housedetail.getName());
                     house.setLat(housedetail.getLat());
                     house.setLng(housedetail.getLng());
-                    house.setcondition(housedetail.getcondition());
-                    house.setcontactinfo(housedetail.getcontactinfo());
+                    house.setrestriction(housedetail.getrestriction());
+                    house.setcontactInfo(housedetail.getcontactInfo());
                     house.setdescription(housedetail.getdescription());
                     house.setlease(housedetail.getlease());
                     house.setprice(housedetail.getprice());
                     house.setrate(housedetail.getrate());
-                    house.setroomtype(housedetail.getroomtype());
+                    house.setroomType(housedetail.getroomType());
                     return houseRepository.save(house);
                 })
                 .orElseThrow(() -> new RuntimeException("House not found with id " + id));
@@ -65,7 +65,7 @@ public class HouseServiceImpl implements HouseService{
 
     @Override
     public void calculateAndSetHouseRate(House house) {
-        List<Article> articles = articleRepository.findByAddressAndTag(house.getAddress(), ArticleType.HOUSE_REVIEW);
+        List<Article> articles = articleRepository.findByAddressAndType(house.getAddress(), ArticleType.HOUSE_REVIEW);
         if (!articles.isEmpty()) {
             double totalRate = 0;
             int count = 0;

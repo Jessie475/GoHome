@@ -1,9 +1,9 @@
 package com.goHome.houseRentingPlatform.service;
 
 import com.goHome.houseRentingPlatform.model.House;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 public interface HouseService {
     public House createHouse(House house);
     public List<House> getAllHouses();
