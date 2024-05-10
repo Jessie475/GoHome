@@ -10,7 +10,9 @@ import org.springframework.data.repository.query.Param;
 
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByType(ArticleType type);
 
@@ -18,7 +20,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Page<Article> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
-    List<Article> findByAddressAndTag(String address, ArticleType tag);
+    List<Article> findByAddressAndType(String address, ArticleType tag);
 
     @Query("SELECT a FROM Article a LEFT JOIN a.comments c GROUP BY a ORDER BY COUNT(c) DESC")
     Page<Article> findAllByCommentCountDesc(Pageable pageable);

@@ -85,17 +85,17 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-        name = "user_favorite_house",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "house_id")
+            name = "user_favorite_house",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "house_id")
     )
     private Set<House> favoriteHouses = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
-        name = "user_favorite_article",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "article_id")
+            name = "user_favorite_article",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id")
     )
     private Set<Article> favoriteArticles = new HashSet<>();
 

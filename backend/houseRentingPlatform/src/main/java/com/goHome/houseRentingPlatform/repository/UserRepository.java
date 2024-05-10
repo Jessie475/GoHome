@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
-    
+
     @SuppressWarnings("null")
     List<User> findByIdentity(String identity);
     List<User> findByName(String name);
