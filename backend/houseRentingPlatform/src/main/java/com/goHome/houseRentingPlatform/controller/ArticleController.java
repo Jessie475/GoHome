@@ -73,7 +73,7 @@ public class ArticleController {
         return ResponseEntity.ok(articles);
     }
 
-    @GetMapping("/filterbyRate")
+    @GetMapping("/filterByRate")
     public ResponseEntity<List<Article>> filterArticlesByTypeAndRate(
             @RequestParam ArticleType type,
             @RequestParam(required = false, defaultValue = "1") Double minRate,
@@ -82,7 +82,7 @@ public class ArticleController {
         return ResponseEntity.ok(filteredArticles);
     }
 
-    @GetMapping("/sortbyTime")
+    @GetMapping("/sortByTime")
     public ResponseEntity<Page<Article>> getSortedArticles(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -90,7 +90,7 @@ public class ArticleController {
         return ResponseEntity.ok(articles);
     }
 
-    @GetMapping("/sortbyComment")
+    @GetMapping("/sortByComment")
     public ResponseEntity<Page<Article>> getArticlesSortedByComments(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
