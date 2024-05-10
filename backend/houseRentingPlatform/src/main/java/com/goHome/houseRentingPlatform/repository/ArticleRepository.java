@@ -18,6 +18,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Page<Article> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
+    List<Article> findByAddressAndTag(String address, ArticleType tag);
+
     @Query("SELECT a FROM Article a LEFT JOIN a.comments c GROUP BY a ORDER BY COUNT(c) DESC")
     Page<Article> findAllByCommentCountDesc(Pageable pageable);
 
