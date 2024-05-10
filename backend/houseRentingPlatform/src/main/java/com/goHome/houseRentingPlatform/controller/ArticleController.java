@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.goHome.houseRentingPlatform.repository.ArticleRepository;
+
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 import com.goHome.houseRentingPlatform.service.ArticleService;
@@ -46,7 +46,7 @@ public class ArticleController {
     }
 
     //點特定文章
-    @GetMapping("/{id}")
+    @GetMapping("/getArticle{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
         Article article = articleService.getAllArticles().stream()
                 .filter(a -> a.getId().equals(id))
