@@ -31,7 +31,7 @@ public class House {
     private Double lng;
 
     @Column(name = "rate", nullable = true)
-    private Integer rate;
+    private Double rate;
 
     @Column(name = "roomtype", nullable = false, length = 255)
     private String roomtype;
@@ -65,7 +65,7 @@ public class House {
     public House() {
     }
 
-    public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Integer rate, 
+    public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
     String roomtype, Integer price, String condition, Integer size, Boolean subsidy, String startdate, Integer lease, String description) {
         this.id = id;
         this.contactinfo = contactinfo;
@@ -132,11 +132,11 @@ public class House {
     public void setLng(Double lng) {
         this.lng = lng;
     }
-    public Integer getrate() {
+    public Double getrate() {
 	    return rate;
 	  }
 
-  public void setrate(Integer rate) {
+  public void setrate(Double rate) {
     this.rate = rate;
   }
   
