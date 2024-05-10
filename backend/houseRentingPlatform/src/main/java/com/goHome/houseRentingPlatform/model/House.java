@@ -15,8 +15,8 @@ public class House {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "contactInfo", nullable = false, length = 255)
-    private String contactInfo;
+    @Column(name = "contactinfo", nullable = false, length = 255)
+    private String contactinfo;
 
     @Column(name = "address", nullable = false, length = 255)
     private String address;
@@ -33,14 +33,14 @@ public class House {
     @Column(name = "rate", nullable = true)
     private Double rate;
 
-    @Column(name = "roomType", nullable = false, length = 255)
-    private String roomType;
+    @Column(name = "roomtype", nullable = false, length = 255)
+    private String roomtype;
 
     @Column(name = "price", nullable = false)
     private Integer price;
 
-    @Column(name = "restriction", nullable = false, length = 255)
-    private String restriction;
+    @Column(name = "condition", nullable = false, length = 500)
+    private String condition;
 
     @Column(name = "size", nullable = false)
     private Integer size;
@@ -66,17 +66,17 @@ public class House {
     }
 
     public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
-    String roomType, Integer price, String restriction, Integer size, Boolean subsidy, String startdate, Integer lease, String description) {
+    String roomtype, Integer price, String condition, Integer size, Boolean subsidy, String startdate, Integer lease, String description) {
         this.id = id;
-        this.contactInfo = contactinfo;
+        this.contactinfo = contactinfo;
         this.address = address;
         this.name = name;
         this.lat = lat;
         this.lng = lng;
         this.rate = rate;
-        this.roomType = roomType;
+        this.roomtype = roomtype;
         this.price = price;
-        this.restriction = restriction;
+        this.condition = condition;
         this.size = size;
         this.subsidy = subsidy;
         this.startdate = startdate;
@@ -93,12 +93,12 @@ public class House {
         this.id = id;
     }
 
-    public String getcontactInfo() {
-        return contactInfo;
+    public String getcontactinfo() {
+        return contactinfo;
       }
     
-    public void setcontactInfo(String contactinfo) {
-    this.contactInfo = contactinfo;
+    public void setcontactinfo(String contactinfo) {
+    this.contactinfo = contactinfo;
     }
 
     public String getAddress() {
@@ -140,12 +140,12 @@ public class House {
     this.rate = rate;
   }
   
-  public String getroomType() {
-	    return roomType;
+  public String getroomtype() {
+	    return roomtype;
 	  }
 
-  public void setroomType(String roomType) {
-	    this.roomType = roomType;
+  public void setroomtype(String roomtype) {
+	    this.roomtype = roomtype;
 	  }
   
   public Integer getprice() {
@@ -156,12 +156,12 @@ public class House {
 	    this.price = price;
 	  } 
   
-  public String getrestriction() {
-	    return restriction;
+  public String getcondition() {
+	    return condition;
 	  }
 
-  public void setrestriction(String restriction) {
-	    this.restriction = restriction;
+  public void setcondition(String condition) {
+	    this.condition = condition;
 	  }
   
   public Integer getsize() {

@@ -1,0 +1,31 @@
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration // 确保添加了@Configuration注解，这是很重要的部分
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable() // 禁用CSRF保护
+            .authorizeRequests()
+                .antMatchers("/auth/**").permitAll() // 允许所有用户访问/auth下的路径，通常用于注册和登录
+            .anyRequest().authenticated() // 除/auth外的所有请求都需要认证
+            .and()
+            .formLogin()
+                .loginPage("/login") // 指定登录页面的路径
+                .permitAll() // 允许所有用户访问登录页面
+                .defaultSuccessUrl("/home", true); // 指定登录成功后的默认跳转页面
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(); // 定义密码编码器
+    }
+}
