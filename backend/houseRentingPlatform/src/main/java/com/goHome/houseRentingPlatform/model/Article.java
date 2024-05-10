@@ -1,52 +1,63 @@
 package com.goHome.houseRentingPlatform.model;
 
+import java.util.Date;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
-@Entity(name = "Article")
+@Entity
 @Table(name = "article")
 public class Article {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "title", nullable = false, length = 255)
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "address", nullable = false, length = 255)
+    @Column(nullable = false)
     private String address;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tag", nullable = false)
-    private ArticleType tag;
-
-    @Column(name = "rate", nullable = true)
+    @Column
     private Double rate;
 
-    @Column(name = "description", nullable = false, length = 2000)
+    @Column(nullable = false, length = 2000)
     private String description;
 
-    // Constructors
-    public Article() {
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ArticleType type;
 
-    public Article(String title, String address, ArticleType tag, Double rate, String description) {
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date createdAt; 
+
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Comment> comments;
+
+    // Constructors, Getters and Setters
+    public Article() {}
+
+    public Article(String title, String address, Double rate, String description, ArticleType type) {
         this.title = title;
         this.address = address;
-        this.tag = tag;
         this.rate = rate;
         this.description = description;
+        this.type = type;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -71,14 +82,6 @@ public class Article {
         this.address = address;
     }
 
-    public ArticleType getTag() {
-        return tag;
-    }
-
-    public void setTag(ArticleType tag) {
-        this.tag = tag;
-    }
-
     public Double getRate() {
         return rate;
     }
@@ -95,9 +98,31 @@ public class Article {
         this.description = description;
     }
 
+    public ArticleType getType() {
+        return type;
+    }
+
+    public void setType(ArticleType type) {
+        this.type = type;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 
 public enum ArticleType {
     HOUSE_REVIEW, ROOMMATE_SEARCH
 }
-
 }
