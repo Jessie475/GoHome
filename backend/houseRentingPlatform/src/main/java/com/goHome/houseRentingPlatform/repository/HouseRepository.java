@@ -20,9 +20,6 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
     List<House> findByLatIsNullAndLngIsNull();
 
-<<<<<<< HEAD
-}
-=======
     List<House> findByAddressContaining(String partialAddress);
 
     List<House> findByRoomType(String roomType);
@@ -49,4 +46,3 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
 
 }
->>>>>>> 3d205c3ec13adde864f2d0340cc306b63e25445e
