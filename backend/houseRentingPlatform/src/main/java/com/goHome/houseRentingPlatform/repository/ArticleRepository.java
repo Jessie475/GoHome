@@ -22,11 +22,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Page<Article> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
     List<Article> findByAddressAndType(String address, ArticleType tag);
+    
 
-    default Optional<Article> findById(Long id) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
-    }
+
 
 
     @Query("SELECT a FROM Article a LEFT JOIN a.comments c GROUP BY a ORDER BY COUNT(c) DESC")
