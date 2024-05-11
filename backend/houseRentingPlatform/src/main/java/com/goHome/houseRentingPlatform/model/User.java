@@ -156,19 +156,19 @@ public class User {
         this.favoriteArticles = favoriteArticles;
     }
 
-    public void addFavHouse(Optional<House> house) {
+    public void addFavHouse(House house) {
         this.favoriteHouses.add(house);
     }
 
-    public void removeFavHouse(Optional<House> house) {
+    public void removeFavHouse(House house) {
         this.favoriteHouses.remove(house);
     }
 
-    public void addFavArticle(Optional<Article> article) {
+    public void addFavArticle(Article article) {
         this.favoriteArticles.add(article);
     }
 
-    public void removeFavArticle(Optional<Article> article) {
+    public void removeFavArticle(Article article) {
         this.favoriteArticles.remove(article);
     }
 

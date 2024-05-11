@@ -25,14 +25,13 @@ public class UserController {
         return ResponseEntity.ok(registeredUser);
     }
 
-    // 通过ID获取用户信息
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
-        return userService.getUserById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
+ // 通过ID获取用户信息
+ @GetMapping("/{id}")
+ public ResponseEntity<User> getUserById(@PathVariable Integer id) {
+     return userService.getUserById(id)
+             .map(ResponseEntity::ok)
+             .orElse(ResponseEntity.notFound().build());
+ }
     // 添加用户收藏的房屋
     @PostMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> addFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
@@ -49,8 +48,7 @@ public class UserController {
     @DeleteMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> removeFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
         try {
-            Optional<User> user = userService.getUserById(userId);
-            House house = HouseService.getHouseById(houseId);
+            User user = userService.getUserById(userId);;
             userService.removeFavHouseFromUser(user, houseId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -62,7 +60,8 @@ public class UserController {
     @PostMapping("/{userId}/favorite-articles/{articleId}")
     public ResponseEntity<?> addFavoriteArticle(@PathVariable Integer userId, @PathVariable Integer articleId) {
         try {
-            userService.addFavArticleToUser(userId, articleId);
+            User user = userService.getUserById(userId);
+            userService.addFavArticleToUser(user, articleId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -73,7 +72,8 @@ public class UserController {
     @DeleteMapping("/{userId}/favorite-articles/{articleId}")
     public ResponseEntity<?> removeFavoriteArticle(@PathVariable Integer userId, @PathVariable Integer articleId) {
         try {
-            userService.removeFavArticleFromUser(userId, articleId);
+            User user = userService.getUserById(userId);
+            userService.removeFavArticleFromUser(user, articleId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

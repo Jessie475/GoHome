@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByIdentity(String identity);
     List<User> findByName(String name);
+    List<User> findById(Integer id);
     List<User> findByPhone(String phone);  // Assume that phone is a String type as per User model
     List<User> findByEmail(String email);  // Added method to find users by email
 
