@@ -54,27 +54,30 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public Optional<User> getUserById(Integer id) {
-        return userRepository.findById(id);
-    }
 
-    public void addFavHouseToUser(User user, House house) {
-        user.addFavHouse(house);
+    public void addFavHouseToUser(User user, Integer houseId) {
+        House house = houseRepository.findById(houseId)
+                .orElseThrow(() -> new RuntimeException("House not found with id " + houseId));        user.addFavHouse(house);
         userRepository.save(user);
     }
 
-    public void removeFavHouseFromUser(User user, House house) {
+    public void removeFavHouseFromUser(User user, Integer houseId) {
+        House house = houseRepository.findById(houseId)
+                .orElseThrow(() -> new RuntimeException("House not found with id " + houseId));
         user.removeFavHouse(house);
         userRepository.save(user);
     }
 
-    public void addFavArticleToUser(User user, Article article) {
+    public void addFavArticleToUser(User user, Long articleId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new RuntimeException("Article not found with id " + articleId));
         user.addFavArticle(article);
         userRepository.save(user);
     }
 
-    public void removeFavArticleFromUser(User user, Article article) {
-
+    public void removeFavArticleFromUser(User user, Long articleId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new RuntimeException("Article not found with id " + articleId));
         user.removeFavArticle(article);
         userRepository.save(user);
     }

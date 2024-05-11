@@ -1,12 +1,15 @@
 package com.goHome.houseRentingPlatform.controller;
 
+import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
+import com.goHome.houseRentingPlatform.service.HouseService;
 import com.goHome.houseRentingPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -34,7 +37,8 @@ public class UserController {
     @PostMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> addFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
         try {
-            userService.addFavHouseToUser(userId, houseId);
+            User user = userService.getUserById(userId);
+            userService.addFavHouseToUser(user, houseId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -45,7 +49,9 @@ public class UserController {
     @DeleteMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> removeFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
         try {
-            userService.removeFavHouseFromUser(userId, houseId);
+            Optional<User> user = userService.getUserById(userId);
+            House house = HouseService.getHouseById(houseId);
+            userService.removeFavHouseFromUser(user, houseId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

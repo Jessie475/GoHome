@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -155,19 +156,21 @@ public class User {
         this.favoriteArticles = favoriteArticles;
     }
 
-    public void addFavHouse(House house) {
+    public void addFavHouse(Optional<House> house) {
         this.favoriteHouses.add(house);
     }
 
-    public void removeFavHouse(House house) {
+    public void removeFavHouse(Optional<House> house) {
         this.favoriteHouses.remove(house);
     }
 
-    public void addFavArticle(Article article) {
+    public void addFavArticle(Optional<Article> article) {
         this.favoriteArticles.add(article);
     }
 
-    public void removeFavArticle(Article article) {
+    public void removeFavArticle(Optional<Article> article) {
         this.favoriteArticles.remove(article);
     }
+
+
 }
