@@ -5,6 +5,7 @@ import com.goHome.houseRentingPlatform.model.User;
 import com.goHome.houseRentingPlatform.service.HouseService;
 import com.goHome.houseRentingPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,20 @@ public class UserController {
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
+    }
+    //登入
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+        try {
+            User users = userService.validateUser(user.getName(), user.getPassword());
+            if (users != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 
