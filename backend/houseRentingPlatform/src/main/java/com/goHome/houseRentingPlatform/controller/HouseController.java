@@ -20,10 +20,15 @@ public class HouseController {
     private HouseRepository houseRepository;
     private HouseService houseService;
 
+    public HouseController(HouseService houseService, HouseRepository houseRepository) {
+        this.houseRepository = houseRepository;
+        this.houseService = houseService;
+    }
+
     @GetMapping("/getAllHouses")//只會出現房屋的部分資訊
     public List<House> getAllHouses(){
         //List<House> houses = houseService.getAllHouses();
-        return houseRepository.findAll();
+        return houseRepository.findAllHouseSummaries();
     }
 
     @GetMapping("/")
