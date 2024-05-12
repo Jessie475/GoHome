@@ -50,7 +50,8 @@ public class Article {
     // Constructors, Getters and Setters
     public Article() {}
 
-    public Article(String title, String address, Double rate, String description, ArticleType type) {
+    public Article(Long id,String title, String address, Double rate, String description, ArticleType type) {
+        this.id = id;
         this.title = title;
         this.address = address;
         this.rate = rate;
