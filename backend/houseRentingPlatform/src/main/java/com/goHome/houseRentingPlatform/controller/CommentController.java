@@ -22,7 +22,7 @@ import com.goHome.houseRentingPlatform.service.CommentService;
         @Autowired
         private CommentService commentService;
 
-        @PostMapping
+        @PostMapping("/addComment")
         public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
             Comment savedComment = commentService.addComment(comment);
             return ResponseEntity.ok(savedComment);
