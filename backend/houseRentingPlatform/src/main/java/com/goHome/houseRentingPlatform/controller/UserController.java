@@ -40,7 +40,6 @@ public class UserController {
         }
     }
 
-
     // 添加用户收藏的房屋
     @PostMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> addFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {

@@ -64,9 +64,15 @@ public class ArticleService {
     public Page<Article> getArticlesSortedByCommentCount(int page, int size) {
         return articleRepository.findAllByCommentCountDesc(PageRequest.of(page, size));
     }
+    public Article getArticleById(Long id){
+        return articleRepository.getArticleById(id);
+    }
 
     //search
     public List<Article> searchArticlesByAddress(String address) {
         return articleRepository.findByAddressContaining(address);
     }
+
+
+
 }
