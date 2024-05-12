@@ -28,25 +28,26 @@ public class ArticleController {
 
     //新增文章
     @PostMapping("/addArticle")
-    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
-        return ResponseEntity.ok(articleService.saveArticle(article));
+    public String createArticle(@RequestBody Article article) {
+        articleService.saveArticle(article);
+        return  "New house is added";
     }
 
     //更新文章
-    @PutMapping("/Update{id}")
+    @PutMapping("/Update/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article article) {
         return ResponseEntity.ok(articleService.updateArticle(id, article));
     }
 
     //刪除文章
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
         articleService.deleteArticle(id);
         return ResponseEntity.ok().build();
     }
 
     //點特定文章
-    @GetMapping("/getArticle{id}")
+    @GetMapping("/getArticle/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
         Article article = articleService.getAllArticles().stream()
                 .filter(a -> a.getId().equals(id))
@@ -61,7 +62,7 @@ public class ArticleController {
         return ResponseEntity.ok(articles);
     }
 
-     @GetMapping("/getAllArticle")
+    @GetMapping("/getAllArticle")
     public ResponseEntity<List<Article>> getAllArticles() {
         List<Article> articles = articleService.getAllArticles();
         return ResponseEntity.ok(articles);
