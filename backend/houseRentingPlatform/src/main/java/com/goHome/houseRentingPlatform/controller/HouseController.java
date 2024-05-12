@@ -1,6 +1,8 @@
 package com.goHome.houseRentingPlatform.controller;
 
 import org.springframework.http.ResponseEntity;
+
+import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.service.HouseService;
@@ -30,10 +32,14 @@ public class HouseController {
     }
 
     @GetMapping("/{id}")//顯示房屋的所有資訊
-    public House getHouseById(@PathVariable("id") Integer id){
-        House house = houseService.getHouseById(id);
-        houseService.calculateAndSetHouseRate(house);
-        return houseService.getHouseById(id);
+    public ResponseEntity<House> getHouseById(@PathVariable("id") Integer id){
+        House house = houseService.getAllHouses().stream()
+        .filter(a -> a.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("House not found!"));
+        //House house = houseService.getHouseById(id);
+        //houseService.calculateAndSetHouseRate(house);
+        return ResponseEntity.ok(house);
     }
 
     @GetMapping("/search")//以地址模糊篩選
