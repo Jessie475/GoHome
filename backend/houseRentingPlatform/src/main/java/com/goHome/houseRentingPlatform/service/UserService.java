@@ -54,9 +54,11 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public User getUserById(User userId) {
-        return userRepository.findById(userId);
+    public User getUserById(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
     }
+    
 
     public void addFavHouseToUser(User user, Integer houseId) {
         House house = houseRepository.findById(houseId)

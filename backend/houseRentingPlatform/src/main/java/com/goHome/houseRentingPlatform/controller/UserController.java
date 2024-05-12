@@ -25,13 +25,7 @@ public class UserController {
         return ResponseEntity.ok(registeredUser);
     }
 
- // 通过ID获取用户信息
- @GetMapping("/{id}")
- public ResponseEntity<User> getUserById(@PathVariable Integer id) {
-     return userService.getUserById(id)
-             .map(ResponseEntity::ok)
-             .orElse(ResponseEntity.notFound().build());
- }
+
     // 添加用户收藏的房屋
     @PostMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> addFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
@@ -58,7 +52,7 @@ public class UserController {
 
     // 添加用户收藏的文章
     @PostMapping("/{userId}/favorite-articles/{articleId}")
-    public ResponseEntity<?> addFavoriteArticle(@PathVariable Integer userId, @PathVariable Integer articleId) {
+    public ResponseEntity<?> addFavoriteArticle(@PathVariable Integer userId, @PathVariable Long articleId) {
         try {
             User user = userService.getUserById(userId);
             userService.addFavArticleToUser(user, articleId);
@@ -70,7 +64,7 @@ public class UserController {
 
     // 移除用户收藏的文章
     @DeleteMapping("/{userId}/favorite-articles/{articleId}")
-    public ResponseEntity<?> removeFavoriteArticle(@PathVariable Integer userId, @PathVariable Integer articleId) {
+    public ResponseEntity<?> removeFavoriteArticle(@PathVariable Integer userId, @PathVariable Long articleId) {
         try {
             User user = userService.getUserById(userId);
             userService.removeFavArticleFromUser(user, articleId);
