@@ -1,6 +1,7 @@
 package com.goHome.houseRentingPlatform.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Page<Article> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
     List<Article> findByAddressAndType(String address, ArticleType tag);
+    
+    Article getArticleById(Long id);
+
+
 
     @Query("SELECT a FROM Article a LEFT JOIN a.comments c GROUP BY a ORDER BY COUNT(c) DESC")
     Page<Article> findAllByCommentCountDesc(Pageable pageable);

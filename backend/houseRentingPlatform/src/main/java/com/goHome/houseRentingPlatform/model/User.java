@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -170,4 +171,6 @@ public class User {
     public void removeFavArticle(Article article) {
         this.favoriteArticles.remove(article);
     }
+
+
 }
