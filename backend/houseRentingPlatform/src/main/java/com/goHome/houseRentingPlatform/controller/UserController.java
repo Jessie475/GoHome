@@ -1,4 +1,4 @@
-///*
+
 //package com.goHome.houseRentingPlatform.controller;
 //
 //import com.goHome.houseRentingPlatform.model.House;
@@ -89,4 +89,4 @@
 //        }
 //    }
 //}
-//*/
+

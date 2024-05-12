@@ -22,7 +22,7 @@ public class HouseService {
     }
 
     public List<House> getAllHouses() {//從資料庫抓所有房子資料
-        return houseRepository.findAll();
+        return houseRepository.findAllHouseSummaries();
     }
 
     public House updateHouse(Integer id, House housedetail) {//更新房子資訊
