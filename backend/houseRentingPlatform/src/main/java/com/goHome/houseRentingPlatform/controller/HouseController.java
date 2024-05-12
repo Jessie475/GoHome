@@ -28,7 +28,7 @@ public class HouseController {
     @GetMapping("/getAllHouses")//只會出現房屋的部分資訊
     public List<House> getAllHouses(){
         //List<House> houses = houseService.getAllHouses();
-        return houseRepository.findAllHouseSummaries();
+        return houseRepository.findAll();
     }
 
     @GetMapping("/")

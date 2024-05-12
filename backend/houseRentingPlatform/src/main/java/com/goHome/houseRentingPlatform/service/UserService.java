@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 //package com.goHome.houseRentingPlatform.service;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +90,6 @@
 //                .orElseThrow(() -> new RuntimeException("Article not found with id " + articleId));
 //        user.addFavArticle(article);
 //        userRepository.save(user);
-=======
 ////package com.goHome.houseRentingPlatform.service;
 ////
 ////import org.springframework.beans.factory.annotation.Autowired;
@@ -184,7 +182,6 @@
 ////                .orElseThrow(() -> new RuntimeException("Article not found with id " + articleId));
 ////        user.addFavArticle(article);
 ////        userRepository.save(user);
->>>>>>> Stashed changes
 //    }
 //
 //    public void removeFavArticleFromUser(User user, Long articleId) {
