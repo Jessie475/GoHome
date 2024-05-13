@@ -1,61 +1,46 @@
 package com.goHome.houseRentingPlatform.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
-import com.goHome.houseRentingPlatform.model.Article;
-import com.goHome.houseRentingPlatform.model.House;
+//import com.goHome.houseRentingPlatform.model.Article;
+//import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
-import com.goHome.houseRentingPlatform.repository.ArticleRepository;
-import com.goHome.houseRentingPlatform.repository.HouseRepository;
+//import com.goHome.houseRentingPlatform.repository.ArticleRepository;
+//import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.repository.UserRepository;
 
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService{
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
+ /* @Autowired
     private HouseRepository houseRepository;
     @Autowired
-    private ArticleRepository articleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private ArticleRepository articleRepository;*/
 
+/* 
     public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository) {
         this.userRepository = userRepository;
         this.houseRepository = houseRepository;
         this.articleRepository = articleRepository;
     }
-
+*/
     public User registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
         return userRepository.save(user);
     }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findUserByIdentity(username);
-        return org.springframework.security.core.userdetails.User
-                .withUsername(username)
-                .password(user.getPassword())
-                .roles("USER")
-                .build();
-    }
-
 
     public User addUser(User user) {
         return userRepository.save(user);
     }
 
     public User validateUser(String username, String password) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
+        Optional<User> userOptional = userRepository.findByName(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             // 检查密码，这里没有加密
@@ -65,7 +50,7 @@ public class UserService implements UserDetailsService {
         }
         return null;
     }
-
+/* 
     public User getUserById(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
@@ -102,6 +87,6 @@ public class UserService implements UserDetailsService {
     private User findUserByIdentity(String username) {
         return null;
     }
-
+*/
 
 }

@@ -42,7 +42,7 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
-
+/* 
     @ManyToMany
     @JoinTable(
             name = "user_favorite_house",
@@ -58,7 +58,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "article_id")
     )
     private Set<Article> favoriteArticles = new HashSet<>();
-
+*/
     // Constructors, getters, and setters
     public User() {
     }
@@ -139,7 +139,7 @@ public class User {
     }
 
     //新增、修改、get、set Favorite article和house
-
+/* 
     public Set<House> getFavHouses() {
         return favoriteHouses;
     }
@@ -171,6 +171,6 @@ public class User {
     public void removeFavArticle(Article article) {
         this.favoriteArticles.remove(article);
     }
-
+*/
 
 }

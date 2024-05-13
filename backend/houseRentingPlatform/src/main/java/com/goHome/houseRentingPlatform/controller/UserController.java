@@ -1,16 +1,18 @@
 package com.goHome.houseRentingPlatform.controller;
 
-import com.goHome.houseRentingPlatform.model.House;
+//import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
-import com.goHome.houseRentingPlatform.service.HouseService;
+//import com.goHome.houseRentingPlatform.service.HouseService;
 import com.goHome.houseRentingPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
+
+
 
 @RestController
 @RequestMapping("/users")
@@ -39,7 +41,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    @GetMapping("/test")
+    public String test(@RequestParam String param) {
+        return "Hello " + param;
+    }
+    
+/* 
     // 添加用户收藏的房屋
     @PostMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> addFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
@@ -86,5 +93,5 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 }
