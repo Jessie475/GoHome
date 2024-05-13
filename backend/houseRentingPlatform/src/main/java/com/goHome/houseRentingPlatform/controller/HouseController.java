@@ -1,10 +1,14 @@
 package com.goHome.houseRentingPlatform.controller;
 
+import org.springframework.http.ResponseEntity;
+
+import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -16,9 +20,15 @@ public class HouseController {
     private HouseRepository houseRepository;
     private HouseService houseService;
 
+    public HouseController(HouseService houseService, HouseRepository houseRepository) {
+        this.houseRepository = houseRepository;
+        this.houseService = houseService;
+    }
+
     @GetMapping("/getAllHouses")//只會出現房屋的部分資訊
     public List<House> getAllHouses(){
-        return houseService.getAllHouses();
+        //List<House> houses = houseService.getAllHouses();
+        return houseRepository.findAll();
     }
 
     @GetMapping("/")
@@ -27,10 +37,14 @@ public class HouseController {
     }
 
     @GetMapping("/{id}")//顯示房屋的所有資訊
-    public House getHouseById(@PathVariable("id") Integer id){
-        House house = houseService.getHouseById(id);
-        houseService.calculateAndSetHouseRate(house);
-        return houseService.getHouseById(id);
+    public ResponseEntity<House> getHouseById(@PathVariable("id") Integer id){
+        House house = houseService.getAllHouses().stream()
+        .filter(a -> a.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("House not found!"));
+        //House house = houseService.getHouseById(id);
+        //houseService.calculateAndSetHouseRate(house);
+        return ResponseEntity.ok(house);
     }
 
     @GetMapping("/search")//以地址模糊篩選
@@ -125,12 +139,12 @@ public class HouseController {
         return "New house is added";
     }
 
-    @PutMapping("/update{id}")
+    @PutMapping("/update/{id}")
     public House updateHouse(@PathVariable("id") Integer id, @RequestBody House housedetail) {
         return houseService.updateHouse(id, housedetail);
     }
 
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteProduct(@PathVariable("id") Integer id) {
         houseService.deleteHouse(id);
     }
