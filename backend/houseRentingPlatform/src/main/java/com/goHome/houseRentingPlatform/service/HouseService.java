@@ -42,7 +42,6 @@ public class HouseService {
                     house.setsize(housedetail.getsize());
                     house.setsubsidy(housedetail.getsubsidy());
                     house.setstartdate(housedetail.getstartdate());
-                    house.setcondition(housedetail.getcondition());
                     return houseRepository.save(house);
                 })
                 .orElseThrow(() -> new RuntimeException("House not found with id " + id));

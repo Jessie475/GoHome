@@ -72,7 +72,7 @@ public class House {
     //private User user;
 
     public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
-    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, Date startdate, Double lease,String description, String condition) {
+    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, Date startdate, Double lease,String description) {
         this.id = id;
         this.contactInfo = contactinfo;
         this.address = address;
@@ -88,7 +88,6 @@ public class House {
         this.startdate = startdate;
         this.lease = lease;
         this.description = description;
-        this.condition = condition;
 
     }
 
@@ -210,13 +209,6 @@ public class House {
 	    this.description = description;
 	  } 
 
-  public String getcondition() {
-    return condition;
-  }
-
-  public void setcondition(String condition) {
-	    this.condition = condition;
-	  } 
 public enum RoomType {
     STUDIO, ROOM
 }
