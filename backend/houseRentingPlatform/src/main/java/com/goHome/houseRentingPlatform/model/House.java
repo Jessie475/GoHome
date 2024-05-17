@@ -197,19 +197,11 @@ public class House {
 	    this.startdate = startdate;
 	  }
  
-<<<<<<< HEAD
   public Double getlease() {
 	    return lease;
 	  }
 
   public void setlease(Double lease) {
-=======
-  public String getlease() {
-	    return lease;
-	  }
-
-  public void setlease(String lease) {
->>>>>>> d99ba3fb863890f973ccd16623c0bf3a10d4e06e
 	    this.lease = lease;
 	  } 
 
