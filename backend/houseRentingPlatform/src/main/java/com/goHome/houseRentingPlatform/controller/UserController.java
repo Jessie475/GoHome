@@ -77,7 +77,7 @@ public class UserController {
         return "Hello ";
     }
 
-/* 
+
     // 添加用户收藏的房屋
     @PostMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> addFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
@@ -124,7 +124,7 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-    }*/
+    }
 }
 //package com.goHome.houseRentingPlatform.controller;
 //

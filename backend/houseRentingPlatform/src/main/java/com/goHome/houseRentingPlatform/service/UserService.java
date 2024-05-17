@@ -21,7 +21,7 @@ public class UserService{
     @Autowired
     private HouseRepository houseRepository;
     @Autowired
-    private ArticleRepository articleRepository;*/
+    private ArticleRepository articleRepository;
 
 
     public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository) {

@@ -52,7 +52,7 @@ public class House {
     private String startdate;
 
     @Column(name = "lease", nullable = false)
-    private Integer lease;
+    private String lease;
 
     @Column(name = "description", nullable = false, length = 255)
     private String description;
@@ -66,7 +66,7 @@ public class House {
     }
 
     public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
-    String roomType, Integer price, String restriction, Integer size, Boolean subsidy, String startdate, Integer lease, String description) {
+    String roomType, Integer price, String restriction, Integer size, Boolean subsidy, String startdate, String lease, String description) {
         this.id = id;
         this.contactInfo = contactinfo;
         this.address = address;
@@ -187,11 +187,11 @@ public class House {
 	    this.startdate = startdate;
 	  }
  
-  public Integer getlease() {
+  public String getlease() {
 	    return lease;
 	  }
 
-  public void setlease(Integer lease) {
+  public void setlease(String lease) {
 	    this.lease = lease;
 	  } 
 
