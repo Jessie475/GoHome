@@ -1,5 +1,4 @@
-
-<<<<<<< HEAD
+package com.goHome.houseRentingPlatform.controller;
 //import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
 //import com.goHome.houseRentingPlatform.service.HouseService;
@@ -11,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+
 
 
 
@@ -21,19 +25,46 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // 注册新用户
+
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User registeredUser = userService.registerUser(user);
-        return ResponseEntity.ok(registeredUser);
+    public ResponseEntity<?> registerUser(@RequestBody User user) throws Exception {
+        List<String> errors = new ArrayList<>();
+
+        if (user.getIdentity() == null || user.getIdentity().isEmpty()) {
+            errors.add("Identity is required.");
+        }
+        if (user.getName() == null || user.getName().isEmpty()) {
+            errors.add("Name is required.");
+        }
+        if (user.getEmail() == null || user.getEmail().isEmpty()) {
+            errors.add("Email is required.");
+        }
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
+            errors.add("Password is required.");
+        }
+        if (!errors.isEmpty()) {
+            return ResponseEntity.badRequest().body(String.join(", ", errors));
+        }
+
+        try {
+            if (userService.emailExists(user.getEmail())) {
+                return ResponseEntity.badRequest().body("郵箱已被使用。");
+            }
+            User registeredUser = userService.registerUser(user);
+            return ResponseEntity.ok(registeredUser);
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
+    
+
     //登入
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
+    public ResponseEntity<?> login(@RequestBody User luser) {
         try {
-            User users = userService.validateUser(user.getName(), user.getPassword());
+            User users = userService.validateUser(luser.getName(), luser.getPassword());
             if (users != null) {
-                return ResponseEntity.ok(user);
+                return ResponseEntity.ok(users);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
             }
@@ -42,11 +73,11 @@ public class UserController {
         }
     }
     @GetMapping("/test")
-    public String test(@RequestParam String param) {
-        return "Hello " + param;
+    public String test() {
+        return "Hello ";
     }
-    
-/* 
+
+
     // 添加用户收藏的房屋
     @PostMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> addFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
@@ -93,9 +124,8 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-    }*/
+    }
 }
-=======
 //package com.goHome.houseRentingPlatform.controller;
 //
 //import com.goHome.houseRentingPlatform.model.House;
@@ -187,4 +217,3 @@ public class UserController {
 //    }
 //}
 
->>>>>>> f63493a2ed31133ba4620634bc8e13e483b8c5f4
