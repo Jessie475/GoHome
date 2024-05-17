@@ -59,11 +59,7 @@ public class House {
     private Date startdate;
 
     @Column(name = "lease", nullable = false)
-<<<<<<< HEAD
     private Double lease;
-=======
-    private String lease;
->>>>>>> d99ba3fb863890f973ccd16623c0bf3a10d4e06e
 
     @Column(name = "description", nullable = false, length = 255)
     private String description;
@@ -79,11 +75,7 @@ public class House {
     }
 
     public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
-<<<<<<< HEAD
-    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, Date startdate, Double lease, String description,String condition) {
-=======
-    String roomType, Integer price, String restriction, Integer size, Boolean subsidy, String startdate, String lease, String description) {
->>>>>>> d99ba3fb863890f973ccd16623c0bf3a10d4e06e
+    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, Date startdate, Double lease,String description,String condition) {
         this.id = id;
         this.contactInfo = contactinfo;
         this.address = address;
