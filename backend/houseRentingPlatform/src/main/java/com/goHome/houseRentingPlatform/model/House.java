@@ -1,5 +1,6 @@
 package com.goHome.houseRentingPlatform.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
@@ -56,7 +57,7 @@ public class House {
     private Boolean subsidy;
 
     @Column(name = "startdate", nullable = false)
-    private Date startdate;
+    private LocalDate startdate;
 
     @Column(name = "lease", nullable = false)
     private Double lease;
@@ -72,7 +73,7 @@ public class House {
     //private User user;
 
     public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
-    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, Date startdate, Double lease,String description) {
+    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, LocalDate startdate, Double lease,String description) {
         this.id = id;
         this.contactInfo = contactinfo;
         this.address = address;
@@ -185,11 +186,11 @@ public class House {
 	    this.subsidy = subsidy;
 	  } 
   
-  public Date getstartdate() {
+  public LocalDate getstartdate() {
 	    return startdate;
 	  }
 
-  public void setstartdate(Date startdate) {
+  public void setstartdate(LocalDate startdate) {
 	    this.startdate = startdate;
 	  }
  
