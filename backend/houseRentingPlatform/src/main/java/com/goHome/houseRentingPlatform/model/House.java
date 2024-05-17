@@ -1,7 +1,13 @@
 package com.goHome.houseRentingPlatform.model;
 
+import java.util.Date;
+
+import com.goHome.houseRentingPlatform.model.Article.ArticleType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,8 +39,9 @@ public class House {
     @Column(name = "rate", nullable = true)
     private Double rate;
 
-    @Column(name = "roomType", nullable = false, length = 255)
-    private String roomType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "roomType", nullable = false)
+    private RoomType roomType;
 
     @Column(name = "price", nullable = false)
     private Integer price;
@@ -43,20 +50,22 @@ public class House {
     private String restriction;
 
     @Column(name = "size", nullable = false)
-    private Integer size;
+    private Double size;
 
     @Column(name = "subsidy", nullable = false)
     private Boolean subsidy;
 
-    @Column(name = "startdate", nullable = false, length = 255)
-    private String startdate;
+    @Column(name = "startdate", nullable = false)
+    private Date startdate;
 
     @Column(name = "lease", nullable = false)
-    private Integer lease;
+    private Double lease;
 
     @Column(name = "description", nullable = false, length = 255)
     private String description;
 
+    @Column(name = "condition", nullable = false, length = 255)
+    private String condition;
 
     //@ManyToOne
     //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
@@ -66,7 +75,7 @@ public class House {
     }
 
     public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
-    String roomType, Integer price, String restriction, Integer size, Boolean subsidy, String startdate, Integer lease, String description) {
+    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, Date startdate, Double lease, String description,String condition) {
         this.id = id;
         this.contactInfo = contactinfo;
         this.address = address;
@@ -82,6 +91,7 @@ public class House {
         this.startdate = startdate;
         this.lease = lease;
         this.description = description;
+        this.condition = condition;
 
     }
 
@@ -140,11 +150,11 @@ public class House {
     this.rate = rate;
   }
   
-  public String getroomType() {
+  public RoomType getroomType() {
 	    return roomType;
 	  }
 
-  public void setroomType(String roomType) {
+  public void setroomType(RoomType roomType) {
 	    this.roomType = roomType;
 	  }
   
@@ -164,11 +174,11 @@ public class House {
 	    this.restriction = restriction;
 	  }
   
-  public Integer getsize() {
+  public Double getsize() {
 	    return size;
 	  }
 
-  public void setsize(Integer size) {
+  public void setsize(Double size) {
 	    this.size = size;
 	  } 
   public boolean getsubsidy() {
@@ -179,19 +189,19 @@ public class House {
 	    this.subsidy = subsidy;
 	  } 
   
-  public String getstartdate() {
+  public Date getstartdate() {
 	    return startdate;
 	  }
 
-  public void setstartdate(String startdate) {
+  public void setstartdate(Date startdate) {
 	    this.startdate = startdate;
 	  }
  
-  public Integer getlease() {
+  public Double getlease() {
 	    return lease;
 	  }
 
-  public void setlease(Integer lease) {
+  public void setlease(Double lease) {
 	    this.lease = lease;
 	  } 
 
@@ -202,4 +212,15 @@ public class House {
   public void setdescription(String description) {
 	    this.description = description;
 	  } 
+
+    public String getcondition() {
+	    return condition;
+	  }
+
+  public void setcondition(String condition) {
+	    this.condition = condition;
+	  } 
+public enum RoomType {
+    STUDIO, ROOM
+}
 }

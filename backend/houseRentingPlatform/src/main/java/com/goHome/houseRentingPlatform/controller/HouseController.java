@@ -25,7 +25,7 @@ public class HouseController {
         this.houseService = houseService;
     }
 
-    @GetMapping("/getAllHouses")//只會出現房屋的部分資訊
+    @GetMapping("/getAllHouses")//只會出現房屋的部分資訊OK
     public List<House> getAllHouses(){
         //List<House> houses = houseService.getAllHouses();
         return houseRepository.findAll();
@@ -36,12 +36,12 @@ public class HouseController {
         return houseService.getHousesWithBlankLatLng();
     }
 
-    @GetMapping("/{id}")//顯示房屋的所有資訊
-    public ResponseEntity<House> getHouseById(@PathVariable("id") Integer id){
+    @GetMapping("/getHouse{id}")//顯示房屋的所有資訊 不行
+    public ResponseEntity<House> getHouseById(@PathVariable Integer id){
         House house = houseService.getAllHouses().stream()
-        .filter(a -> a.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("House not found!"));
+            .filter(a -> a.getId().equals(id))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("House not found!"));
         //House house = houseService.getHouseById(id);
         //houseService.calculateAndSetHouseRate(house);
         return ResponseEntity.ok(house);
@@ -52,7 +52,7 @@ public class HouseController {
         return houseRepository.findByAddressContaining(partialAddress);
     }
 
-    @GetMapping("/filterbyPrice")//以價錢區間篩選
+    @GetMapping("/filterbyPrice")//以價錢區間篩選OK
     public List<House> filterPrice(
             @RequestParam(value = "minPrice", required = false) Integer minPrice,
             @RequestParam(value = "maxPrice", required = false) Integer maxPrice) {
@@ -63,7 +63,7 @@ public class HouseController {
         }
     }
 
-    @GetMapping("/filterbyRate")//以分數區間篩選
+    @GetMapping("/filterbyRate")//以分數區間篩選OK
     public List<House> filterRate(
             @RequestParam(value = "minRate", required = false) Integer minRate,
             @RequestParam(value = "maxRate", required = false) Integer maxRate) {
@@ -74,7 +74,7 @@ public class HouseController {
         }
     }
 
-    @GetMapping("/filterbySize")//以大小區間篩選
+    @GetMapping("/filterbySize")//以大小區間篩選OK
     public List<House> filterSize(
             @RequestParam(value = "minSize", required = false) Integer minSize,
             @RequestParam(value = "maxSize", required = false) Integer maxSize) {
@@ -95,7 +95,7 @@ public class HouseController {
         return houseRepository.findBySubsidy(subsidy);
     }
 
-    @GetMapping("/sortbyPrice")//以房價高低排列
+    @GetMapping("/sortbyPrice")//以房價高低排列OK
     public List<House> sortPrice(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection) {
         if (sortDirection != null && sortDirection.matches("^(asc|desc)$")) {
             if (sortDirection.equals("asc")) {
@@ -108,7 +108,7 @@ public class HouseController {
         }
     }
 
-    @GetMapping("/sortbyRate")//以評分高低排列
+    @GetMapping("/sortbyRate")//以評分高低排列OK
     public List<House> sortRate(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection) {
         if (sortDirection != null && sortDirection.matches("^(asc|desc)$")) {
             if (sortDirection.equals("asc")) {
@@ -121,7 +121,7 @@ public class HouseController {
         }
     }
     
-    @GetMapping("/sortbySize")//以房屋大小排列
+    @GetMapping("/sortbySize")//以房屋大小排列OK
     public List<House> sortSize(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection) {
         if (sortDirection != null && sortDirection.matches("^(asc|desc)$")) {
             if (sortDirection.equals("asc")) {

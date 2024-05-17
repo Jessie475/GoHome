@@ -39,6 +39,10 @@ public class HouseService {
                     house.setprice(housedetail.getprice());
                     house.setrate(housedetail.getrate());
                     house.setroomType(housedetail.getroomType());
+                    house.setsize(housedetail.getsize());
+                    house.setsubsidy(housedetail.getsubsidy());
+                    house.setstartdate(housedetail.getstartdate());
+                    house.setcondition(housedetail.getcondition());
                     return houseRepository.save(house);
                 })
                 .orElseThrow(() -> new RuntimeException("House not found with id " + id));
@@ -57,8 +61,6 @@ public class HouseService {
         return houseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("House not found with id " + id));
     }
-
-
 
     public void calculateAndSetHouseRate(House house) {
         List<Article> articles = articleRepository.findByAddressAndType(house.getAddress(), ArticleType.HOUSE_REVIEW);
