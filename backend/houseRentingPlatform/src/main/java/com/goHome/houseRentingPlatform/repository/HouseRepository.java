@@ -1,6 +1,10 @@
 package com.goHome.houseRentingPlatform.repository;
 
+import com.goHome.houseRentingPlatform.model.Article;
+import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 import com.goHome.houseRentingPlatform.model.House;
+import com.goHome.houseRentingPlatform.model.House.RoomType;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -24,15 +28,15 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
     List<House> findByAddressContaining(String partialAddress);
 
-    List<House> findByRoomType(String roomType);
+    List<House> findByRoomType(RoomType roomType);
 
     List<House> findBySubsidy(Boolean subsidy);
 
     List<House> findByPriceBetween(Integer minPrice, Integer maxPrice);
 
-    List<House> findByRateBetween(Integer minRate, Integer maxRate);
+    List<House> findByRateBetween(Double minRate, Double maxRate);
 
-    List<House> findBySizeBetween(Integer minSize, Integer maxSize);
+    List<House> findBySizeBetween(Double minSize, Double maxSize);
 
     List<House> findAllByOrderByPriceDesc();
 

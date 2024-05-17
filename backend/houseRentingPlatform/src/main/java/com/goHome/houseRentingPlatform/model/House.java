@@ -71,11 +71,8 @@ public class House {
     //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     //private User user;
 
-    public House() {
-    }
-
     public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
-    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, Date startdate, Double lease,String description,String condition) {
+    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, Date startdate, Double lease,String description, String condition) {
         this.id = id;
         this.contactInfo = contactinfo;
         this.address = address;
@@ -213,9 +210,9 @@ public class House {
 	    this.description = description;
 	  } 
 
-    public String getcondition() {
-	    return condition;
-	  }
+  public String getcondition() {
+    return condition;
+  }
 
   public void setcondition(String condition) {
 	    this.condition = condition;

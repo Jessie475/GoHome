@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.House;
+import com.goHome.houseRentingPlatform.model.House.RoomType;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +66,8 @@ public class HouseController {
 
     @GetMapping("/filterbyRate")//以分數區間篩選OK
     public List<House> filterRate(
-            @RequestParam(value = "minRate", required = false) Integer minRate,
-            @RequestParam(value = "maxRate", required = false) Integer maxRate) {
+            @RequestParam(value = "minRate", required = false) Double minRate,
+            @RequestParam(value = "maxRate", required = false) Double maxRate) {
         if (minRate != null && maxRate != null) {
             return houseRepository.findByRateBetween(minRate, maxRate);
         } else {
@@ -76,8 +77,8 @@ public class HouseController {
 
     @GetMapping("/filterbySize")//以大小區間篩選OK
     public List<House> filterSize(
-            @RequestParam(value = "minSize", required = false) Integer minSize,
-            @RequestParam(value = "maxSize", required = false) Integer maxSize) {
+            @RequestParam(value = "minSize", required = false) Double minSize,
+            @RequestParam(value = "maxSize", required = false) Double maxSize) {
         if (minSize != null && maxSize != null) {
             return houseRepository.findBySizeBetween(minSize, maxSize);
         } else {
@@ -86,7 +87,7 @@ public class HouseController {
     }
 
     @GetMapping("/filterbyRoomtype")//以房型篩選
-    public List<House> getHousesByRoomtype(@RequestParam String roomtype) {
+    public List<House> getHousesByRoomtype(@RequestParam RoomType roomtype) {
         return houseRepository.findByRoomType(roomtype);
     }
 
