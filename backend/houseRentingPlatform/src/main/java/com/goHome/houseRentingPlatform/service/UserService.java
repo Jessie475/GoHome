@@ -35,9 +35,11 @@ public class UserService{
         return userRepository.save(user);
     }
     public boolean emailExists(String email) {
-        // 检查邮箱是否已存在于数据库中的方法
-        return userRepository.findByEmail(email) != null;
+        // 假设 userRepository 是您的 JPA 仓库
+        User user = userRepository.findByEmail(email);
+        return user != null;
     }
+    
     public User addUser(User user) {
         return userRepository.save(user);
     }
@@ -87,9 +89,9 @@ public class UserService{
         userRepository.save(user);
     }
 
-    private User findUserByIdentity(String username) {
+    /*private User findUserByIdentity(String username) {
         return null;
-    }
+    }*/
 
 
 }

@@ -39,6 +39,9 @@ public class UserController {
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
             errors.add("Email is required.");
         }
+        else if (userService.emailExists(user.getEmail())) {
+            errors.add("Email is already in use.");
+        }
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
             errors.add("Password is required.");
         }
@@ -47,9 +50,6 @@ public class UserController {
         }
 
         try {
-            if (userService.emailExists(user.getEmail())) {
-                return ResponseEntity.badRequest().body("郵箱已被使用。");
-            }
             User registeredUser = userService.registerUser(user);
             return ResponseEntity.ok(registeredUser);
         }catch (Exception e) {
