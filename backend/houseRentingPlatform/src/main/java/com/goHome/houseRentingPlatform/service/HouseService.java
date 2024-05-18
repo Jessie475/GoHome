@@ -14,15 +14,16 @@ public class HouseService {
 
     @Autowired
     private HouseRepository houseRepository;
+    @Autowired
     private ArticleRepository articleRepository;
 
     
-    public House createHouse(House house) {//新增房子
+    public House saveHouse(House house) {//新增房子
         return houseRepository.save(house);
     }
 
     public List<House> getAllHouses() {//從資料庫抓所有房子資料
-        return houseRepository.findAllHouseSummaries();
+        return houseRepository.findAll();
     }
 
     public House updateHouse(Integer id, House housedetail) {//更新房子資訊
@@ -37,7 +38,7 @@ public class HouseService {
                     house.setdescription(housedetail.getdescription());
                     house.setlease(housedetail.getlease());
                     house.setprice(housedetail.getprice());
-                    house.setrate(housedetail.getrate());
+                    house.setRate(housedetail.getRate());
                     house.setroomType(housedetail.getroomType());
                     house.setsize(housedetail.getsize());
                     house.setsubsidy(housedetail.getsubsidy());
@@ -55,23 +56,31 @@ public class HouseService {
         houseRepository.deleteById(id);
     }
 
+    public boolean existsById(Integer id) {//檢查房子是否存在
+        return houseRepository.existsById(id);
+    }
  
     public House getHouseById(Integer id) {
         return houseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("House not found with id " + id));
     }
 
-    public void calculateAndSetHouseRate(House house) {
+    public double calculateAndSetHouseRate(House house) {
         List<Article> articles = articleRepository.findByAddressAndType(house.getAddress(), ArticleType.HOUSE_REVIEW);
         if (!articles.isEmpty()) {
             double totalRate = 0;
             int count = 0;
             for (Article article : articles) {
-                totalRate += article.getRate();
-                count++;
+                if (article.getRate() != null) { // 检查评分是否为null
+                    totalRate += article.getRate();
+                    count++;
+                }
             }
-            double averageRate = totalRate / count;
-            house.setrate(averageRate);
+            if (count > 0) {
+                double averageRate = totalRate / count;
+                return averageRate;
+            }
         }
+        return 0;
     }
 }

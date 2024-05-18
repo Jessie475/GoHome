@@ -14,12 +14,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 //import jakarta.persistence.JoinColumn;
 //import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "house")
 public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
     @Column(name = "contactInfo", nullable = false, length = 255)
@@ -65,12 +66,11 @@ public class House {
     @Column(name = "description", nullable = false, length = 255)
     private String description;
 
-    @Column(name = "condition", nullable = false, length = 255)
-    private String condition;
-
     //@ManyToOne
     //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     //private User user;
+
+    public House(){}
 
     public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
     RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, LocalDate startdate, Double lease,String description) {
@@ -89,7 +89,6 @@ public class House {
         this.startdate = startdate;
         this.lease = lease;
         this.description = description;
-
     }
 
     public Integer getId() {
@@ -139,78 +138,78 @@ public class House {
     public void setLng(Double lng) {
         this.lng = lng;
     }
-    public Double getrate() {
+    public Double getRate() {
 	    return rate;
 	  }
 
-  public void setrate(Double rate) {
-    this.rate = rate;
-  }
+    public void setRate(Double rate) {
+      this.rate = rate;
+    }
+    
+    public RoomType getroomType() {
+        return roomType;
+      }
+
+    public void setroomType(RoomType roomType) {
+        this.roomType = roomType;
+      }
+    
+    public Integer getprice() {
+        return price;
+      }
+
+    public void setprice(Integer price) {
+        this.price = price;
+      } 
+    
+    public String getrestriction() {
+        return restriction;
+      }
+
+    public void setrestriction(String restriction) {
+        this.restriction = restriction;
+      }
+    
+    public Double getsize() {
+        return size;
+      }
+
+    public void setsize(Double size) {
+        this.size = size;
+      } 
+    public boolean getsubsidy() {
+        return subsidy;
+      }
+
+    public void setsubsidy(Boolean subsidy) {
+        this.subsidy = subsidy;
+      } 
+    
+    public LocalDate getstartdate() {
+        return startdate;
+      }
+
+    public void setstartdate(LocalDate startdate) {
+        this.startdate = startdate;
+      }
   
-  public RoomType getroomType() {
-	    return roomType;
-	  }
+    public Double getlease() {
+        return lease;
+      }
 
-  public void setroomType(RoomType roomType) {
-	    this.roomType = roomType;
-	  }
-  
-  public Integer getprice() {
-	    return price;
-	  }
+    public void setlease(Double lease) {
+        this.lease = lease;
+      } 
 
-  public void setprice(Integer price) {
-	    this.price = price;
-	  } 
-  
-  public String getrestriction() {
-	    return restriction;
-	  }
+    public String getdescription() {
+        return description;
+      }
 
-  public void setrestriction(String restriction) {
-	    this.restriction = restriction;
-	  }
-  
-  public Double getsize() {
-	    return size;
-	  }
+    public void setdescription(String description) {
+        this.description = description;
+      } 
 
-  public void setsize(Double size) {
-	    this.size = size;
-	  } 
-  public boolean getsubsidy() {
-	    return subsidy;
-	  }
-
-  public void setsubsidy(Boolean subsidy) {
-	    this.subsidy = subsidy;
-	  } 
-  
-  public LocalDate getstartdate() {
-	    return startdate;
-	  }
-
-  public void setstartdate(LocalDate startdate) {
-	    this.startdate = startdate;
-	  }
- 
-  public Double getlease() {
-	    return lease;
-	  }
-
-  public void setlease(Double lease) {
-	    this.lease = lease;
-	  } 
-
-  public String getdescription() {
-	    return description;
-	  }
-
-  public void setdescription(String description) {
-	    this.description = description;
-	  } 
-
-public enum RoomType {
-    STUDIO, ROOM
-}
+    public enum RoomType {
+        STUDIO, ROOM
+    }
 }

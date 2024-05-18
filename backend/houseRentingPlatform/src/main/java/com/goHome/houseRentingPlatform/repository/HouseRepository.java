@@ -16,7 +16,7 @@ import java.util.List;
 @EnableJpaRepositories
 public interface HouseRepository extends JpaRepository<House,Integer> {
     
-    @SuppressWarnings("null")
+    //@SuppressWarnings("null")
     List<House> findAll();
 
     @Query("SELECT h.name, h.price, h.roomType FROM House AS h")
@@ -34,9 +34,21 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
     List<House> findByPriceBetween(Integer minPrice, Integer maxPrice);
 
+    List<House> findByPriceGreaterThanEqual(Integer minPrice);
+
+    List<House> findByPriceLessThanEqual(Integer maxPrice);
+
     List<House> findByRateBetween(Double minRate, Double maxRate);
 
+    List<House> findByRateGreaterThanEqual(Double minRate);
+
+    List<House> findByRateLessThanEqual(Double maxRate);
+
     List<House> findBySizeBetween(Double minSize, Double maxSize);
+
+    List<House> findBySizeGreaterThanEqual(Double minSize);
+
+    List<House> findBySizeLessThanEqual(Double maxSize);
 
     List<House> findAllByOrderByPriceDesc();
 
@@ -49,6 +61,5 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
     List<House> findAllByOrderBySizeDesc();
 
     List<House> findAllByOrderBySizeAsc();
-
 
 }
