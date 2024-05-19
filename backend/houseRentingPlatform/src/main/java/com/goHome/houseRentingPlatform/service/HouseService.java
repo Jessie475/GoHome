@@ -1,5 +1,6 @@
 package com.goHome.houseRentingPlatform.service;
 
+
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 import com.goHome.houseRentingPlatform.model.House;
@@ -64,7 +65,7 @@ public class HouseService {
         return houseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("House not found with id " + id));
     }
-
+    
     public double calculateAndSetHouseRate(House house) {
         List<Article> articles = articleRepository.findByAddressAndType(house.getAddress(), ArticleType.HOUSE_REVIEW);
         if (!articles.isEmpty()) {
@@ -82,5 +83,10 @@ public class HouseService {
             }
         }
         return 0;
+    }
+
+    public List<Article> findRelateArticle(Integer id) {
+        House house = houseRepository.getHouseById(id);
+        return articleRepository.findByAddress(house.getAddress());
     }
 }
