@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.goHome.houseRentingPlatform.model.A_Comment;
-import com.goHome.houseRentingPlatform.repository.CommentRepository;
+import com.goHome.houseRentingPlatform.repository.A_CommentRepository;
 
 @Service
-public class CommentService {
+public class A_CommentService {
 
     @Autowired
-    private CommentRepository commentRepository;
+    private A_CommentRepository commentRepository;
 
     public A_Comment addComment(A_Comment comment) {
         return commentRepository.save(comment);
