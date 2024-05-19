@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.goHome.houseRentingPlatform.model.Comment;
+import com.goHome.houseRentingPlatform.model.A_Comment;
 import com.goHome.houseRentingPlatform.service.CommentService;
 
     @RestController
-    @RequestMapping("/comments")
-    public class CommentController {
+    @RequestMapping("/A_comments")
+    public class A_CommentController {
 
         @Autowired
         private CommentService commentService;
 
         @PostMapping("/addComment")
-        public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
-            Comment savedComment = commentService.addComment(comment);
+        public ResponseEntity<A_Comment> createComment(@RequestBody A_Comment comment) {
+            A_Comment savedComment = commentService.addComment(comment);
             return ResponseEntity.ok(savedComment);
         }
 
@@ -35,8 +35,8 @@ import com.goHome.houseRentingPlatform.service.CommentService;
         }
 
         @GetMapping("/article/{articleId}")
-        public ResponseEntity<List<Comment>> getCommentsByArticleId(@PathVariable Long articleId) {
-            List<Comment> comments = commentService.getCommentsByArticleId(articleId);
+        public ResponseEntity<List<A_Comment>> getCommentsByArticleId(@PathVariable Long articleId) {
+            List<A_Comment> comments = commentService.getCommentsByArticleId(articleId);
             return ResponseEntity.ok(comments);
         }
     }

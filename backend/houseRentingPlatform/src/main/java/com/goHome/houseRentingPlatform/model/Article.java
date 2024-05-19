@@ -45,7 +45,7 @@ public class Article {
     private Date createdAt; 
 
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Comment> comments;
+    private Set<A_Comment> comments;
 
     // Constructors, Getters and Setters
     public Article() {}
@@ -115,11 +115,11 @@ public class Article {
         this.createdAt = createdAt;
     }
 
-    public Set<Comment> getComments() {
+    public Set<A_Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(Set<A_Comment> comments) {
         this.comments = comments;
     }
 
