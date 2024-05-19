@@ -19,6 +19,7 @@ import java.util.List;
 public class HouseController {
     @Autowired
     private HouseRepository houseRepository;
+    @Autowired
     private HouseService houseService;
 
     public HouseController(HouseService houseService, HouseRepository houseRepository) {
@@ -46,6 +47,7 @@ public class HouseController {
         //House house = houseService.getHouseById(id);
         double averageRate = houseService.calculateAndSetHouseRate(house);
         house.setRate(averageRate);
+        houseRepository.save(house);
         return ResponseEntity.ok(house);
     }
     
@@ -159,16 +161,16 @@ public class HouseController {
         }
     }
     @PostMapping("/addHouse")//新增房屋資訊 一直失敗
-    public House saveHouse(@RequestBody House house) {
-        if (house == null) {
-            // 如果 house 对象为空，可以选择抛出异常或者返回 null
-            throw new IllegalArgumentException("House object cannot be null");
-        }
-        return houseRepository.save(house);
+    public ResponseEntity<House> saveHouse(@RequestBody House house) {
+        // if (house == null) {
+        //     // 如果 house 对象为空，可以选择抛出异常或者返回 null
+        //     throw new IllegalArgumentException("House object cannot be null");
+        // }
+        return ResponseEntity.ok(houseService.saveHouse(house));
     }
     
 
-    @PutMapping("/update/{id}")//更新房屋資訊 一直失敗
+    @PutMapping("/Update/{id}")//更新房屋資訊 一直失敗
     public ResponseEntity<House> updateHouse(@PathVariable("id") Integer id, @RequestBody House housedetail) {
         return ResponseEntity.ok(houseService.updateHouse(id, housedetail));
     }
