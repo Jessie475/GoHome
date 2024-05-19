@@ -23,7 +23,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findByAddressAndType(String address, ArticleType tag);
     
-
+    Article getArticleById(Long id);
 
 
 

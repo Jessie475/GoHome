@@ -1,18 +1,26 @@
 package com.goHome.houseRentingPlatform.model;
 
+import java.time.LocalDate;
+import java.util.Date;
+
+import com.goHome.houseRentingPlatform.model.Article.ArticleType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 //import jakarta.persistence.JoinColumn;
 //import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "house")
 public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
     @Column(name = "contactInfo", nullable = false, length = 255)
@@ -33,8 +41,9 @@ public class House {
     @Column(name = "rate", nullable = true)
     private Double rate;
 
-    @Column(name = "roomType", nullable = false, length = 255)
-    private String roomType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "roomType", nullable = false)
+    private RoomType roomType;
 
     @Column(name = "price", nullable = false)
     private Integer price;
@@ -43,30 +52,28 @@ public class House {
     private String restriction;
 
     @Column(name = "size", nullable = false)
-    private Integer size;
+    private Double size;
 
     @Column(name = "subsidy", nullable = false)
     private Boolean subsidy;
 
-    @Column(name = "startdate", nullable = false, length = 255)
-    private String startdate;
+    @Column(name = "startdate", nullable = false)
+    private LocalDate startdate;
 
     @Column(name = "lease", nullable = false)
-    private Integer lease;
+    private Double lease;
 
     @Column(name = "description", nullable = false, length = 255)
     private String description;
-
 
     //@ManyToOne
     //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     //private User user;
 
-    public House() {
-    }
+    public House(){}
 
     public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
-    String roomType, Integer price, String restriction, Integer size, Boolean subsidy, String startdate, Integer lease, String description) {
+    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, LocalDate startdate, Double lease,String description) {
         this.id = id;
         this.contactInfo = contactinfo;
         this.address = address;
@@ -82,7 +89,6 @@ public class House {
         this.startdate = startdate;
         this.lease = lease;
         this.description = description;
-
     }
 
     public Integer getId() {
@@ -132,74 +138,78 @@ public class House {
     public void setLng(Double lng) {
         this.lng = lng;
     }
-    public Double getrate() {
+    public Double getRate() {
 	    return rate;
 	  }
 
-  public void setrate(Double rate) {
-    this.rate = rate;
-  }
+    public void setRate(Double rate) {
+      this.rate = rate;
+    }
+    
+    public RoomType getroomType() {
+        return roomType;
+      }
+
+    public void setroomType(RoomType roomType) {
+        this.roomType = roomType;
+      }
+    
+    public Integer getprice() {
+        return price;
+      }
+
+    public void setprice(Integer price) {
+        this.price = price;
+      } 
+    
+    public String getrestriction() {
+        return restriction;
+      }
+
+    public void setrestriction(String restriction) {
+        this.restriction = restriction;
+      }
+    
+    public Double getsize() {
+        return size;
+      }
+
+    public void setsize(Double size) {
+        this.size = size;
+      } 
+    public boolean getsubsidy() {
+        return subsidy;
+      }
+
+    public void setsubsidy(Boolean subsidy) {
+        this.subsidy = subsidy;
+      } 
+    
+    public LocalDate getstartdate() {
+        return startdate;
+      }
+
+    public void setstartdate(LocalDate startdate) {
+        this.startdate = startdate;
+      }
   
-  public String getroomType() {
-	    return roomType;
-	  }
+    public Double getlease() {
+        return lease;
+      }
 
-  public void setroomType(String roomType) {
-	    this.roomType = roomType;
-	  }
-  
-  public Integer getprice() {
-	    return price;
-	  }
+    public void setlease(Double lease) {
+        this.lease = lease;
+      } 
 
-  public void setprice(Integer price) {
-	    this.price = price;
-	  } 
-  
-  public String getrestriction() {
-	    return restriction;
-	  }
+    public String getdescription() {
+        return description;
+      }
 
-  public void setrestriction(String restriction) {
-	    this.restriction = restriction;
-	  }
-  
-  public Integer getsize() {
-	    return size;
-	  }
+    public void setdescription(String description) {
+        this.description = description;
+      } 
 
-  public void setsize(Integer size) {
-	    this.size = size;
-	  } 
-  public boolean getsubsidy() {
-	    return subsidy;
-	  }
-
-  public void setsubsidy(Boolean subsidy) {
-	    this.subsidy = subsidy;
-	  } 
-  
-  public String getstartdate() {
-	    return startdate;
-	  }
-
-  public void setstartdate(String startdate) {
-	    this.startdate = startdate;
-	  }
- 
-  public Integer getlease() {
-	    return lease;
-	  }
-
-  public void setlease(Integer lease) {
-	    this.lease = lease;
-	  } 
-
-  public String getdescription() {
-	    return description;
-	  }
-
-  public void setdescription(String description) {
-	    this.description = description;
-	  } 
+    public enum RoomType {
+        STUDIO, ROOM
+    }
 }

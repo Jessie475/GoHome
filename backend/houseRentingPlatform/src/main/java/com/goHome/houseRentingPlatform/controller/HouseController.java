@@ -1,10 +1,15 @@
 package com.goHome.houseRentingPlatform.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.House;
+import com.goHome.houseRentingPlatform.model.House.RoomType;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -16,9 +21,15 @@ public class HouseController {
     private HouseRepository houseRepository;
     private HouseService houseService;
 
-    @GetMapping("/getAllHouses")//只會出現房屋的部分資訊
+    public HouseController(HouseService houseService, HouseRepository houseRepository) {
+        this.houseRepository = houseRepository;
+        this.houseService = houseService;
+    }
+
+    @GetMapping("/getAllHouses")//出現房屋資訊OK
     public List<House> getAllHouses(){
-        return houseService.getAllHouses();
+        //List<House> houses = houseService.getAllHouses();
+        return houseRepository.findAll();
     }
 
     @GetMapping("/")
@@ -26,62 +37,90 @@ public class HouseController {
         return houseService.getHousesWithBlankLatLng();
     }
 
-    @GetMapping("/{id}")//顯示房屋的所有資訊
-    public House getHouseById(@PathVariable("id") Integer id){
-        House house = houseService.getHouseById(id);
-        houseService.calculateAndSetHouseRate(house);
-        return houseService.getHouseById(id);
+    @GetMapping("/getHouse/{id}")//顯示單一房屋資訊 OK
+    public ResponseEntity<House> getHouseById(@PathVariable Integer id){
+        House house = houseService.getAllHouses().stream()
+                .filter(a -> a.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("House not found!"));
+        //House house = houseService.getHouseById(id);
+        double averageRate = houseService.calculateAndSetHouseRate(house);
+        house.setRate(averageRate);
+        return ResponseEntity.ok(house);
+    }
+    
+
+    @GetMapping("/search")//以地址模糊篩選OK
+    public ResponseEntity<Object> searchHousesByPartialAddress(@RequestParam String partialAddress) {
+        List<House> houses = houseRepository.findByAddressContaining(partialAddress);
+        if (houses.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("House not found!");
+        }
+        return ResponseEntity.ok(houses);
     }
 
-    @GetMapping("/search")//以地址模糊篩選
-    public List<House> searchHousesByPartialAddress(@RequestParam String partialAddress) {
-        return houseRepository.findByAddressContaining(partialAddress);
-    }
-
-    @GetMapping("/filterbyPrice")//以價錢區間篩選
-    public List<House> filterPrice(
+    @GetMapping("/filterbyPrice")//以價錢區間篩選OK
+    public ResponseEntity<List<House>> filterPrice(
             @RequestParam(value = "minPrice", required = false) Integer minPrice,
             @RequestParam(value = "maxPrice", required = false) Integer maxPrice) {
+        List<House> houses;
         if (minPrice != null && maxPrice != null) {
-            return houseRepository.findByPriceBetween(minPrice, maxPrice);
+            houses = houseRepository.findByPriceBetween(minPrice, maxPrice);
+        } else if (minPrice != null) {
+            houses = houseRepository.findByPriceGreaterThanEqual(minPrice);
+        } else if (maxPrice != null) {
+            houses = houseRepository.findByPriceLessThanEqual(maxPrice);
         } else {
-            return houseRepository.findAll();
+            houses = houseRepository.findAll();
         }
+        return ResponseEntity.ok(houses);
     }
 
-    @GetMapping("/filterbyRate")//以分數區間篩選
-    public List<House> filterRate(
-            @RequestParam(value = "minRate", required = false) Integer minRate,
-            @RequestParam(value = "maxRate", required = false) Integer maxRate) {
+    @GetMapping("/filterbyRate")//以分數區間篩選OK
+    public ResponseEntity<List<House>> filterRate(
+            @RequestParam(value = "minRate", required = false) Double minRate,
+            @RequestParam(value = "maxRate", required = false) Double maxRate) {
+        List<House> houses;
         if (minRate != null && maxRate != null) {
-            return houseRepository.findByRateBetween(minRate, maxRate);
+            houses = houseRepository.findByRateBetween(minRate, maxRate);
+        } else if (minRate != null) {
+            houses = houseRepository.findByRateGreaterThanEqual(minRate);
+        } else if (maxRate != null) {
+            houses = houseRepository.findByRateLessThanEqual(maxRate);
         } else {
-            return houseRepository.findAll();
+            houses = houseRepository.findAll();
         }
+        return ResponseEntity.ok(houses);
     }
 
-    @GetMapping("/filterbySize")//以大小區間篩選
-    public List<House> filterSize(
-            @RequestParam(value = "minSize", required = false) Integer minSize,
-            @RequestParam(value = "maxSize", required = false) Integer maxSize) {
+    @GetMapping("/filterbySize")//以大小區間篩選OK
+    public ResponseEntity<List<House>> filterSize(
+            @RequestParam(value = "minSize", required = false) Double minSize,
+            @RequestParam(value = "maxSize", required = false) Double maxSize) {
+        List<House> houses;
         if (minSize != null && maxSize != null) {
-            return houseRepository.findBySizeBetween(minSize, maxSize);
+            houses = houseRepository.findBySizeBetween(minSize, maxSize);
+        } else if (minSize != null) {
+            houses = houseRepository.findBySizeGreaterThanEqual(minSize);
+        } else if (maxSize != null) {
+            houses = houseRepository.findBySizeLessThanEqual(maxSize);
         } else {
-            return houseRepository.findAll();
+            houses = houseRepository.findAll();
         }
+        return ResponseEntity.ok(houses);
     }
 
-    @GetMapping("/filterbyRoomtype")//以房型篩選
-    public List<House> getHousesByRoomtype(@RequestParam String roomtype) {
+    @GetMapping("/filterbyRoomtype")//以房型篩選)OK
+    public List<House> getHousesByRoomtype(@RequestParam RoomType roomtype) {
         return houseRepository.findByRoomType(roomtype);
     }
 
-    @GetMapping("/filterbySubsidy")//以租屋補助篩選
+    @GetMapping("/filterbySubsidy")//以租屋補助篩選OK
     public List<House> getHousesBySubsidy(@RequestParam Boolean subsidy) {
         return houseRepository.findBySubsidy(subsidy);
     }
 
-    @GetMapping("/sortbyPrice")//以房價高低排列
+    @GetMapping("/sortbyPrice")//以房價高低排列OK
     public List<House> sortPrice(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection) {
         if (sortDirection != null && sortDirection.matches("^(asc|desc)$")) {
             if (sortDirection.equals("asc")) {
@@ -94,7 +133,7 @@ public class HouseController {
         }
     }
 
-    @GetMapping("/sortbyRate")//以評分高低排列
+    @GetMapping("/sortbyRate")//以評分高低排列OK
     public List<House> sortRate(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection) {
         if (sortDirection != null && sortDirection.matches("^(asc|desc)$")) {
             if (sortDirection.equals("asc")) {
@@ -107,7 +146,7 @@ public class HouseController {
         }
     }
     
-    @GetMapping("/sortbySize")//以房屋大小排列
+    @GetMapping("/sortbySize")//以房屋大小排列OK
     public List<House> sortSize(@RequestParam(name = "sortDirection", defaultValue = "desc") String sortDirection) {
         if (sortDirection != null && sortDirection.matches("^(asc|desc)$")) {
             if (sortDirection.equals("asc")) {
@@ -119,22 +158,31 @@ public class HouseController {
             return houseService.getAllHouses();
         }
     }
-    @PostMapping("/addHouse")
-    public String add(@RequestBody House house){
-        houseService.createHouse(house);
-        return "New house is added";
+    @PostMapping("/addHouse")//新增房屋資訊 一直失敗
+    public House saveHouse(@RequestBody House house) {
+        if (house == null) {
+            // 如果 house 对象为空，可以选择抛出异常或者返回 null
+            throw new IllegalArgumentException("House object cannot be null");
+        }
+        return houseRepository.save(house);
+    }
+    
+
+    @PutMapping("/update/{id}")//更新房屋資訊 一直失敗
+    public ResponseEntity<House> updateHouse(@PathVariable("id") Integer id, @RequestBody House housedetail) {
+        return ResponseEntity.ok(houseService.updateHouse(id, housedetail));
     }
 
-    @PutMapping("/update{id}")
-    public House updateHouse(@PathVariable("id") Integer id, @RequestBody House housedetail) {
-        return houseService.updateHouse(id, housedetail);
+    @DeleteMapping("/delete/{id}")//刪除房屋資訊 OK
+    public ResponseEntity<String> deleteHouse(@PathVariable("id") Integer id) {
+        if (houseService.existsById(id)) {
+            houseService.deleteHouse(id);
+            return ResponseEntity.ok("House deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("House not found");
+        }
     }
-
-    @DeleteMapping("/delete{id}")
-    public void deleteProduct(@PathVariable("id") Integer id) {
-        houseService.deleteHouse(id);
-    }
-
+    
     
     
 }
