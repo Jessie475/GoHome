@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 @Table(name = "house")
 public class House {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 使用数据库自增字段
     private Integer id;
 
     @Column(name = "contactInfo", nullable = false, length = 255)
@@ -72,9 +72,8 @@ public class House {
 
     public House(){}
 
-    public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
+    public House(String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
     RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, LocalDate startdate, Double lease,String description) {
-        this.id = id;
         this.contactInfo = contactinfo;
         this.address = address;
         this.name = name;

@@ -84,4 +84,9 @@ public class HouseService {
         }
         return 0;
     }
+
+    public List<Article> findRelateArticle(Integer id) {
+        House house = houseRepository.getHouseById(id);
+        return articleRepository.findByAddress(house.getAddress());
+    }
 }

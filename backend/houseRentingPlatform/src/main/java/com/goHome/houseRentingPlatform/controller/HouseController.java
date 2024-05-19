@@ -51,6 +51,11 @@ public class HouseController {
         return ResponseEntity.ok(house);
     }
     
+    @GetMapping("/getHouseArticle/{id}")//顯示單一房屋相關文章
+    public List<Article> findRelateArticle(@PathVariable Integer id){
+        List<Article> articles = houseService.findRelateArticle(id);
+        return articles;
+    }
 
     @GetMapping("/search")//以地址模糊篩選OK
     public ResponseEntity<Object> searchHousesByPartialAddress(@RequestParam String partialAddress) {
@@ -160,17 +165,17 @@ public class HouseController {
             return houseService.getAllHouses();
         }
     }
-    @PostMapping("/addHouse")//新增房屋資訊 一直失敗
+    @PostMapping("/addHouse")//新增房屋資訊 OK
     public ResponseEntity<House> saveHouse(@RequestBody House house) {
-        // if (house == null) {
-        //     // 如果 house 对象为空，可以选择抛出异常或者返回 null
-        //     throw new IllegalArgumentException("House object cannot be null");
-        // }
+        if (house == null) {
+            // 如果 house 对象为空，可以选择抛出异常或者返回 null
+            throw new IllegalArgumentException("House object cannot be null");
+        }
         return ResponseEntity.ok(houseService.saveHouse(house));
     }
     
 
-    @PutMapping("/Update/{id}")//更新房屋資訊 一直失敗
+    @PutMapping("/Update/{id}")//更新房屋資訊 ok
     public ResponseEntity<House> updateHouse(@PathVariable("id") Integer id, @RequestBody House housedetail) {
         return ResponseEntity.ok(houseService.updateHouse(id, housedetail));
     }
