@@ -69,7 +69,7 @@ public class ArticleService {
 
     //search
     public List<Article> searchArticlesByAddress(String address) {
-        return articleRepository.findByAddressContaining(address);
+        return articleRepository.findByAddressContainingIgnoreCase(address);
     }
 
 
