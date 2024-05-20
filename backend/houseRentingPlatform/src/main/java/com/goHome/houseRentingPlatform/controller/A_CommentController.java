@@ -12,31 +12,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.goHome.houseRentingPlatform.model.Comment;
-import com.goHome.houseRentingPlatform.service.CommentService;
+import com.goHome.houseRentingPlatform.model.A_Comment;
+import com.goHome.houseRentingPlatform.service.A_CommentService;
 
     @RestController
-    @RequestMapping("/comments")
-    public class CommentController {
+    @RequestMapping("/A_comments")
+    public class A_CommentController {
 
         @Autowired
-        private CommentService commentService;
+        private A_CommentService ACommentService;
 
         @PostMapping("/addComment")
-        public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
-            Comment savedComment = commentService.addComment(comment);
+        public ResponseEntity<A_Comment> createComment(@RequestBody A_Comment comment) {
+            A_Comment savedComment = ACommentService.addComment(comment);
             return ResponseEntity.ok(savedComment);
         }
 
         @DeleteMapping("/{id}")
         public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
-            commentService.deleteComment(id);
+            ACommentService.deleteComment(id);
             return ResponseEntity.ok().build();
         }
 
         @GetMapping("/article/{articleId}")
-        public ResponseEntity<List<Comment>> getCommentsByArticleId(@PathVariable Long articleId) {
-            List<Comment> comments = commentService.getCommentsByArticleId(articleId);
+        public ResponseEntity<List<A_Comment>> getCommentsByArticleId(@PathVariable Long articleId) {
+            List<A_Comment> comments = ACommentService.getCommentsByArticleId(articleId);
             return ResponseEntity.ok(comments);
         }
     }

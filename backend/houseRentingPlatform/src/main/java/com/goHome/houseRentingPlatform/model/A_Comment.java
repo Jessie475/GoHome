@@ -14,8 +14,8 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "comment")
-public class Comment {
+@Table(name = "A_Comment")
+public class A_Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,7 +34,7 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date commentTime;
 
-public Comment(Long id, Article article, User userId, String content) {
+public A_Comment(Long id, Article article, User userId, String content) {
     this.id = id;
     this.article = article;
     this.userId = userId;
