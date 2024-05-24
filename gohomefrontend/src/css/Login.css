@@ -1,0 +1,83 @@
+/* Login.css */
+/* .container: 登入頁面的主要容器設置 */
+.container {
+  width: 100%; /* 容器寬度設為100% */
+  max-width: 400px; /* 最大寬度限制為400px */
+  margin-top: 100px; /* 上邊距設為100px */
+  margin-left: 290px; /* 左邊距設為290px */
+  padding: 20px; /* 內邊距為20px */
+  height: 80vh; /* 高度設為視窗高度的80% */
+}
+
+/* .card: 登入表單的卡片樣式 */
+.card {
+  border: 1px solid #dedede; /* 邊框設為1px灰色 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+  border-radius: 5px; /* 邊框圓角為5px */
+}
+
+/* .card-body: 卡片內容的填充區域 */
+.card-body {
+  padding: 20px; /* 內邊距為20px */
+}
+
+/* .card-title: 卡片標題的樣式設定 */
+.card-title {
+  margin-bottom: 20px; /* 下邊距為20px */
+  text-align: center; /* 文本居中顯示 */
+  font-size: 24px; /* 字體大小為24px */
+}
+
+/* .form-group: 表單群組的間距 */
+.form-group {
+  margin-bottom: 15px; /* 下邊距為15px */
+}
+
+/* .form-group .form-control: 表單控件的寬度和居中設定 */
+.form-group .form-control {
+  width: 98%; /* 控件寬度設為98% */
+  margin: 0 auto; /* 水平居中 */
+}
+
+/* .form-group label: 標籤的顯示和間距設定 */
+.form-group label {
+  display: block; /* 以塊狀元素顯示 */
+  margin-bottom: 5px; /* 下邊距為5px */
+}
+
+/* .form-group input: 輸入框的樣式設定 */
+.form-group input {
+  width: 50%; /* 寬度設為50% */
+  padding: 4px; /* 內邊距為4px */
+  font-size: 16px; /* 字體大小為16px */
+  border: 1px solid #ccc; /* 邊框為灰色 */
+  border-radius: 4px; /* 圓角為4px */
+}
+
+/* .btn-block: 提交按鈕的樣式 */
+.btn-block {
+  clear: both; /* 清除浮動 */
+  width: 50%; /* 寬度設為50% */
+  padding: 10px; /* 內邊距為10px */
+  font-size: 18px; /* 字體大小為18px */
+  cursor: pointer; /* 鼠標指針顯示為點擊狀態 */
+  background-color: black; /* 背景顏色為黑色 */
+  color: white; /* 文字顏色為白色 */
+  border: none; /* 無邊框 */
+  border-radius: 4px; /* 圓角為4px */
+  margin-left: 90px; /* 左邊距為90px */
+}
+
+/* .btn-block:disabled: 禁用狀態的按鈕樣式 */
+.btn-block:disabled {
+  opacity: 0.5; /* 不透明度為0.5 */
+  cursor: not-allowed; /* 鼠標指針顯示為禁止狀態 */
+}
+
+/* .text-danger: 錯誤訊息的樣式 */
+.text-danger {
+  color: #dc3545; /* 文字顏色為深紅色 */
+  font-size: 16px; /* 字體大小為16px */
+  text-align: center; /* 文本居中顯示 */
+  margin-top: 20px; /* 上邊距為20px */
+}
