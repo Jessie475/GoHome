@@ -34,6 +34,8 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date commentTime;
 
+    public Comment() {}
+    
 public Comment(Long id, Article article, User userId, String content) {
     this.id = id;
     this.article = article;

@@ -22,7 +22,8 @@ import jakarta.persistence.TemporalType;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "article_id")  // 這裡修改對應資料庫的欄位名
+    private Long articleId;
 
     @Column(nullable = false)
     private String title;
@@ -51,7 +52,7 @@ public class Article {
     public Article() {}
 
     public Article(Long id,String title, String address, Double rate, String description, ArticleType type) {
-        this.id = id;
+        this.articleId = id;
         this.title = title;
         this.address = address;
         this.rate = rate;
@@ -60,11 +61,11 @@ public class Article {
     }
 
     public Long getId() {
-        return id;
+        return articleId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.articleId = id;
     }
 
     public String getTitle() {
