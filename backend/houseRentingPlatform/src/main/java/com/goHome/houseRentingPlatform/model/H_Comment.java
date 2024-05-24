@@ -14,15 +14,15 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "comment")
-public class Comment {
+@Table(name = "H_Comment")
+public class H_Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_id", nullable = false)
-    private Article article;
+    @JoinColumn(name = "house_id", nullable = false)
+    private House house;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -34,36 +34,34 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date commentTime;
 
-    public Comment() {}
-    
-public Comment(Long id, Article article, User userId, String content) {
-    this.id = id;
-    this.article = article;
-    this.userId = userId;
-    this.content = content;
-}
-public User getUserId() {
-    return userId;
-}
+    public H_Comment(Long id, House house, User userId, String content) {
+        this.id = id;
+        this.house = house;
+        this.userId = userId;
+        this.content = content;
+    }
+    public User getUserId() {
+        return userId;
+    }
 
-public void setUserId(User userId) {
-    this.userId = userId;
-}
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
 
-public String getContent() {
-    return content;
-}
+    public String getContent() {
+        return content;
+    }
 
-public void setContent(String content) {
-    this.content = content;
-}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-public Date getCommentTime() {
-    return commentTime;
-}
+    public Date getCommentTime() {
+        return commentTime;
+    }
 
-public void setCommentTime(Date commentTime) {
-    this.commentTime = commentTime;
-}
+    public void setCommentTime(Date commentTime) {
+        this.commentTime = commentTime;
+    }
 }
 

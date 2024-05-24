@@ -2,25 +2,20 @@ package com.goHome.houseRentingPlatform.model;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 //import jakarta.persistence.JoinColumn;
 //import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "house")
 public class House {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 使用数据库自增字段
     private Integer id;
 
     @Column(name = "contactInfo", nullable = false, length = 255)
@@ -69,12 +64,12 @@ public class House {
     //@ManyToOne
     //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     //private User user;
-
+    @OneToMany(mappedBy = "house", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<H_Comment> comments;
     public House(){}
 
-    public House(Integer id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
+    public House(String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
     RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, LocalDate startdate, Double lease,String description) {
-        this.id = id;
         this.contactInfo = contactinfo;
         this.address = address;
         this.name = name;
@@ -207,7 +202,14 @@ public class House {
 
     public void setdescription(String description) {
         this.description = description;
-      } 
+      }
+    public Set<H_Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<H_Comment> comments) {
+        this.comments = comments;
+    }
 
     public enum RoomType {
         STUDIO, ROOM
