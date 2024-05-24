@@ -15,18 +15,19 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "A_Comment")
+
 public class A_Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "article_id", nullable = false)
     private Article article;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
-    private User userId;
+    private User user;
 
     @Column(name = "content", nullable = false, length = 500)
     private String content;
@@ -39,15 +40,15 @@ public class A_Comment {
 public A_Comment(Long id, Article article, User userId, String content) {
     this.id = id;
     this.article = article;
-    this.userId = userId;
+    this.user = userId;
     this.content = content;
 }
 public User getUserId() {
-    return userId;
+    return user;
 }
 
 public void setUserId(User userId) {
-    this.userId = userId;
+    this.user = userId;
 }
 
 public String getContent() {
@@ -65,5 +66,12 @@ public Date getCommentTime() {
 public void setCommentTime(Date commentTime) {
     this.commentTime = commentTime;
 }
+
+public void setUser(User user) {
+    this.user = user;
 }
 
+public Article getArticle() {
+    return article;
+}
+}

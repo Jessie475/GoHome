@@ -22,7 +22,7 @@ import jakarta.persistence.TemporalType;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "article_id")  // 這裡修改對應資料庫的欄位名
+    @Column(name = "article_id") 
     private Long articleId;
 
     @Column(nullable = false)
