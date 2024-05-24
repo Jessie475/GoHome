@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
+import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.repository.ArticleRepository;
+import com.goHome.houseRentingPlatform.repository.HouseRepository;
+import com.goHome.houseRentingPlatform.repository.UserRepository;
 
 @Service
 public class ArticleService {
@@ -18,7 +21,23 @@ public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
-    public Article saveArticle(Article article) {
+    @Autowired
+    private HouseRepository houseRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public Article saveArticle(Article article, Integer userId) {
+        if (article.getType() == ArticleType.HOUSE_REVIEW) {
+            List<House> houses = houseRepository.findByAddressContaining(article.getAddress());
+            if (houses.isEmpty()) {
+                throw new RuntimeException("House not found with address: " + article.getAddress());
+            }
+            House house = houses.get(0);
+            if (house.getcontactInfo().equals(userRepository.findById(userId).get().getEmail())) {
+                throw new RuntimeException("User cannot review their own rented house.");
+            }
+        }
         return articleRepository.save(article);
     }
 
@@ -72,6 +91,8 @@ public class ArticleService {
         return articleRepository.findByAddressContainingIgnoreCase(address);
     }
 
-
+    public Page<Article> getArticlesSortedByFavoriteCount(int page, int size) {
+        return articleRepository.findAllByFavoriteCountDesc(PageRequest.of(page, size));
+    }
 
 }

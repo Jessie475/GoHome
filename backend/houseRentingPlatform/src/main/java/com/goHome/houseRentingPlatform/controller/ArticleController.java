@@ -33,8 +33,8 @@ public class ArticleController {
 
     //新增文章
     @PostMapping("/addArticle")
-    public String createArticle(@RequestBody Article article) {
-        articleService.saveArticle(article);
+    public String createArticle(@RequestBody Article article,@RequestParam Integer userId) {
+        articleService.saveArticle(article,userId);
         return  "New house is added";
     }
 
@@ -98,6 +98,14 @@ public class ArticleController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Page<Article> articles = articleService.getArticlesSortedByCommentCount(page, size);
+        return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("/sortByFavorite")
+    public ResponseEntity<Page<Article>> getArticlesSortedByFavoriteCount(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Article> articles = articleService.getArticlesSortedByFavoriteCount(page, size);
         return ResponseEntity.ok(articles);
     }
 
