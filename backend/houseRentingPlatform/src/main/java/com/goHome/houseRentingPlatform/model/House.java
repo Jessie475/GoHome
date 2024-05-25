@@ -15,8 +15,9 @@ import jakarta.persistence.*;
 @Table(name = "house")
 public class House {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 使用数据库自增字段
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "house_id")
+    private Integer house_Id;
 
     @Column(name = "contactInfo", nullable = false, length = 255)
     private String contactInfo;
@@ -68,8 +69,9 @@ public class House {
     private Set<H_Comment> comments;
     public House(){}
 
-    public House(String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
-    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, LocalDate startdate, Double lease,String description) {
+    public House(Integer house_id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
+    RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, LocalDate startdate, Double lease,String description ) {
+        this.house_Id = house_id;
         this.contactInfo = contactinfo;
         this.address = address;
         this.name = name;
@@ -87,11 +89,11 @@ public class House {
     }
 
     public Integer getId() {
-        return id;
+        return house_Id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.house_Id = id;
     }
 
     public String getcontactInfo() {

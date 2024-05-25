@@ -40,6 +40,10 @@ public class H_Comment {
         this.userId = userId;
         this.content = content;
     }
+    public H_Comment(){
+        
+    }
+
     public User getUserId() {
         return userId;
     }

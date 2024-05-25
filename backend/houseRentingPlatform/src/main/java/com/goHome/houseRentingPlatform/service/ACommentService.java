@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.goHome.houseRentingPlatform.model.A_Comment;
 import com.goHome.houseRentingPlatform.model.User;
-import com.goHome.houseRentingPlatform.repository.ACommentRepository;
+import com.goHome.houseRentingPlatform.repository.A_CommentRepository;
 
 @Service
 public class ACommentService {
 
     @Autowired
-    private ACommentRepository commentRepository;
+    private A_CommentRepository commentRepository;
 
    // public A_Comment addComment(A_Comment comment) {
       //  return commentRepository.save(comment);

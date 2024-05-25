@@ -3,20 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import '../css/Login.css'; // Import the CSS file
 
-const login = ({ username, password }) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (username === '1' && password === '1') {  // 帳號密碼
-        console.log(username, password);
-        resolve('success');
-      } else {
-        console.log(username, password);
-        reject('error');
-      }
-     }, 1000); //過1秒返回結果
-  });
-}
+const login = async ({ username, password }) => {
+  try {
+    const response = await fetch('http://localhost:8081/users/login', { // 修改此處為你的後端 API 路徑
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: username, password: password }),
+    });
 
+    if (response.ok) {
+      return 'success';
+    } else {
+      throw new Error('error');
+    }
+  } catch (error) {
+    throw error;
+  }
+}
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

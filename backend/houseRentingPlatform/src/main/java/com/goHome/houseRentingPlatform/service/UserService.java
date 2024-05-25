@@ -11,6 +11,7 @@ import com.goHome.houseRentingPlatform.repository.ArticleRepository;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,7 +36,6 @@ public class UserService{
         return userRepository.save(user);
     }
     public boolean emailExists(String email) {
-        // 假设 userRepository 是您的 JPA 仓库
         User user = userRepository.findByEmail(email);
         return user != null;
     }
@@ -48,7 +48,7 @@ public class UserService{
         Optional<User> userOptional = userRepository.findByName(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            // 检查密码，这里没有加密
+            // 檢查密碼
             if (user.getPassword().equals(password)) {
                 return user;
             }
@@ -61,31 +61,42 @@ public class UserService{
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
     }
     
+    public List<House> getFavoriteHouses(Integer userId) {
+        User user = userRepository.findByUserId(userId).orElse(null);
+        return user != null ? user.getFavoriteHouses() : null;
+    }
+
+    public List<Article> getFavoriteArticles(Integer userId) {
+        User user = userRepository.findByUserId(userId).orElse(null);
+        return user != null ? user.getFavoriteArticles() : null;
+    }
+    
 
     public void addFavHouseToUser(User user, Integer houseId) {
         House house = houseRepository.findById(houseId)
-                .orElseThrow(() -> new RuntimeException("House not found with id " + houseId));        user.addFavHouse(house);
+                .orElseThrow(() -> new RuntimeException("House not found with id " + houseId));        
+        user.addFavoriteHouse(house);
         userRepository.save(user);
     }
 
     public void removeFavHouseFromUser(User user, Integer houseId) {
         House house = houseRepository.findById(houseId)
                 .orElseThrow(() -> new RuntimeException("House not found with id " + houseId));
-        user.removeFavHouse(house);
+        user.removeFavoriteHouse(house);
         userRepository.save(user);
     }
 
     public void addFavArticleToUser(User user, Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new RuntimeException("Article not found with id " + articleId));
-        user.addFavArticle(article);
+        user.addFavoriteArticle(article);
         userRepository.save(user);
     }
 
     public void removeFavArticleFromUser(User user, Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new RuntimeException("Article not found with id " + articleId));
-        user.removeFavArticle(article);
+        user.removeFavoriteArticle(article);
         userRepository.save(user);
     }
 

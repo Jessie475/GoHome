@@ -1,8 +1,12 @@
 package com.goHome.houseRentingPlatform.controller;
+import com.goHome.houseRentingPlatform.model.Article;
+import com.goHome.houseRentingPlatform.model.House;
 //import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
 //import com.goHome.houseRentingPlatform.service.HouseService;
 import com.goHome.houseRentingPlatform.service.UserService;
+
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -26,13 +27,9 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody User user) throws Exception {
         List<String> errors = new ArrayList<>();
-
-        if (user.getIdentity() == null || user.getIdentity().isEmpty()) {
-            errors.add("Identity is required.");
-        }
         if (user.getName() == null || user.getName().isEmpty()) {
             errors.add("Name is required.");
         }
@@ -56,7 +53,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-    
 
     //登入
     @PostMapping("/login")
@@ -78,7 +74,30 @@ public class UserController {
     }
 
 
-    // 添加用户收藏的房屋
+    // get收藏房屋
+    @GetMapping("/{userId}/favhouses")
+    public ResponseEntity<List<House>> getFavoriteHouseIds(@PathVariable Integer userId) {
+        List<House> houses = new ArrayList<>(userService.getFavoriteHouses(userId));
+        if (houses != null && !houses.isEmpty()) {
+            return ResponseEntity.ok(houses);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // get收藏文章
+    @GetMapping("/{userId}/favarticles")
+    public ResponseEntity<List<Article>> getFavoriteArticles(@PathVariable Integer userId) {
+        List<Article> articles = new ArrayList<>(userService.getFavoriteArticles(userId));
+        if (articles != null && !articles.isEmpty()) {
+            return ResponseEntity.ok(articles);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    // add收藏房屋
     @PostMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> addFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
         try {
@@ -90,7 +109,7 @@ public class UserController {
         }
     }
 
-    // 移除用户收藏的房屋
+    // remove收藏房屋
     @DeleteMapping("/{userId}/favorite-houses/{houseId}")
     public ResponseEntity<?> removeFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
         try {
@@ -102,7 +121,7 @@ public class UserController {
         }
     }
 
-    // 添加用户收藏的文章
+    // add收藏文章
     @PostMapping("/{userId}/favorite-articles/{articleId}")
     public ResponseEntity<?> addFavoriteArticle(@PathVariable Integer userId, @PathVariable Long articleId) {
         try {
@@ -114,7 +133,7 @@ public class UserController {
         }
     }
 
-    // 移除用户收藏的文章
+    // remove收藏文章
     @DeleteMapping("/{userId}/favorite-articles/{articleId}")
     public ResponseEntity<?> removeFavoriteArticle(@PathVariable Integer userId, @PathVariable Long articleId) {
         try {
@@ -126,94 +145,3 @@ public class UserController {
         }
     }
 }
-//package com.goHome.houseRentingPlatform.controller;
-//
-//import com.goHome.houseRentingPlatform.model.House;
-//import com.goHome.houseRentingPlatform.model.User;
-//import com.goHome.houseRentingPlatform.service.HouseService;
-//import com.goHome.houseRentingPlatform.service.UserService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//import java.util.Optional;
-//
-//@RestController
-//@RequestMapping("/users")
-//public class UserController {
-//
-//    @Autowired
-//    private UserService userService;
-//
-//    // 注册新用户
-//    @PostMapping("/register")
-//    public ResponseEntity<User> registerUser(@RequestBody User user) {
-//        User registeredUser = userService.registerUser(user);
-//        return ResponseEntity.ok(registeredUser);
-//    }
-//    //登入
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody User user) {
-//        try {
-//            User users = userService.validateUser(user.getName(), user.getPassword());
-//            if (users != null) {
-//                return ResponseEntity.ok(user);
-//            } else {
-//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-//            }
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-//
-//    // 添加用户收藏的房屋
-//    @PostMapping("/{userId}/favorite-houses/{houseId}")
-//    public ResponseEntity<?> addFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
-//        try {
-//            User user = userService.getUserById(userId);
-//            userService.addFavHouseToUser(user, houseId);
-//            return ResponseEntity.ok().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-//
-//    // 移除用户收藏的房屋
-//    @DeleteMapping("/{userId}/favorite-houses/{houseId}")
-//    public ResponseEntity<?> removeFavoriteHouse(@PathVariable Integer userId, @PathVariable Integer houseId) {
-//        try {
-//            User user = userService.getUserById(userId);;
-//            userService.removeFavHouseFromUser(user, houseId);
-//            return ResponseEntity.ok().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-//
-//    // 添加用户收藏的文章
-//    @PostMapping("/{userId}/favorite-articles/{articleId}")
-//    public ResponseEntity<?> addFavoriteArticle(@PathVariable Integer userId, @PathVariable Long articleId) {
-//        try {
-//            User user = userService.getUserById(userId);
-//            userService.addFavArticleToUser(user, articleId);
-//            return ResponseEntity.ok().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-//
-//    // 移除用户收藏的文章
-//    @DeleteMapping("/{userId}/favorite-articles/{articleId}")
-//    public ResponseEntity<?> removeFavoriteArticle(@PathVariable Integer userId, @PathVariable Long articleId) {
-//        try {
-//            User user = userService.getUserById(userId);
-//            userService.removeFavArticleFromUser(user, articleId);
-//            return ResponseEntity.ok().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-//}
-
