@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
+import com.goHome.houseRentingPlatform.model.User;
 import com.goHome.houseRentingPlatform.service.ArticleService;
+import com.goHome.houseRentingPlatform.service.UserService;
 
 @RestController
 @RequestMapping("/articles")
@@ -26,10 +28,13 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private UserService userService;
+
     //新增文章
     @PostMapping("/addArticle")
-    public String createArticle(@RequestBody Article article) {
-        articleService.saveArticle(article);
+    public String createArticle(@RequestBody Article article,@RequestParam Integer userId) {
+        articleService.saveArticle(article,userId);
         return  "New house is added";
     }
 
@@ -46,13 +51,10 @@ public class ArticleController {
         return ResponseEntity.ok().build();
     }
 
-    //點特定文章
     @GetMapping("/getArticle/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
-        Article article = articleService.getAllArticles().stream()
-                .filter(a -> a.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Article not found!"));
+        Article article = articleService.findArticleById(id)
+            .orElseThrow(() -> new RuntimeException("Article not found!"));
         return ResponseEntity.ok(article);
     }
 
@@ -98,5 +100,30 @@ public class ArticleController {
         Page<Article> articles = articleService.getArticlesSortedByCommentCount(page, size);
         return ResponseEntity.ok(articles);
     }
+
+    @GetMapping("/sortByFavorite")
+    public ResponseEntity<Page<Article>> getArticlesSortedByFavoriteCount(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Article> articles = articleService.getArticlesSortedByFavoriteCount(page, size);
+        return ResponseEntity.ok(articles);
+    }
+
+    // 添加收藏功能
+    @PostMapping("/favorite/{articleId}")
+    public ResponseEntity<Void> addFavoriteArticle(@PathVariable Long articleId, @RequestParam Integer userId) {
+        User user = userService.getUserById(userId);
+        userService.addFavArticleToUser(user, articleId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/favorite/{articleId}")
+    public ResponseEntity<Void> removeFavoriteArticle(@PathVariable Long articleId, @RequestParam Integer userId) {
+        User user = userService.getUserById(userId);
+        userService.removeFavArticleFromUser(user, articleId);
+        return ResponseEntity.ok().build();
+    }
+
+
 }
 

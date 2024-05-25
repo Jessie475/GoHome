@@ -1,5 +1,9 @@
 package com.goHome.houseRentingPlatform.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -7,10 +11,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 import java.util.ArrayList;
@@ -27,10 +30,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-    
-    @Enumerated(EnumType.STRING)
+    @Column(name = "user_id")
+    private Integer user_id;
+
     @Column(name = "identity", nullable = false, length = 50)
     private Identity identity;
 
@@ -74,8 +76,8 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, Identity identity, String name, String phone, String nationality, String gender, String email, String password) {
-        this.id = id;
+    public User(Integer id, String identity, String name, String phone, String nationality, String gender, String email, String password) {
+        this.user_id = id;
         this.identity = identity;
         this.name = name;
         this.phone = phone;
@@ -89,11 +91,11 @@ public class User {
         Landlord, Tenant
     }
     public Integer getId() {
-        return id;
+        return user_id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.user_id = id;
     }
 
     public Identity getIdentity() {

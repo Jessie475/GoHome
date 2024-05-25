@@ -1,0 +1,48 @@
+/* SignUp.css */
+
+.signup-container {
+    width: 400px; 
+    margin-left: 290px; 
+    padding: 20px; 
+    border-radius: 10px; /* 邊框圓角 */
+    border: 1px solid #dedede; /* 邊框設為1px灰色 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 陰影 */
+}
+
+.signup-form label {
+    display: block; 
+    margin: 5px 0; 
+}
+
+.text1{
+    width: 95.5%;
+}
+
+/* 輸入欄位 */
+.signup-form input[type="email"],
+.signup-form input[type="password"],
+.signup-form input[type="text"],
+.signup-form select {
+    width: 100%; 
+    padding: 8px; 
+    margin-top: 5px; 
+    border: 1px solid #ccc; /* 邊框為1px，顏色為灰色 */
+    border-radius: 4px; /* 圓角 */
+}
+
+
+.signup-form button {
+    width: 50%; 
+    padding: 10px; 
+    background-color: #0056b3; 
+    color: white; /* 文字顏色 */
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; /* 鼠標懸停時顯示手手形狀 */
+    margin-top: 20px; 
+}
+
+
+.signup-form button:hover {
+    background-color: #004494; /* 滑鼠懸停時的背景顏色 */
+}
