@@ -91,8 +91,8 @@ public class ArticleService {
         return articleRepository.findByAddressContainingIgnoreCase(address);
     }
 
-    public Page<Article> getArticlesSortedByFavoriteCount(int page, int size) {
-        return articleRepository.findAllByFavoriteCountDesc(PageRequest.of(page, size));
-    }
+  //  public Page<Article> getArticlesSortedByFavoriteCount(int page, int size) {
+      //  return articleRepository.findAllByFavoriteCountDesc(PageRequest.of(page, size));
+  //  }
 
 }

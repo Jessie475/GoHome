@@ -28,8 +28,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     
     Article getArticleById(Long id);
 
-    @Query("SELECT a FROM Article a LEFT JOIN a.favoriteUsers u GROUP BY a ORDER BY COUNT(u) DESC")
-    Page<Article> findAllByFavoriteCountDesc(Pageable pageable);
+    //@Query("SELECT a FROM Article a LEFT JOIN a.favoriteUsers u GROUP BY a ORDER BY COUNT(u) DESC")
+    //Page<Article> findAllByFavoriteCountDesc(Pageable pageable);
 
     @Query("SELECT a FROM Article a LEFT JOIN a.comments c GROUP BY a ORDER BY COUNT(c) DESC")
     Page<Article> findAllByCommentCountDesc(Pageable pageable);

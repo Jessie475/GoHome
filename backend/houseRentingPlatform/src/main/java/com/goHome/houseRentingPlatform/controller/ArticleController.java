@@ -101,13 +101,13 @@ public class ArticleController {
         return ResponseEntity.ok(articles);
     }
 
-    @GetMapping("/sortByFavorite")
-    public ResponseEntity<Page<Article>> getArticlesSortedByFavoriteCount(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Page<Article> articles = articleService.getArticlesSortedByFavoriteCount(page, size);
-        return ResponseEntity.ok(articles);
-    }
+   // @GetMapping("/sortByFavorite")
+  //  public ResponseEntity<Page<Article>> getArticlesSortedByFavoriteCount(
+     //       @RequestParam(defaultValue = "0") int page,
+      //      @RequestParam(defaultValue = "10") int size) {
+    //    Page<Article> articles = articleService.getArticlesSortedByFavoriteCount(page, size);
+     //   return ResponseEntity.ok(articles);
+   //}
 
     // 添加收藏功能
     @PostMapping("/favorite/{articleId}")
