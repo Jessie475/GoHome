@@ -20,9 +20,10 @@ import jakarta.persistence.TemporalType;
 @Entity
 @Table(name = "article")
 public class Article {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "article_id") 
+    @Column(name = "article_id")
     private Long articleId;
 
     @Column(nullable = false)

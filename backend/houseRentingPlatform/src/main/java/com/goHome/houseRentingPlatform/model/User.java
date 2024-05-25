@@ -1,7 +1,6 @@
 package com.goHome.houseRentingPlatform.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,23 +15,18 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "users") // Ensure the table name is according to database naming standards
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer user_id;
+    private Integer userId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "identity", nullable = false, length = 50)
     private Identity identity;
 
@@ -57,27 +51,25 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_favorite_house",
-        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "house_id", referencedColumnName = "house_id")
     )
     private List<House> favoriteHouses;
 
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_favorite_article",
-        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "article_id", referencedColumnName = "article_id")
     )
     private List<Article> favoriteArticles;
-    
 
     // Constructors, getters, and setters
     public User() {
     }
 
-    public User(Integer id, String identity, String name, String phone, String nationality, String gender, String email, String password) {
-        this.user_id = id;
+    public User(Integer userId, Identity identity, String name, String phone, String nationality, String gender, String email, String password) {
+        this.userId = userId;
         this.identity = identity;
         this.name = name;
         this.phone = phone;
@@ -90,12 +82,13 @@ public class User {
     public enum Identity {
         Landlord, Tenant
     }
-    public Integer getId() {
-        return user_id;
+
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.user_id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Identity getIdentity() {
@@ -138,7 +131,6 @@ public class User {
         this.gender = gender;
     }
 
-
     public String getPassword() {
         return password;
     }
@@ -153,43 +145,37 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }    
- 
+    }
 
-    //新增、修改、get、set Favorite article和house
-
-    public List<House> getFavHouses() {
+    public List<House> getFavoriteHouses() {
         return favoriteHouses;
     }
 
-    public void setFavHouses(List<House> favoriteHouses) {
+    public void setFavoriteHouses(List<House> favoriteHouses) {
         this.favoriteHouses = favoriteHouses;
     }
 
-    public List<Article> getFavArticles() {
+    public List<Article> getFavoriteArticles() {
         return favoriteArticles;
     }
 
-    public void setFavArticles(List<Article> favoriteArticles) {
+    public void setFavoriteArticles(List<Article> favoriteArticles) {
         this.favoriteArticles = favoriteArticles;
     }
 
-    public void addFavHouse(House house) {
+    public void addFavoriteHouse(House house) {
         this.favoriteHouses.add(house);
     }
 
-    public void removeFavHouse(House house) {
+    public void removeFavoriteHouse(House house) {
         this.favoriteHouses.remove(house);
     }
 
-    public void addFavArticle(Article article) {
+    public void addFavoriteArticle(Article article) {
         this.favoriteArticles.add(article);
     }
 
-    public void removeFavArticle(Article article) {
+    public void removeFavoriteArticle(Article article) {
         this.favoriteArticles.remove(article);
     }
-
- 
-
 }

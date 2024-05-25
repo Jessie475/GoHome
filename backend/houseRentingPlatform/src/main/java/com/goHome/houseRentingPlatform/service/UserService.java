@@ -63,12 +63,12 @@ public class UserService{
     
     public List<House> getFavoriteHouses(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
-        return user != null ? user.getFavHouses() : null;
+        return user != null ? user.getFavoriteHouses() : null;
     }
 
     public List<Article> getFavoriteArticles(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
-        return user != null ? user.getFavArticles() : null;
+        return user != null ? user.getFavoriteArticles() : null;
     }
     
 
@@ -81,21 +81,21 @@ public class UserService{
     public void removeFavHouseFromUser(User user, Integer houseId) {
         House house = houseRepository.findById(houseId)
                 .orElseThrow(() -> new RuntimeException("House not found with id " + houseId));
-        user.removeFavHouse(house);
+        user.removeFavoriteHouse(house);
         userRepository.save(user);
     }
 
     public void addFavArticleToUser(User user, Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new RuntimeException("Article not found with id " + articleId));
-        user.addFavArticle(article);
+        user.addFavoriteArticle(article);
         userRepository.save(user);
     }
 
     public void removeFavArticleFromUser(User user, Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new RuntimeException("Article not found with id " + articleId));
-        user.removeFavArticle(article);
+        user.removeFavoriteArticle(article);
         userRepository.save(user);
     }
 
