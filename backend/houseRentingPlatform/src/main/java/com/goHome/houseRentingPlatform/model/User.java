@@ -1,6 +1,9 @@
 package com.goHome.houseRentingPlatform.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,20 +13,26 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "users") // Ensure the table name is according to database naming standards
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
+    
+    @Enumerated(EnumType.STRING)
     @Column(name = "identity", nullable = false, length = 50)
-    private String identity;
+    private Identity identity;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -43,27 +52,29 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_favorite_house",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "house_id")
+        name = "user_favorite_house",
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "house_id", referencedColumnName = "house_id")
     )
-    private Set<House> favoriteHouses = new HashSet<>();
+    private List<House> favoriteHouses;
 
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_favorite_article",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "article_id")
+        name = "user_favorite_article",
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "article_id", referencedColumnName = "article_id")
     )
-    private Set<Article> favoriteArticles = new HashSet<>();
+    private List<Article> favoriteArticles;
+    
 
     // Constructors, getters, and setters
     public User() {
     }
 
-    public User(Integer id, String identity, String name, String phone, String nationality, String gender, String email, String password) {
+    public User(Integer id, Identity identity, String name, String phone, String nationality, String gender, String email, String password) {
         this.id = id;
         this.identity = identity;
         this.name = name;
@@ -74,6 +85,9 @@ public class User {
         this.password = password;
     }
 
+    public enum Identity {
+        Landlord, Tenant
+    }
     public Integer getId() {
         return id;
     }
@@ -82,11 +96,11 @@ public class User {
         this.id = id;
     }
 
-    public String getIdentity() {
+    public Identity getIdentity() {
         return identity;
     }
 
-    public void setIdentity(String identity) {
+    public void setIdentity(Identity identity) {
         this.identity = identity;
     }
 
@@ -142,19 +156,19 @@ public class User {
 
     //新增、修改、get、set Favorite article和house
 
-    public Set<House> getFavHouses() {
+    public List<House> getFavHouses() {
         return favoriteHouses;
     }
 
-    public void setFavHouses(Set<House> favoriteHouses) {
+    public void setFavHouses(List<House> favoriteHouses) {
         this.favoriteHouses = favoriteHouses;
     }
 
-    public Set<Article> getFavArticles() {
+    public List<Article> getFavArticles() {
         return favoriteArticles;
     }
 
-    public void setFavArticles(Set<Article> favoriteArticles) {
+    public void setFavArticles(List<Article> favoriteArticles) {
         this.favoriteArticles = favoriteArticles;
     }
 
@@ -174,5 +188,6 @@ public class User {
         this.favoriteArticles.remove(article);
     }
 
+ 
 
 }

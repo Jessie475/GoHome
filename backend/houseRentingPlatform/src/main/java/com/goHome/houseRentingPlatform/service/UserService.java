@@ -11,6 +11,7 @@ import com.goHome.houseRentingPlatform.repository.ArticleRepository;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,7 +36,6 @@ public class UserService{
         return userRepository.save(user);
     }
     public boolean emailExists(String email) {
-        // 假设 userRepository 是您的 JPA 仓库
         User user = userRepository.findByEmail(email);
         return user != null;
     }
@@ -48,7 +48,7 @@ public class UserService{
         Optional<User> userOptional = userRepository.findByName(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            // 检查密码，这里没有加密
+            // 檢查密碼
             if (user.getPassword().equals(password)) {
                 return user;
             }
@@ -59,6 +59,16 @@ public class UserService{
     public User getUserById(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    }
+    
+    public List<House> getFavoriteHouses(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user != null ? user.getFavHouses() : null;
+    }
+
+    public List<Article> getFavoriteArticles(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user != null ? user.getFavArticles() : null;
     }
     
 
