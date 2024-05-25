@@ -61,20 +61,21 @@ public class UserService{
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
     }
     
-    public List<House> getFavoriteHouses(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
+    public List<House> getFavoriteHouses(Integer userId) {
+        User user = userRepository.findByUserId(userId).orElse(null);
         return user != null ? user.getFavoriteHouses() : null;
     }
 
-    public List<Article> getFavoriteArticles(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
+    public List<Article> getFavoriteArticles(Integer userId) {
+        User user = userRepository.findByUserId(userId).orElse(null);
         return user != null ? user.getFavoriteArticles() : null;
     }
     
 
     public void addFavHouseToUser(User user, Integer houseId) {
         House house = houseRepository.findById(houseId)
-                .orElseThrow(() -> new RuntimeException("House not found with id " + houseId));        user.addFavHouse(house);
+                .orElseThrow(() -> new RuntimeException("House not found with id " + houseId));        
+        user.addFavoriteHouse(house);
         userRepository.save(user);
     }
 

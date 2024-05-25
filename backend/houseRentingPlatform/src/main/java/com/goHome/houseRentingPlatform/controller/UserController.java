@@ -76,7 +76,7 @@ public class UserController {
 
     // get收藏房屋
     @GetMapping("/{userId}/favhouses")
-    public ResponseEntity<List<House>> getFavoriteHouseIds(@PathVariable Long userId) {
+    public ResponseEntity<List<House>> getFavoriteHouseIds(@PathVariable Integer userId) {
         List<House> houses = new ArrayList<>(userService.getFavoriteHouses(userId));
         if (houses != null && !houses.isEmpty()) {
             return ResponseEntity.ok(houses);
@@ -87,7 +87,7 @@ public class UserController {
 
     // get收藏文章
     @GetMapping("/{userId}/favarticles")
-    public ResponseEntity<List<Article>> getFavoriteArticles(@PathVariable Long userId) {
+    public ResponseEntity<List<Article>> getFavoriteArticles(@PathVariable Integer userId) {
         List<Article> articles = new ArrayList<>(userService.getFavoriteArticles(userId));
         if (articles != null && !articles.isEmpty()) {
             return ResponseEntity.ok(articles);
