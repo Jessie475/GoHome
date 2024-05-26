@@ -1,3 +1,5 @@
+/* RentalList.css */
+/* 現在沒有用！！！ */
 .rental-list {
   list-style-type: none;
   padding: 0;
@@ -6,16 +8,18 @@
 .rental-item {
   display: flex;
   align-items: center;
-  margin-bottom: 20px; /* 每個項目之間的間距 */
-  background-color: #f9f9f9;
+  margin-bottom: 20px;
+  /* 每個項目之間的間距 */
+  background-color: #F6EEE0;
   border: 1px solid #ccc;
   padding: 10px;
 }
 
 .rental-image {
-  width: 150px; 
-  height: 100px; 
-  margin-right: 20px; /* 圖片和文字之間的間隔 */
+  width: 150px;
+  height: 100px;
+  margin-right: 20px;
+  /* 圖片和文字之間的間隔 */
 }
 
 .rental-info {

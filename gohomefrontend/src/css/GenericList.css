@@ -1,0 +1,141 @@
+/* GenericList.css */
+.list-container {
+  width: 97%;
+  margin: 20px auto;
+  padding: 0;
+  list-style-type: none;
+}
+
+.list-item-link {
+  text-decoration: none;
+  margin: 10px;
+  color: black;
+  display: block;
+  /* 整個block都可以點 */
+  box-shadow: 0 2px 5px rgba(193, 19, 19, 0.1);
+}
+
+.list-item {
+
+  background-color: #F6EEE0;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.list-item:hover {
+  background-color: #e0e0e0;
+  /* 懸停 */
+}
+
+.item-image {
+  width: 150px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-link {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #e0e0e0;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.page-link:hover {
+  background-color: #d0d0d0;
+}
+
+.add-button {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  width: 80px;
+  height: 80px;
+  background-color: #f76c6c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.add-button:hover {
+  background-color: #fa8383;
+  /* 懸停 */
+}
+
+/* 以下為rentallist filter 內容 */
+
+.filter-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 20px;
+  /* 與下方列表間隔 */
+  background-color: #E4B7A0;
+  /* 淺色背景 */
+  border-bottom: 2px solid #ccc;
+}
+
+/* 文本輸入和下拉選擇框通用樣式 */
+.filter-form input[type="text"],
+.filter-form select {
+  padding: 8px 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.filter-form select {
+  cursor: pointer;
+  background-color: #F6EEE0;
+}
+
+.filter-form button {
+  padding: 8px 16px;
+  background-color: #f76c6c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filter-form button:hover {
+  background-color: #fa8383;
+}
+
+.clear-button {
+  padding: 8px 16px;
+  background-color: #f76c6c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clear-button:hover {
+  background-color: #fa8383;
+}

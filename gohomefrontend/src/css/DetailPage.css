@@ -1,0 +1,113 @@
+/* DetailPage.css */
+
+.detail-page {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.banner {
+    margin-bottom: 20px;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: auto;
+    gap: 10px;
+}
+
+.content,
+.control-buttons,
+.comment-section {
+    padding: 20px;
+    background-color: #FFF6F0;
+    border-radius: 5px;
+}
+
+.comment-section {
+    margin: 20px 0px;
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.comments-list {
+    background-color: #FFF6F0;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.comment {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.commenter-id {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-time {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.comment-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.comment p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: left;
+    gap: 15px;
+}
+
+
+.comment-input-text {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.like-button,
+.favorite-button,
+.contact-button,
+.comment-submit-button,
+.comment-like-button {
+    padding: 10px 20px;
+    background-color: #F6EEE0;
+    color: #C38370;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.ike-button:hover:hover,
+.favorite-button:hover,
+.contact-button:hover,
+.comment-submit-button:hover,
+.comment-like-button:hover {
+    background-color: #FABD94;
+}

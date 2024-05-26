@@ -1,0 +1,57 @@
+.banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #C38370;
+}
+
+.banner .back-button {
+    padding: 8px 16px;
+    background-color: #F6EEE0;
+    color: #C38370;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.banner .back-button:hover {
+    background-color: #a3968b;
+}
+
+.banner p {
+    margin: 0 auto;
+    /* 中央對齊標題 */
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.search-container,
+.placeholder {
+    display: flex;
+    align-items: center;
+    width: 226px;
+    /* 確保佔位組件和searchbar大小一致 */
+}
+
+.search-container input {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    text-align: end;
+    background-color: #faf6f0;
+    border-radius: 4px;
+}
+
+.search-container button {
+    padding: 8px 16px;
+    background-color: #F6EEE0;
+    color: #C38370;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.search-container button:hover {
+    background-color: #a3968b;
+}

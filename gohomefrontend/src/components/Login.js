@@ -1,33 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import '../css/Login.css'; // Import the CSS file
+import '../css/Login.css';
 
-const login = async ({ username, password }) => {
-  try {
-    const response = await fetch('http://localhost:8081/users/login', { // 修改此處為你的後端 API 路徑
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name: username, password: password }),
-    });
-
-    if (response.ok) {
-      return 'success';
-    } else {
-      throw new Error('error');
-    }
-  } catch (error) {
-    throw error;
-  }
+const login = ({ username, password }) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (username === '1' && password === '1') {  // 帳號密碼
+        console.log(username, password);
+        resolve('success');
+      } else {
+        console.log(username, password);
+        reject('error');
+      }
+    }, 1000); //過1秒返回結果
+  });
 }
+
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSumbit = async (e) => {
     e.preventDefault();
@@ -37,7 +32,7 @@ function Login() {
       setIsSubmitting(false);
       navigate('/home');  // 登錄成功後進入 Home 頁面
     } catch (error) {
-      setError('incorrect username or password');
+      setError('錯誤的用戶名或密碼');
       setUsername('');
       setPassword('');
       setIsSubmitting(false);
@@ -51,7 +46,7 @@ function Login() {
           {error && <h1 className="text-danger">{error}</h1>}
           <form onSubmit={handleSumbit}>
             <div className="form-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">用戶名</label>
               <input
                 type="text"
                 className="form-control"
@@ -61,7 +56,7 @@ function Login() {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">密碼</label>
               <input
                 type="password"
                 value={password}
@@ -70,8 +65,8 @@ function Login() {
                 id="password"
               />
             </div>
-            <div className='sign_up'> 
-              <Link className="link-style sign_up" to="/signup">註冊帳號</Link>              
+            <div className='sign_up'>
+              <Link className="link-style-sign_up" to="/signup">註冊帳號</Link>
             </div>
             <button type="submit" className="btn-block" disabled={isSubmitting}>
               {isSubmitting ? 'Submitting...' : 'Submit'}

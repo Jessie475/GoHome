@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import GenericList from './GenericList';
 import Banner from './Banner';
 
-function ArticleList() {
-  const articles = [];
+function FindRoommate() {
+  const roommates = [];
   for (let i = 1; i <= 18; i++) {
-    articles.push({
+    roommates.push({
       id: i,
-      name: `文章 ${i}`,
-      description: `描述 ${i}`,
-      link: `/article/${i}`
+      name: `室友 ${i}`,
+      description: `信息 ${i}`,
+      link: `/roommate/${i}`
     });
   }
 
@@ -18,28 +18,28 @@ function ArticleList() {
   const [itemsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredArticles = articles.filter(article =>
-    article.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    article.description.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredRoommates = roommates.filter(roommate =>
+    roommate.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    roommate.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredArticles.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredRoommates.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
-      <Banner title="文章列表" showSearch={true} onSearch={(value) => setSearchTerm(value)} />
+      <Banner title="尋找室友" showSearch={true} onSearch={(value) => setSearchTerm(value)} />
       <GenericList
-        items={currentItems.map(article => ({
-          content: `${article.name}: ${article.description}`,
-          link: article.link
+        items={currentItems.map(roommate => ({
+          content: `${roommate.name}: ${roommate.description}`,
+          link: roommate.link
         }))}
       />
       <div className="pagination">
-        {Array.from({ length: Math.ceil(filteredArticles.length / itemsPerPage) }, (_, i) => (
+        {Array.from({ length: Math.ceil(filteredRoommates.length / itemsPerPage) }, (_, i) => (
           <button
             key={i + 1}
             onClick={() => paginate(i + 1)}
@@ -51,10 +51,11 @@ function ArticleList() {
         ))}
       </div>
       <div>
-        <Link to="/postarticle" className="add-button">+</Link>
+        <Link to="/postfindroommate" className="add-button">+</Link>
       </div>
+
     </div>
   );
 }
 
-export default ArticleList;
+export default FindRoommate;

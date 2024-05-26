@@ -22,13 +22,16 @@ function Navigation() {
         </div>
         <ul className="home-links">
           <li className="home-link">
-            <Link className="link-style" to="/rentals">租屋</Link>
+            <Link className="link-style" to="/account">我的帳號</Link>
           </li>
           <li className="home-link">
-            <Link className="link-style" to="/articles">文章</Link>
+            <Link className="link-style" to="/rentals">尋找房屋</Link>
           </li>
           <li className="home-link">
-            <Link className="link-style" to="/users">使用者</Link>
+            <Link className="link-style" to="/findroommate">尋找室友</Link>
+          </li>
+          <li className="home-link">
+            <Link className="link-style" to="/articles">分享文章</Link>
           </li>
         </ul>
       </div>
