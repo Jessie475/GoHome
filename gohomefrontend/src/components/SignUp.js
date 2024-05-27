@@ -12,13 +12,36 @@ function SignUp() {
   const [role, setRole] = useState('');
   const [nationality, setNationality] = useState('');
   const [showPassword, setShowPassword] = useState(false); // 控制密碼是否顯示
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 這裏將資料發送
-    console.log({ name, email, password, phone, gender, role, nationality, username });
-    // 提交後處理
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('http://localhost:8081/users/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, name, phone, gender, role, nationality }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('User registered successfully:', result);
+        // 顯示成功訊息或導航至其他頁面
+      } else {
+        const errorText = await response.text();
+        setError(errorText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred while registering the user.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -75,8 +98,9 @@ function SignUp() {
               <option value="tenant">房客</option>
             </select>
           </label>
-          <button className='signup-button' type="submit">註冊</button>
-        </form>
+          <button className='signup-button' type="submit" disabled={isSubmitting}>
+            {isSubmitting ? '註冊中...' : '註冊'}
+          </button>        </form>
       </div>
     </div>
   );

@@ -32,7 +32,9 @@ public class UserService{
     }
 
     public User registerUser(User user) {
-        user.setPassword(user.getPassword());
+        if (userRepository.findByName(user.getName()) != null || userRepository.findByEmail(user.getEmail()) != null) {
+            throw new RuntimeException("User already exists");
+        }
         return userRepository.save(user);
     }
     public boolean emailExists(String email) {
@@ -40,9 +42,9 @@ public class UserService{
         return user != null;
     }
     
-    public User addUser(User user) {
-        return userRepository.save(user);
-    }
+    // public User addUser(User user) {
+    //     return userRepository.save(user);
+    // }
 
     public User validateUser(String username, String password) {
         Optional<User> userOptional = userRepository.findByName(username);

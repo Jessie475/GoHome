@@ -91,11 +91,11 @@ public class User {
         this.userId = userId;
     }
 
-    public Identity getIdentity() {
+    public Identity getRole() {
         return identity;
     }
 
-    public void setIdentity(Identity identity) {
+    public void setRole(Identity identity) {
         this.identity = identity;
     }
 
