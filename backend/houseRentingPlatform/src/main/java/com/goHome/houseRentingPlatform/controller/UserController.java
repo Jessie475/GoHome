@@ -27,40 +27,69 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody User user) throws Exception {
-        List<String> errors = new ArrayList<>();
-        if (user.getName() == null || user.getName().isEmpty()) {
-            errors.add("Name is required.");
-        }
-        if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            errors.add("Email is required.");
-        }
-        else if (userService.emailExists(user.getEmail())) {
-            errors.add("Email is already in use.");
-        }
-        if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            errors.add("Password is required.");
-        }
-        if (!errors.isEmpty()) {
-            return ResponseEntity.badRequest().body(String.join(", ", errors));
-        }
+//     @PostMapping("/signup")
+//     public ResponseEntity<?> registerUser(@RequestBody User user) throws Exception {
+//         List<String> errors = new ArrayList<>();
+//         if (user.getName() == null || user.getName().isEmpty()) {
+//             errors.add("Name is required.");
+//         }
+//         if (user.getEmail() == null || user.getEmail().isEmpty()) {
+//             errors.add("Email is required.");
+//         }
+//         else if (userService.emailExists(user.getEmail())) {
+//             errors.add("Email is already in use.");
+//         }
+//         if (user.getPassword() == null || user.getPassword().isEmpty()) {
+//             errors.add("Password is required.");
+//         }
+//         if (!errors.isEmpty()) {
+//             return ResponseEntity.badRequest().body(String.join(", ", errors));
+//         }
+// 
+//         try {
+//             User registeredUser = userService.registerUser(user);
+//             return ResponseEntity.ok(registeredUser);
+//         }catch (Exception e) {
+//             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+//         }
+//     }
 
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup(@RequestBody User newUser) {
         try {
-            User registeredUser = userService.registerUser(user);
-            return ResponseEntity.ok(registeredUser);
-        }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            User createdUser = userService.createUser(newUser.getName(), newUser.getEmail(), newUser.getPassword(), newUser.getName(), newUser.getPhone(), newUser.getGender(), newUser.getIdentity());
+            if (createdUser != null) {
+                return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create user");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    //登入
+    // //登入
+    // @PostMapping("/login")
+    // public ResponseEntity<?> login(@RequestBody User luser) {
+    //     try {
+    //         User users = userService.validateUser(luser.getName(), luser.getPassword());
+    //         if (users != null) {
+    //             return ResponseEntity.ok(users);
+    //         } else {
+    //             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    //         }
+    //     } catch (Exception e) {
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    //     }
+    // }
+
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User luser) {
         try {
-            User users = userService.validateUser(luser.getName(), luser.getPassword());
-            if (users != null) {
-                return ResponseEntity.ok(users);
+            User user = userService.validateUser(luser.getName(), luser.getPassword());
+            if (user != null) {
+                return ResponseEntity.ok(user); // 返回完整的用户信息
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
             }

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../css/SignUp.css'; // 確保導入 CSS 檔案
 
 function SignUp() {
+  const navigate = useNavigate(); // 确保在顶部初始化
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [gender, setGender] = useState('');
-  const [role, setRole] = useState('');
-  const [nationality, setNationality] = useState('');
+  const [identity, setIdentity] = useState('');
+  //const [nationality, setNationality] = useState('');
   const [showPassword, setShowPassword] = useState(false); // 控制密碼是否顯示
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -25,13 +26,13 @@ function SignUp() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, name, phone, gender, role, nationality }),
+        body: JSON.stringify({ email, password, name, phone, gender, identity, username }),
       });
 
       if (response.ok) {
         const result = await response.json();
         console.log('User registered successfully:', result);
-        // 顯示成功訊息或導航至其他頁面
+        navigate('/login'); // 注册成功后导航到登录页面
       } else {
         const errorText = await response.text();
         setError(errorText);
@@ -49,7 +50,7 @@ function SignUp() {
       <h1 className='signup-title'>註冊新帳號</h1>
       <div className="signup-container">
         <form onSubmit={handleSubmit} className="signup-form">
-          <div class="text1">
+          <div className="text1">
             <label>
               真實姓名:
               <input type="text" value={name} onChange={e => setName(e.target.value)} />
@@ -58,7 +59,7 @@ function SignUp() {
               用戶名:
               <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
             </label>
-            <label >
+            <label>
               電子郵件:
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
             </label>
@@ -71,15 +72,14 @@ function SignUp() {
                 </button>
               </div>
             </label>
-
             <label>
               電話:
               <input type="text" value={phone} onChange={e => setPhone(e.target.value)} />
             </label>
-            <label>
+            {/* <label>
               國籍:
               <input type="text" value={nationality} onChange={e => setNationality(e.target.value)} />
-            </label>
+            </label> */}
           </div>
           <label>
             性別:
@@ -92,15 +92,17 @@ function SignUp() {
           </label>
           <label>
             身份:
-            <select value={role} onChange={e => setRole(e.target.value)}>
+            <select value={identity} onChange={e => setIdentity(e.target.value)}>
               <option value="">請選擇</option>
-              <option value="landlord">房東</option>
-              <option value="tenant">房客</option>
+              <option value="Landlord">房東</option>
+              <option value="Tenant">房客</option>
             </select>
           </label>
+          {error && <p className="error-message">{error}</p>}
           <button className='signup-button' type="submit" disabled={isSubmitting}>
             {isSubmitting ? '註冊中...' : '註冊'}
-          </button>        </form>
+          </button>
+        </form>
       </div>
     </div>
   );

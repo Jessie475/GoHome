@@ -68,12 +68,12 @@ public class User {
     public User() {
     }
 
-    public User(Integer userId, Identity identity, String name, String phone, String nationality, String gender, String email, String password) {
+    public User(Integer userId, Identity identity, String name, String phone, String gender, String email, String password) {
         this.userId = userId;
         this.identity = identity;
         this.name = name;
         this.phone = phone;
-        this.nationality = nationality;
+        //this.nationality = nationality;
         this.gender = gender;
         this.email = email;
         this.password = password;
@@ -91,11 +91,11 @@ public class User {
         this.userId = userId;
     }
 
-    public Identity getRole() {
+    public Identity getIdentity() {
         return identity;
     }
 
-    public void setRole(Identity identity) {
+    public void setIdentity(Identity identity) {
         this.identity = identity;
     }
 
@@ -115,13 +115,13 @@ public class User {
         this.phone = phone;
     }
 
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
+//     public String getNationality() {
+//         return nationality;
+//     }
+// 
+//     public void setNationality(String nationality) {
+//         this.nationality = nationality;
+//     }
 
     public String getGender() {
         return gender;

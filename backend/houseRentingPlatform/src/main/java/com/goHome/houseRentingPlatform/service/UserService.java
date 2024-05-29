@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
+import com.goHome.houseRentingPlatform.model.User.Identity;
 import com.goHome.houseRentingPlatform.repository.ArticleRepository;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.repository.UserRepository;
@@ -31,12 +32,21 @@ public class UserService{
         this.articleRepository = articleRepository;
     }
 
-    public User registerUser(User user) {
-        if (userRepository.findByName(user.getName()) != null || userRepository.findByEmail(user.getEmail()) != null) {
-            throw new RuntimeException("User already exists");
-        }
-        return userRepository.save(user);
+    public User createUser(String username, String email, String password, String name, String phone, String gender, Identity identity) {
+
+        User newUser = new User();
+        newUser.setName(username);
+        newUser.setEmail(email);
+        newUser.setPassword(password);
+        newUser.setName(name);
+        newUser.setPhone(phone);
+        newUser.setGender(gender);
+        newUser.setIdentity(identity);
+        //newUser.setNationality(nationality);
+
+        return userRepository.save(newUser);
     }
+
     public boolean emailExists(String email) {
         User user = userRepository.findByEmail(email);
         return user != null;
@@ -105,6 +115,5 @@ public class UserService{
     /*private User findUserByIdentity(String username) {
         return null;
     }*/
-
 
 }
