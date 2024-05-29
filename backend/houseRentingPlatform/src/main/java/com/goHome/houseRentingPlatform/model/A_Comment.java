@@ -1,6 +1,8 @@
 package com.goHome.houseRentingPlatform.model;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,6 +25,7 @@ public class A_Comment {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "article_id", nullable = false)
+    @JsonBackReference
     private Article article;
 
     @ManyToOne(fetch = FetchType.EAGER)

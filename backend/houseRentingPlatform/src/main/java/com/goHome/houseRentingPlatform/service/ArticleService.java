@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
@@ -16,6 +17,7 @@ import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.repository.UserRepository;
 
 @Service
+@CrossOrigin(origins = "http://localhost:3000")
 public class ArticleService {
 
     @Autowired
@@ -90,9 +92,6 @@ public class ArticleService {
     public List<Article> searchArticlesByAddress(String address) {
         return articleRepository.findByAddressContainingIgnoreCase(address);
     }
-
-  //  public Page<Article> getArticlesSortedByFavoriteCount(int page, int size) {
-      //  return articleRepository.findAllByFavoriteCountDesc(PageRequest.of(page, size));
-  //  }
-
+   
+    
 }

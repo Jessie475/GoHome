@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.goHome.houseRentingPlatform.service.UserService;
 
 @RestController
 @RequestMapping("/articles")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ArticleController {
 
     @Autowired
@@ -101,13 +103,7 @@ public class ArticleController {
         return ResponseEntity.ok(articles);
     }
 
-   // @GetMapping("/sortByFavorite")
-  //  public ResponseEntity<Page<Article>> getArticlesSortedByFavoriteCount(
-     //       @RequestParam(defaultValue = "0") int page,
-      //      @RequestParam(defaultValue = "10") int size) {
-    //    Page<Article> articles = articleService.getArticlesSortedByFavoriteCount(page, size);
-     //   return ResponseEntity.ok(articles);
-   //}
+ 
 
     // 添加收藏功能
     @PostMapping("/favorite/{articleId}")
@@ -123,6 +119,8 @@ public class ArticleController {
         userService.removeFavArticleFromUser(user, articleId);
         return ResponseEntity.ok().build();
     }
+
+
 
 
 }
