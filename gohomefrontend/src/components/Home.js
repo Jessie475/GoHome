@@ -1,11 +1,188 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+/* global google */
+import { Wrapper } from '@googlemaps/react-wrapper';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import '../css/Home.css';
 
-function Home() {
-  return (
-    <h1>地圖</h1>
-  );
-}
+const GoogleMap = React.forwardRef(({ center, zoom, children, data }, ref) => {
+    
+    const [locations, setLocations] = useState([]);
+    const mapRef = useRef(null);
+    const map = useRef(null);
+    const geocoder = useRef(null);
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+
+    const handleClick = async (e) => {
+        e.preventDefault();
+        const house = { name, address };
+        console.log(house);
+        fetch('http://localhost:8081/house/addHouse', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(house),
+        }).then((response) => {
+            if (response.ok) {
+                geocodeData(geocoder.current, locations);
+                showAllHouses(map.current, locations);
+            } else {
+                console.error('Server error:', response.status);
+            }
+        }).catch((error) => {
+            console.error('Fetch error:', error);
+        });
+    };
+
+    useEffect(() => {
+        fetch('http://localhost:8081/house/getAllHouses')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (!Array.isArray(data)) {
+                    data = [data];
+                    console.log('data is no array')
+                }
+                console.log('Fetched allData:', data);
+                setLocations(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching allData:', error);
+            });
+    }, []);
+
+    const Marker = ({ map, position, title }) => {
+        const [marker, setMarker] = useState(null);
+
+        useEffect(() => {
+            if (!marker && map && position && typeof position.lat === 'number' && typeof position.lng === 'number') {
+                const newMarker = new google.maps.Marker({
+                    position,
+                    map,
+                    title,
+                });
+                setMarker(newMarker);
+            }
+            return () => {
+                if (marker) {
+                    marker.setMap(null);
+                }
+            };
+        }, [map, marker, position, title]);
+    };
+
+    const loadMap = useCallback(() => {
+        if (mapRef.current) {
+            map.current = new google.maps.Map(mapRef.current, {
+                zoom,
+                center,
+            });
+
+            geocoder.current = new google.maps.Geocoder();
+            locations.forEach((location) => {
+                <Marker
+                    map={map.current}
+                    position={{ lat: location.lat, lng: location.lng }}
+                    title={location.name}
+                />;
+            });
+
+            geocodeData(geocoder.current, locations);
+            showAllHouses(map.current, locations);
+        }
+    }, [center, zoom, data, locations]);
+
+    useEffect(() => {
+        loadMap();
+    }, [loadMap, center, zoom, data, locations]);
+
+    const geocodeData = (geocoder, data) => {
+        if (!Array.isArray(data)) {
+            console.error('Error: locations is not an array');
+            return;
+        }
+
+        data.forEach((location) => {
+            if (location.lat == null || location.lng == null) {
+                const address = `${location.name} ${location.address}`;
+                geocoder.geocode({ address }, (results, status) => {
+                    if (status === 'OK') {
+                        const lat = results[0].geometry.location.lat();
+                        const lng = results[0].geometry.location.lng();
+                        updateMarkerWithLatLng(location.id, lat, lng);
+                    } else {
+                        console.error('Geocode was not successful for the following reason:', status);
+                    }
+                });
+            }
+        });
+    };
+
+    const showAllHouses = (map, data) => {
+        const infoWind = new google.maps.InfoWindow();
+
+        data.forEach((data) => {
+            const content = document.createElement('div');
+            const strong = document.createElement('strong');
+            strong.textContent = data.name;
+            content.appendChild(strong);
+
+            const marker = new google.maps.Marker({
+                position: new google.maps.LatLng(data.lat, data.lng),
+                map,
+            });
+
+            marker.addListener('mouseover', () => {
+                infoWind.setContent(content);
+                infoWind.open(map, marker);
+            });
+        });
+    };
+
+    const updateMarkerWithLatLng = async (id, lat, lng) => {
+        try {
+            const response = await fetch(`http://localhost:8081/house/updateLatLng/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ lat, lng }),
+            });
+
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error('Error updating house with lat/lng:', error);
+        }
+    };
+
+    return (
+        <>
+            <div ref={mapRef} style={{ height: '500px', width: '100%' }} />
+        </>
+    );
+});
+
+const Home = () => {
+    const googleMapRef = useRef(null);
+    const center = { lat: 24.982, lng: 121.565 };
+    const zoom = 15;
+    const googleApiKey = 'xxxxxxxxxxxxx';
+
+    return (
+      <div>
+        <h1>地圖</h1>
+            <Wrapper apiKey={googleApiKey} render={(status) => <h1>{status}</h1>}>
+                <GoogleMap
+                    center={center}
+                    zoom={zoom}
+                    ref={googleMapRef}
+                />
+            </Wrapper>
+        </div>
+    );
+};
 
 export default Home;

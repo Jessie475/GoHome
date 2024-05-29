@@ -180,6 +180,15 @@ public class HouseController {
         return ResponseEntity.ok(houseService.updateHouse(id, housedetail));
     }
 
+    @PutMapping("/updateLatLng/{id}")
+    public ResponseEntity<House> updateLatLng(@PathVariable("id") Integer id, @RequestBody House houseDetails) {
+        House house = houseRepository.findById(id).orElseThrow(() -> new RuntimeException("House not found!"));
+        house.setLat(houseDetails.getLat());
+        house.setLng(houseDetails.getLng());
+        houseRepository.save(house);
+        return ResponseEntity.ok(house);
+    }
+
     @DeleteMapping("/delete/{id}")//刪除房屋資訊 OK
     public ResponseEntity<String> deleteHouse(@PathVariable("id") Integer id) {
         if (houseService.existsById(id)) {
