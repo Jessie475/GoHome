@@ -187,7 +187,7 @@ const Home = () => {
     const googleMapRef = useRef(null);
     const center = { lat: 24.982, lng: 121.565 };
     const zoom = 15;
-    const googleApiKey = 'AIzaSyAyqdIvF6Rk1UROBq9cuieBahgD7adDb0k';
+    const googleApiKey = 'xxxxxxxxxxxxx';
 
     return (
         <div>
