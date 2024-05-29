@@ -1,25 +1,25 @@
 // components/AppRoutes.js
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Login from './Login';
-import SignUp from './SignUp';
-import Home from './Home';
-import RentalList from './RentalList';
-import RentalDetail from './RentalDetail';
-import ArticleList from './ArticleList';
-import ArticleDetail from './ArticleDetail';
+import { Route, Routes } from 'react-router-dom';
 import Account from './Account';
-import SavedHouse from './accountpart/SavedHouse';
-import MyPost from './accountpart/MyPost';
-import PostRent from './accountpart/PostRent';
-import SavedArticle from './accountpart/SavedArticle';
-import MyComment from './accountpart/MyComment';
-import PostedRent from './accountpart/PostedRent';
+import ArticleDetail from './ArticleDetail';
+import ArticleList from './ArticleList';
 import FindRoommate from './FindRoommate';
 import FindRoommateDetail from './FindRoommateDetail';
-import PostFindRoommate from './PostFindRoommate';
-import PostArticle from './PostArticle';
+import Home from './Home';
 import HouseMap from './HouseMap';
+import Login from './Login';
+import PostArticle from './PostArticle';
+import PostFindRoommate from './PostFindRoommate';
+import RentalDetail from './RentalDetail';
+import RentalList from './RentalList';
+import SignUp from './SignUp';
+import MyComment from './accountpart/MyComment';
+import MyPost from './accountpart/MyPost';
+import PostRent from './accountpart/PostRent';
+import PostedRent from './accountpart/PostedRent';
+import SavedArticle from './accountpart/SavedArticle';
+import SavedHouse from './accountpart/SavedHouse';
 
 
 

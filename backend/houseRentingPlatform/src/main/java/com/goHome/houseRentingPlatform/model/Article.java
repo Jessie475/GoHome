@@ -53,16 +53,24 @@ public class Article {
     @JsonManagedReference
     private Set<A_Comment> comments;
 
+    @Column(name = "lat", nullable = true)
+    private Double lat;
+
+    @Column(name = "lng", nullable = true)
+    private Double lng;
+
     // Constructors, Getters and Setters
     public Article() {}
 
-    public Article(Long id,String title, String address, Double rate, String description, ArticleType type) {
+    public Article(Long id,String title, String address, Double rate, String description, ArticleType type, Double lat, Double lng) {
         this.articleId = id;
         this.title = title;
         this.address = address;
         this.rate = rate;
         this.description = description;
         this.type = type;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public Long getId() {
@@ -111,6 +119,21 @@ public class Article {
 
     public void setType(ArticleType type) {
         this.type = type;
+    }
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 
     public Date getCreatedAt() {

@@ -1,57 +1,97 @@
-  .post-header {
-    text-align: center;
-    margin-bottom: 20px;
+.post-header {
+  text-align: center;
+  margin-bottom: 20px;
 
+}
+
+.post-container,
+.form-textarea {
+  width: 98%;
+  margin: 20px auto;
+  padding: 0;
+}
+
+.form-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.half-width {
+  width: 48%;
+}
+
+@media (max-width: 768px) {
+  .half-width {
+    width: 100%;
   }
+}
 
-  .post-container,
-  .form-textarea {
-    width: 98%;
-    margin: 20px auto;
-    padding: 0;
-  }
+.form-group input {
+  width: 98%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: 1px solid #F6EEE0;
+  background-color: #F6EEE0;
+  border-radius: 4px;
+  color: #C38370;
+}
 
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    /* 使元素分佈在容器的兩端 */
-  }
+#startDate {
+  width: 93.5%;
+  margin-right: 300px;
+}
 
+.form-textarea {
+  height: 150px;
+  padding: 5px;
+  border: #F6EEE0;
+  border-radius: 5px;
+  background-color: #F6EEE0;
 
-  .form-textarea {
-    height: 150px;
-    padding: 5px;
-    border: #F6EEE0;
-    border-radius: 5px;
-    background-color: #F6EEE0;
-  }
+}
 
-  .form-control {
-    background-color: #F6EEE0;
+.form-group select {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #F6EEE0;
+  background-color: #F6EEE0;
+  border-radius: 5px;
+  width: 98%;
+  display: block;
 
-  }
+}
 
-  input[type="file"] {
-    padding: 8px;
-    border: 1px solid #F6EEE0;
-    background-color: #F6EEE0;
-    border-radius: 5px;
-  }
+.form-control {
+  background-color: #F6EEE0;
 
-  .submit-button {
-    width: 20%;
-    padding: 10px;
-    background-color: #F6EEE0;
-    color: #A45C40;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
+}
 
-  .submit-button:hover {
-    background-color: #a3968b;
-  }
+input[type="file"] {
+  padding: 8px;
+  border: 1px solid #F6EEE0;
+  background-color: #F6EEE0;
+  border-radius: 5px;
+}
 
-  .submit-button:hover {
-    background-color: #a3968b;
-  }
+.button-container {
+  display: flex;
+  justify-content: center;
+  /* 按钮居中显示 */
+  margin-top: 20px;
+  /* 与上一个元素的间距 */
+}
+
+.submit-button {
+  width: 20%;
+  padding: 10px;
+  background-color: #F6EEE0;
+  color: #A45C40;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.submit-button:hover {
+  background-color: #a3968b;
+}

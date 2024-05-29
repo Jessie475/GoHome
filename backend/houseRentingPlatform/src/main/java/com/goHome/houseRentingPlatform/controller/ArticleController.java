@@ -2,6 +2,8 @@ package com.goHome.houseRentingPlatform.controller;
 
 import java.util.List;
 
+import com.goHome.houseRentingPlatform.model.House;
+import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.goHome.houseRentingPlatform.repository.ArticleRepository;
 
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
@@ -29,7 +32,8 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
-
+    @Autowired
+    private ArticleRepository ArticleRepository;
     @Autowired
     private UserService userService;
 
@@ -119,7 +123,14 @@ public class ArticleController {
         userService.removeFavArticleFromUser(user, articleId);
         return ResponseEntity.ok().build();
     }
-
+    @PutMapping("/updateLatLng/{id}")
+    public ResponseEntity<Article> updateLatLng(@PathVariable("id") Long id, @RequestBody House articleDetails) {
+        Article Article = ArticleRepository.findById(id).orElseThrow(() -> new RuntimeException("Article not found!"));
+        Article.setLat(articleDetails.getLat());
+        Article.setLng(articleDetails.getLng());
+        ArticleRepository.save(Article);
+        return ResponseEntity.ok(Article);
+    }
 
 
 
