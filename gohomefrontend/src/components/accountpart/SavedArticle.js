@@ -83,6 +83,63 @@
 // }
 // 
 // export default SavedArticle;
+
+// 
+// //ver2
+// import React, { useState, useEffect, useContext } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import GenericList from '../GenericList';
+// import Banner from '../../components/Banner';
+// import { UserContext } from '../../contexts/UserContext';
+// 
+// function SavedArticle() {
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [savedArticles, setSavedArticles] = useState([]);
+//   const { user } = useContext(UserContext);
+//   const navigate = useNavigate();
+// 
+//   useEffect(() => {
+//     if (user && user.userId) {
+//       fetch(`http://localhost:8081/users/${user.userId}/favarticles`)
+//         .then(response => {
+//           if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//           }
+//           return response.json();
+//         })
+//         .then(data => {
+//           setSavedArticles(data);
+//         })
+//         .catch(error => {
+//           console.error('There was a problem with the fetch operation:', error);
+//         });
+//     }
+//   }, [user]);
+// 
+//   const handleItemClick = (id) => {
+//     navigate(`/savedarticle/${savedArticles.articleId}`);
+//   };
+// 
+//   return (
+//     <div>
+//       <div>
+//         <Banner title="收藏的文章" showSearch={true} onSearch={(value) => setSearchTerm(value)} />
+//       </div>
+//       <GenericList
+//         title="我的收藏文章"
+//         items={savedArticles.map(savedArticle => ({
+//           content: `${savedArticle.title}: ${savedArticle.description}`,
+//           link: savedArticle.link,
+//           onClick: () => handleItemClick(savedArticle.articleId) // 添加点击事件处理
+//         }))}
+//       />
+//     </div>
+//   );
+// }
+// 
+// export default SavedArticle;
+
+
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GenericList from '../GenericList';
@@ -126,8 +183,7 @@ function SavedArticle() {
         title="我的收藏文章"
         items={savedArticles.map(savedArticle => ({
           content: `${savedArticle.title}: ${savedArticle.description}`,
-          link: savedArticle.link,
-          onClick: () => handleItemClick(savedArticle.articleId) // 添加点击事件处理
+          link: `/savedarticle/${savedArticle.id}` // 传递正确的ID
         }))}
       />
     </div>
