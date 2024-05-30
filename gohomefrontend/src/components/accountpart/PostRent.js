@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import Banner from '../../components/Banner';
 import '../../css/PostPageStyles.css';
@@ -8,17 +9,45 @@ function PostRent() {
   const [size, setSize] = useState('');
   const [rent, setRent] = useState('');
   const [subsidy, setSubsidy] = useState('');
-  const [leaseTerm, setLeaseTerm] = useState('');
+  const [lease, setLease] = useState('');
   const [startDate, setStartDate] = useState('');
   const [address, setAddress] = useState('');
   const [contactInfo, setContactInfo] = useState('');
-  const [content, setContent] = useState('');
+  const [description, setDescription] = useState('');
+  const [restriction, setRestriction] = useState('');
   const [image, setImage] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ title, type, size, rent, subsidy, leaseTerm, startDate, address, contactInfo, content, image });
-    // 添加提交到服务器的代码
+    const houseData = {
+      title,
+      type,
+      size,
+      rent,
+      subsidy,
+      lease,
+      startdate: startDate, // 确保字段名称与后端匹配
+      address,
+      contactInfo,
+      description,
+      restriction,
+      // 您可以根据需要处理 image 字段
+    };
+    
+    console.log(houseData);
+    
+    try {
+      const response = await axios.post('http://localhost:8081/house/addHouse', houseData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      console.log('House added successfully:', response.data);
+      // 清空表单或者进行其他操作
+    } catch (error) {
+      console.error('Error adding house:', error);
+    }
   };
 
   return (
@@ -35,9 +64,9 @@ function PostRent() {
               <label htmlFor="type">類型</label>
               <select id="type" value={type} onChange={e => setType(e.target.value)} className="form-control">
                 <option value="">選擇類型</option>
-                <option value="apartment">公寓</option>
-                <option value="house">獨棟房屋</option>
-                <option value="studio">工作室</option>
+                <option value="apartment">雅房</option>
+                <option value="house">套房</option>
+                {/* <option value="studio">工作室</option> */}
               </select>
             </div>
             <div className="form-group half-width">
@@ -54,7 +83,7 @@ function PostRent() {
                 <option value="">選擇租屋補助</option>
                 <option value="none">無補助</option>
                 <option value="government">政府補助</option>
-                <option value="private">私人補助</option>
+                {/* <option value="private">私人補助</option> */}
               </select>
             </div>
             <div className="form-group half-width">
@@ -68,8 +97,8 @@ function PostRent() {
               <input id="startDate" type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="date-input" />
             </div>
             <div className="form-group half-width">
-              <label htmlFor="leaseTerm">租期</label>
-              <input id="leaseTerm" type="text" value={leaseTerm} onChange={e => setLeaseTerm(e.target.value)} className="form-control" />
+              <label htmlFor="lease">租期</label>
+              <input id="lease" type="text" value={lease} onChange={e => setLease(e.target.value)} className="form-control" />
             </div>
           </div>
           <div className="form-group">
@@ -81,8 +110,12 @@ function PostRent() {
             <input id="contactInfo" type="text" value={contactInfo} onChange={e => setContactInfo(e.target.value)} className="form-control" />
           </div>
           <div className="form-group">
-            <label htmlFor="content">更多資訊</label>
-            <textarea id="content" value={content} onChange={e => setContent(e.target.value)} className="form-textarea" />
+            <label htmlFor="description">描述</label>
+            <textarea id="description" value={description} onChange={e => setDescription(e.target.value)} className="form-textarea" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="restriction">限制</label>
+            <textarea id="restriction" value={restriction} onChange={e => setRestriction(e.target.value)} className="form-textarea" />
           </div>
           <div className="form-group">
             <label htmlFor="image-upload" className="addimg-label">新增圖片</label>
