@@ -2,7 +2,8 @@ package com.goHome.houseRentingPlatform.model;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +18,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
+@JsonIgnoreProperties({"article"})
 @Table(name = "A_Comment")
 public class A_Comment {
 
@@ -26,7 +28,7 @@ public class A_Comment {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "article_id", nullable = false)
-    @JsonBackReference
+   @JsonIgnore
     private Article article;
 
     @ManyToOne(fetch = FetchType.EAGER)
