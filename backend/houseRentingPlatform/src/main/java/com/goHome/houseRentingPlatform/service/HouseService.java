@@ -31,7 +31,7 @@ public class HouseService {
         return houseRepository.findById(id)
                 .map(house ->{
                     house.setAddress(housedetail.getAddress());
-                    house.setName(housedetail.getName());
+                    house.setTitle(housedetail.getTitle());
                     house.setLat(housedetail.getLat());
                     house.setLng(housedetail.getLng());
                     house.setrestriction(housedetail.getrestriction());

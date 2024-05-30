@@ -33,7 +33,7 @@ function AppRoutes() {
       <Route path="/rentals" element={<RentalList />} />
       <Route path="/rental/:id" element={<RentalDetail />} />
       <Route path="/articles" element={<ArticleList />} />
-      <Route path="/article/:id" element={<ArticleDetail />} />
+      <Route path="/articles/:id" element={<ArticleDetail />} /> 
       <Route path="/account" element={<Account />} />
       <Route path="/savedhouse" element={<SavedHouse />} />
       <Route path="/mypost" element={<MyPost />} />
@@ -52,6 +52,7 @@ function AppRoutes() {
       <Route path="/postarticle" element={<PostArticle />} />
       
       <Route path="/savedarticle/:id" element={<ArticleDetail />} /> 
+      <Route path="/savedhouse/:id" element={<RentalDetail />} />
 
       <Route path="/article/:id" element={<ArticleDetail />} />
       <Route path="/savedhouse/:id" element={<RentalDetail />} />

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import Banner from './Banner';
 import GenericList from './GenericList';
@@ -6,29 +7,68 @@ import GenericList from './GenericList';
 
 
 function RentalList() {
-  const rentals = [];
-  for (let i = 1; i <= 18; i++) {
-    rentals.push({
-      id: i,
-      name: `${i}號房`,
-      address: `SomeAddress ${i}`,
-      img: `/images/room${i}.jpg`,
-      description: `描述 ${i}`,
-      link: `/rental/${i}`,
-      rent: i * 1000,
-      type: i % 2 === 0 ? "單人" : "雙人",
-      subsidy: i % 3 === 0 ? "有" : "無",
-      size: 3 + i,
-      rating: 4 + (i % 2)
-    });
-  }
-
+  
+  // const rentals = [];
+  // for (let i = 1; i <= 18; i++) {
+  //   rentals.push({
+  //     id: i,
+  //     name: `${i}號房`,
+  //     address: `SomeAddress ${i}`,
+  //     img: `/images/room${i}.jpg`,
+  //     description: `描述 ${i}`,
+  //     link: `/rental/${i}`,
+  //     rent: i * 1000,
+  //     type: i % 2 === 0 ? "單人" : "雙人",
+  //     subsidy: i % 3 === 0 ? "有" : "無",
+  //     size: 3 + i,
+  //     rating: 4 + (i % 2)
+  //   });
+  //}
+  const [houses, setHouses] = useState([]); 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [filters, setFilters] = useState({});
   const [addressSearch, setAddressSearch] = useState('');
   const [sortField, setSortField] = useState('');
   const [sortDirection, setSortDirection] = useState('');
+
+  useEffect(() => {
+    fetchHouses();
+  }, []);
+
+  const fetchHouses = async () => {
+    try {
+      const response = await axios.get('http://localhost:8081/house/getAllHouses');
+      console.log('API Response Status:', response.status); 
+      console.log('API Response Data:', response.data); 
+      if (Array.isArray(response.data)) {
+       
+        const cleanedData = response.data.map(house => ({
+          house_Id: house.house_Id,
+          contactInfo: house.contactInfo,
+          address: house.address,
+          title: house.title,
+          lat: house.lat,
+          lng: house.lng,
+          rate: house.rate,
+          type: house.type,
+          roomType: house.roomType,
+          price: house.price,
+          restriction: house.restriction,
+          size: house.size,
+          subsidy: house.subsidy,
+          startdate: house.startdate,
+          lease: house.lease,
+          description: house.description, 
+        }));
+        setHouses(cleanedData);
+      } else {
+        console.error('Fetched data is not an array:', response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching houses:', error);
+    }
+  };
 
   const handleClearFilters = () => {
     setFilters({});
@@ -38,13 +78,13 @@ function RentalList() {
     setCurrentPage(1); // Optionally reset to the first page
   };
 
-  const sortedFilteredItems = rentals.filter(rental => {
-    return (filters.rent ? rental.rent <= parseInt(filters.rent, 10) : true) &&
-      (filters.type ? rental.type === filters.type : true) &&
-      (filters.subsidy ? rental.subsidy === filters.subsidy : true) &&
-      (filters.size ? rental.size <= parseInt(filters.size, 10) : true) &&
-      (filters.rating ? rental.rating >= parseInt(filters.rating, 10) : true) &&
-      (addressSearch ? rental.address.toLowerCase().includes(addressSearch.toLowerCase()) : true);
+  const sortedFilteredItems = Array.isArray(houses) ? houses.filter(house => {
+    return (filters.price ? house.price <= parseInt(filters.price, 10) : true) &&
+      (filters.type ? house.type === filters.type : true) &&
+      (filters.subsidy ? house.subsidy === filters.subsidy : true) &&
+      (filters.size ? house.size <= parseInt(filters.size, 10) : true) &&
+      (filters.rating ? house.rate >= parseInt(filters.rate, 10) : true) &&
+      (addressSearch ? house.address.toLowerCase().includes(addressSearch.toLowerCase()) : true);
   }).sort((a, b) => {
     if (!sortField) return 0;
     if (a[sortField] < b[sortField]) {
@@ -54,7 +94,8 @@ function RentalList() {
       return sortDirection === 'ascending' ? 1 : -1;
     }
     return 0;
-  });
+  }) : [];
+
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -124,9 +165,9 @@ function RentalList() {
         <button onClick={handleClearFilters}>清除設定</button>
       </div>
       <GenericList
-        items={currentItems.map(rental => ({
-          content: `${rental.img}: ${rental.name}: ${rental.description}`,
-          link: rental.link
+        items={currentItems.map(house => ({
+          content: `${house.title}: ${house.description}`,
+          link: `/house/${house.house_Id}`
         }))}
       />
       <div className="pagination">

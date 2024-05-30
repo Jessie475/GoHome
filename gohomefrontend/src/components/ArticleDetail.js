@@ -46,9 +46,9 @@ function ArticleDetail() {
     setComment('');
   };
 
-  const likeComment = (id) => {
+  const likeComment = (commentId) => {
     setComments(comments.map(comment =>
-      comment.id === id ? { ...comment, likes: comment.likes + 1 } : comment
+      comment.id === commentId ? { ...comment, likes: comment.likes + 1 } : comment
     ));
   };
 

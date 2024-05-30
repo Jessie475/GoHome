@@ -170,9 +170,6 @@ function SavedArticle() {
     }
   }, [user]);
 
-  const handleItemClick = (id) => {
-    navigate(`/savedarticle/${id}`);
-  };
 
   return (
     <div>
