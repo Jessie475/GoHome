@@ -7,10 +7,17 @@ import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.House.RoomType;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.service.HouseService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -165,13 +172,51 @@ public class HouseController {
             return houseService.getAllHouses();
         }
     }
-    @PostMapping("/addHouse")//新增房屋資訊 OK
-    public ResponseEntity<House> saveHouse(@RequestBody House house) {
-        if (house == null) {
-            // 如果 house 对象为空，可以选择抛出异常或者返回 null
-            throw new IllegalArgumentException("House object cannot be null");
+    @PostMapping("/addHouse")
+    public ResponseEntity<House> saveHouse(
+        @RequestParam("title") String title,
+        @RequestParam("type") RoomType type,
+        @RequestParam("size") Double size,
+        @RequestParam("price") Integer price,
+        @RequestParam("subsidy") Boolean subsidy,
+        @RequestParam("lease") Double lease,
+        @RequestParam("startdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+        @RequestParam("address") String address,
+        @RequestParam("contactInfo") String contactInfo,
+        @RequestParam("description") String description,
+        @RequestParam("restriction") String restriction,
+        @RequestParam(value = "image", required = false) MultipartFile image)  {
+        
+        try {
+            House house = new House();
+            house.setTitle(title);
+            house.setroomType(type);
+            house.setsize(size);
+            house.setprice(price);
+            house.setsubsidy(subsidy);
+            house.setlease(lease);;
+            house.setstartdate(startDate);
+            house.setAddress(address);
+            house.setcontactInfo(contactInfo);
+            house.setdescription(description);;
+            house.setrestriction(restriction);;
+
+            // 如果有图片则设置图片
+            if (image != null && !image.isEmpty()) {
+                house.setImage(image.getBytes());
+            }
+
+            House savedHouse = houseService.saveHouse(house);
+            return ResponseEntity.ok(savedHouse);
+        } catch (IOException e) {
+            // 处理图片字节转换错误
+            //logger.error("Error saving house image", e);
+            return ResponseEntity.status(500).build();
+        } catch (Exception e) {
+            // 处理其他可能的错误
+            //logger.error("Error adding house", e);
+            return ResponseEntity.status(500).build();
         }
-        return ResponseEntity.ok(houseService.saveHouse(house));
     }
     
 

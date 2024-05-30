@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+// import { UserContext } from '../contexts/UserContext';
 import Banner from '../../components/Banner';
 import '../../css/PostPageStyles.css';
 
@@ -7,7 +8,7 @@ function PostRent() {
   const [title, setTitle] = useState('');
   const [type, setType] = useState('');
   const [size, setSize] = useState('');
-  const [rent, setRent] = useState('');
+  const [price, setPrice] = useState('');
   const [subsidy, setSubsidy] = useState('');
   const [lease, setLease] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -16,37 +17,39 @@ function PostRent() {
   const [description, setDescription] = useState('');
   const [restriction, setRestriction] = useState('');
   const [image, setImage] = useState(null);
+  //const { user } = useContext(UserContext); // 使用 useContext 獲取用戶信息
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const houseData = {
-      title,
-      type,
-      size,
-      rent,
-      subsidy,
-      lease,
-      startdate: startDate, // 确保字段名称与后端匹配
-      address,
-      contactInfo,
-      description,
-      restriction,
-      // 您可以根据需要处理 image 字段
-    };
-    
-    console.log(houseData);
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('type', type);
+    formData.append('size', size);
+    formData.append('price', price);
+    formData.append('subsidy', subsidy === 'true');
+    formData.append('lease', lease);
+    formData.append('startdate', startDate); // 確保字段名稱與後端匹配
+    formData.append('address', address);
+    formData.append('contactInfo', contactInfo);
+    formData.append('description', description);
+    formData.append('restriction', restriction);
+    //formData.append('userId', user.userId); // 添加用戶 ID
+    if (image) {
+      formData.append('image', image);
+    }
     
     try {
-      const response = await axios.post('http://localhost:8081/house/addHouse', houseData, {
+      const response = await axios.post('http://localhost:8081/house/addHouse', formData, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
       });
       
       console.log('House added successfully:', response.data);
-      // 清空表单或者进行其他操作
+      alert('已成功新增出租資訊'); // 顯示成功消息
     } catch (error) {
       console.error('Error adding house:', error);
+      alert('新增失敗，請重試'); // 顯示失敗消息
     }
   };
 
@@ -64,26 +67,22 @@ function PostRent() {
               <label htmlFor="type">類型</label>
               <select id="type" value={type} onChange={e => setType(e.target.value)} className="form-control">
                 <option value="">選擇類型</option>
-                <option value="apartment">雅房</option>
-                <option value="house">套房</option>
-                {/* <option value="studio">工作室</option> */}
+                <option value="STUDIO">套房</option>
+                <option value="ROOM">雅房</option>
               </select>
             </div>
             <div className="form-group half-width">
-              <label htmlFor="rent">租金</label>
-              <input id="rent" type="text" value={rent} onChange={e => setRent(e.target.value)} className="form-control" />
+              <label htmlFor="price">租金</label>
+              <input id="price" type="text" value={price} onChange={e => setPrice(e.target.value)} className="form-control" />
             </div>
-
-
           </div>
           <div className="form-row">
             <div className="form-group half-width">
               <label htmlFor="subsidy">租屋補助</label>
-              <select id="subsidy" value={subsidy} onChange={e => setSubsidy(e.target.value)} className="form-control">
+              <select id="subsidy" value={subsidy} onChange={e => setSubsidy(e.target.value === 'true')} className="form-control">
                 <option value="">選擇租屋補助</option>
-                <option value="none">無補助</option>
-                <option value="government">政府補助</option>
-                {/* <option value="private">私人補助</option> */}
+                <option value="false">無補助</option>
+                <option value="true">政府補助</option>
               </select>
             </div>
             <div className="form-group half-width">

@@ -62,6 +62,14 @@ public class House {
     @Column(name = "description", nullable = false, length = 255)
     private String description;
 
+    @Lob
+    @Column(name = "image", nullable = true)
+    private byte[] image;
+
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "user_id", nullable = false)
+    // private User user;
+
     //@ManyToOne
     //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     //private User user;
@@ -212,6 +220,22 @@ public class House {
     public void setComments(Set<H_Comment> comments) {
         this.comments = comments;
     }
+
+    public byte[] getImage() {
+      return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    // public User getUser() {
+    //   return user;
+    // }
+
+    // public void setUser(User user) {
+    //     this.user = user;
+    // }
 
     public enum RoomType {
         STUDIO, ROOM

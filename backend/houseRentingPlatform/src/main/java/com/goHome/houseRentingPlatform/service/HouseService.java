@@ -6,6 +6,8 @@ import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.repository.ArticleRepository;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
+import com.goHome.houseRentingPlatform.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ public class HouseService {
     private HouseRepository houseRepository;
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     
     public House saveHouse(House house) {//新增房子
@@ -26,6 +30,10 @@ public class HouseService {
     public List<House> getAllHouses() {//從資料庫抓所有房子資料
         return houseRepository.findAll();
     }
+
+    // public List<House> getHouseesByUserId(Integer userId) {
+    //     return houseRepository.findByUser_UserId(userId);
+    // }
 
     public House updateHouse(Integer id, House housedetail) {//更新房子資訊
         return houseRepository.findById(id)
