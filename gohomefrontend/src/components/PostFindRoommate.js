@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { UserContext } from '../contexts/UserContext';
 import '../css/PostPageStyles.css';
 import Banner from './Banner';
 
@@ -7,11 +9,38 @@ function PostFindRoommate() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
+    const { user } = useContext(UserContext);
 
-    const handleSubmit = (e) => {
+    if (!user) {
+        return <div>请先登录</div>;
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({ title, content, address, image });
-        // 提交到服務器
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('address', address);
+        formData.append('description', content);
+        formData.append('type', 'ROOMMATE_SEARCH'); // 默认类型为 ROOMMATE_SEARCH
+        formData.append('userId', user.userId);
+        if (image) {
+            formData.append('image', image);
+        }
+
+        console.log('Form Data:', Array.from(formData.entries()));
+
+        try {
+            const response = await axios.post('http://localhost:8081/article/addArticle', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log(response.data);
+            alert('已成功上傳');  // 显示成功消息
+        } catch (error) {
+            console.error('Error submitting article:', error);
+            alert('失敗，請重試');  // 显示失败消息
+        }
 
         // Clear all fields
         setTitle('');

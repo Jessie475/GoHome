@@ -125,3 +125,26 @@
 .filter-form button:hover {
   background-color: #df5b33;
 }
+
+.clear-button {
+  padding: 8px 16px;
+  background-color: #f76c6c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clear-button:hover {
+  background-color: #fa8383;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
