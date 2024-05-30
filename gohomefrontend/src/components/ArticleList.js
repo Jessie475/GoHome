@@ -103,7 +103,7 @@ function ArticleList() {
       <GenericList
         items={currentItems.map(article => ({
           content: `${article.title}: ${article.description}`,
-          link: `/article/${article.articleId}`
+          link: `/articles/${article.articleId}` // 确保链接正确指向文章详细页面
         }))}
       />
       <div className="pagination">

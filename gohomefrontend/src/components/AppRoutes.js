@@ -51,6 +51,9 @@ function AppRoutes() {
       
       <Route path="/savedarticle/:id" element={<ArticleDetail />} /> 
 
+      <Route path="/article/:id" element={<ArticleDetail />} />
+      <Route path="/savedhouse/:id" element={<RentalDetail />} />
+
     </Routes>
   );
 }
