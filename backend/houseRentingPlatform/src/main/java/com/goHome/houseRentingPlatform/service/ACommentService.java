@@ -22,12 +22,6 @@ public class ACommentService {
    // }
 
    public A_Comment addComment(A_Comment comment,User user) {
-    // 检查评论对象中是否有文章属性
-    if (comment.getArticle() == null) {
-        // 如果没有设置文章属性，可以抛出异常或者给出默认值
-        throw new IllegalArgumentException("评论对象必须包含有效的文章");
-    }
-    // 设置评论时间
     comment.setCommentTime(new Date());
     comment.setUser(user);
     return commentRepository.save(comment);
