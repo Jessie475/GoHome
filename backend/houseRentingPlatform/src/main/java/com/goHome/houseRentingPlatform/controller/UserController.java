@@ -68,21 +68,6 @@ public class UserController {
         }
     }
 
-    // //登入
-    // @PostMapping("/login")
-    // public ResponseEntity<?> login(@RequestBody User luser) {
-    //     try {
-    //         User users = userService.validateUser(luser.getName(), luser.getPassword());
-    //         if (users != null) {
-    //             return ResponseEntity.ok(users);
-    //         } else {
-    //             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-    //         }
-    //     } catch (Exception e) {
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    //     }
-    // }
-
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User luser) {
