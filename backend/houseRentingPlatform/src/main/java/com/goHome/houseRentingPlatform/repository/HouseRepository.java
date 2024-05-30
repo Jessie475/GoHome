@@ -19,7 +19,7 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
     //@SuppressWarnings("null")
     List<House> findAll();
 
-    @Query("SELECT h.name, h.price, h.roomType FROM House AS h")
+    @Query("SELECT h.title, h.price, h.roomType FROM House AS h")
     List<House> findAllHouseSummaries();
 
     House getHouseById(Integer id);
