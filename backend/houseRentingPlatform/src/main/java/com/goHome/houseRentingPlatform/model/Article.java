@@ -3,8 +3,8 @@ package com.goHome.houseRentingPlatform.model;
 import java.util.Date;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -24,7 +24,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@JsonIgnoreProperties({"user"})
+@JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
 @Table(name = "article")
 public class Article {
 
@@ -54,7 +54,7 @@ public class Article {
     private Date createdAt; 
 
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+   @JsonIgnore
     private Set<A_Comment> comments;
 
     @ManyToOne(fetch = FetchType.LAZY)
