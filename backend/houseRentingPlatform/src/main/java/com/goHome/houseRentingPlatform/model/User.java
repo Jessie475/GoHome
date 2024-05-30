@@ -53,6 +53,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> articles;
 
+    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    // private List<House> houses;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_favorite_house",
@@ -119,6 +122,14 @@ public class User {
     public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
+
+    // public List<House> getHouses() {
+    //     return houses;
+    // }
+
+    // public void setHouses(List<House> houses) {
+    //     this.houses = houses;
+    // }
     
     public String getPhone() {
         return phone;

@@ -26,6 +26,8 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
     List<House> findByLatIsNullAndLngIsNull();
 
+    //List<House> findByUser_UserId(Integer userId);
+
     List<House> findByAddressContaining(String partialAddress);
 
     List<House> findByRoomType(RoomType roomType);
