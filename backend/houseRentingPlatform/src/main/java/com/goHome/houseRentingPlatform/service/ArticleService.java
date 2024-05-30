@@ -43,6 +43,10 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+    public List<Article> getArticlesByUserId(Integer userId) {
+        return articleRepository.findByUser_UserId(userId);
+    }
+
     public void deleteArticle(Long articleId) {
         articleRepository.deleteById(articleId);
     }
@@ -58,6 +62,7 @@ public class ArticleService {
             article.setRate(updatedArticle.getRate());
             article.setDescription(updatedArticle.getDescription());
             article.setType(updatedArticle.getType());
+            article.setImage(updatedArticle.getImage());
             return articleRepository.save(article);
         }).orElseThrow(() -> new RuntimeException("Article not found!"));
     }
