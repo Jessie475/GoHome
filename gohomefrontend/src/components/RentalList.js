@@ -77,10 +77,11 @@ function RentalList() {
 
   const sortedFilteredItems = Array.isArray(houses) ? houses.filter(house => {
     return (filters.price ? house.price <= parseInt(filters.price, 10) : true) &&
-      (filters.type ? house.type === filters.type : true) &&
-      (filters.subsidy ? house.subsidy === filters.subsidy : true) &&
+      //(filters.type ? house.type === filters.type : true) &&
+      (filters.subsidy !== undefined ? house.subsidy === (filters.subsidy === '1') : true) &&
       (filters.size ? house.size <= parseInt(filters.size, 10) : true) &&
-      (filters.rating ? house.rate >= parseInt(filters.rate, 10) : true) &&
+      (filters.rate ? (filters.rate === '3' ? house.rate < 3 || house.rate === null : house.rate >= parseInt(filters.rate, 10) && house.rate < parseInt(filters.rate, 10) + 1) : true) &&
+      (filters.roomType ? house.roomType === filters.roomType : true) &&
       (addressSearch ? house.address.toLowerCase().includes(addressSearch.toLowerCase()) : true);
   }).sort((a, b) => {
     if (!sortField) return 0;
@@ -124,40 +125,41 @@ function RentalList() {
           value={addressSearch}
           onChange={handleAddressSearchChange}
         />
-        <select name="rent" onChange={handleFilterChange}>
+        <select name="price" onChange={handleFilterChange}>
           <option value="">房租區間</option>
-          <option value="0~5000">0~5000</option>
-          <option value="5001~10000">5001~10000</option>
+          <option value="5000">0~5000</option>
+          <option value="10000">5001~10000</option>
+          <option value="20000">10001~20000</option>
         </select>
-        <select name="type" onChange={handleFilterChange}>
+        <select name="roomType" onChange={handleFilterChange}>
           <option value="">所有類型</option>
-          <option value="單人">單人</option>
-          <option value="雙人">雙人</option>
+          <option value="ROOM">雅房</option>
+          <option value="STUDIO">套房</option>
         </select>
         <select name="subsidy" onChange={handleFilterChange}>
           <option value="">租房補助</option>
-          <option value="有">有</option>
-          <option value="無">無</option>
+          <option value="1">有</option>
+          <option value="0">無</option>
         </select>
         <select name="size" onChange={handleFilterChange}>
           <option value="">坪數區間</option>
-          <option value="0~5">0~5</option>
-          <option value="5~10">5~10</option>
+          <option value="5">0~5</option>
+          <option value="10">5~10</option>
         </select>
-        <select name="rating" onChange={handleFilterChange}>
+        <select name="rate" onChange={handleFilterChange}>
           <option value="">評價區間</option>
-          <option value="4~5">4~5顆星</option>
-          <option value="3~4">3~4顆星</option>
-          <option value="0~3">3顆星以下</option>
+          <option value="5">4~5顆星</option>
+          <option value="4">3~4顆星</option>
+          <option value="3">3顆星以下</option>
         </select>
         <select onChange={handleSortChange}>
           <option value="">排序方式</option>
-          <option value="rent|ascending">租金升序</option>
-          <option value="rent|descending">租金降序</option>
-          <option value="type|ascending">房型升序</option>
-          <option value="type|descending">房型降序</option>
-          <option value="rating|ascending">評價升序</option>
-          <option value="rating|descending">評價降序</option>
+          <option value="price|ascending">租金升序</option>
+          <option value="price|descending">租金降序</option>
+          <option value="roomType|ascending">房型升序</option>
+          <option value="roomType|descending">房型降序</option>
+          <option value="rate|ascending">評價升序</option>
+          <option value="rate|descending">評價降序</option>
         </select>
         <button onClick={handleClearFilters}>清除設定</button>
       </div>

@@ -5,6 +5,7 @@ import StarRatings from 'react-star-ratings';
 import '../css/RentalDetail.css';
 import Banner from './Banner';
 import GenericList from './GenericList';
+import dayjs from 'dayjs';  // 导入 Day.js
 
 function RentalDetail() {
   const { id } = useParams();
@@ -29,15 +30,15 @@ function RentalDetail() {
           console.error('Error fetching house:', error);
         });
 
-      // fetch(`http://localhost:8081/getHouseArticle/${rentalId}`)
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     setArticles(data.articles || []);
-      //     setComments(data.comments || []);
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching related articles:', error);
-      //   });
+      fetch(`http://localhost:8081/getHouseArticle/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          setArticles(data.articles || []);
+          // setComments(data.comments || []);
+        })
+        .catch(error => {
+          console.error('Error fetching related articles:', error);
+        });
     }
   }, [id]);
 
@@ -75,7 +76,7 @@ function RentalDetail() {
           <div className="contact-info">
             <p><strong>聯絡資訊：</strong>{house.contactInfo}</p>
             <p><strong>起租日：</strong>
-              {new Date(house.startDate).toLocaleDateString()}
+            {dayjs(house.startDate).format('YYYY-MM-DD')}  {/* 使用 Day.js 格式化日期 */}
             </p>
             <p><strong>租期：</strong>{house.lease}<strong>年</strong></p>
           </div>
@@ -105,20 +106,21 @@ function RentalDetail() {
             }))}
           />
         
-          {/* <div className="comments-list">
-            {comments.map(({ id, content, commentTime, likes }) => (
+          <div className="comments-list">
+            {articles.map(({ id, title, description, likes }) => (
               <div key={id} className="comment">
                 <div className="comment-header">
                   <span className="commenter-id">ID: {id}</span>
-                  <span className="comment-time">{new Date(commentTime).toLocaleString()}</span>
+                  <span className="comment-time">Title: {title}</span>
+                  <span className="comment-time">Description: {description}</span>
                 </div>
                 <p>{content}</p>
-                <div className="comment-actions">
+                {/* <div className="comment-actions">
                   <button className="comment-like-button" onClick={() => likeComment(id)}>讚 {likes}</button>
-                </div>
+                </div> */}
               </div>
             ))}
-          </div> */}
+          </div>
         
         <div className="pagination">
           {Array.from({ length: Math.ceil(currentItems.length / itemsPerPage) }, (_, i) => (
