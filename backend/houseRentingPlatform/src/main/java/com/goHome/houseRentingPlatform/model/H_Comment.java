@@ -67,5 +67,6 @@ public class H_Comment {
     public void setCommentTime(Date commentTime) {
         this.commentTime = commentTime;
     }
+
 }
 

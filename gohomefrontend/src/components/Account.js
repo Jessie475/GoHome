@@ -83,7 +83,7 @@ function Account() {
           <>
             <div>姓名: {user.name}</div>
             <div>性別: {user.gender}</div>
-            <div>帳號: {user.userId}</div>
+            <div>帳號: {user.email}</div>
           </>
         ) : (
           <div>尚未登入</div>

@@ -1,7 +1,3 @@
-
-
-
-
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -28,7 +24,7 @@ function ArticleList() {
       console.log('API Response Data:', response.data); 
       if (Array.isArray(response.data)) {
         const cleanedData = response.data.map(article => ({
-          articleId: article.articleId,
+          articleId: article.id,
           title: article.title,
           address: article.address,
           rate: article.rate,

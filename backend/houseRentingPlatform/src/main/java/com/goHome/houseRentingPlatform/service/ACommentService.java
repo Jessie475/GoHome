@@ -34,4 +34,10 @@ public class ACommentService {
     public List<A_Comment> getCommentsByArticleId(Long articleId) {
         return commentRepository.findByArticleId(articleId);
     }
+
+    public static List<A_Comment> getAcommentsByUserId(Integer userId) {
+        return A_CommentRepository.findByUserId(userId);
+    }
+
+
 }

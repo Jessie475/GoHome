@@ -20,7 +20,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","articles"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","articles","house"})
 @Table(name = "users")
 public class User {
     @Id
@@ -71,6 +71,9 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "article_id", referencedColumnName = "article_id")
     )
     private List<Article> favoriteArticles;
+
+
+
 
     // Constructors, getters, and setters
     public User() {
@@ -202,4 +205,11 @@ public class User {
     public void removeFavoriteArticle(Article article) {
         this.favoriteArticles.remove(article);
     }
+
+
+
+
+
+
+
 }

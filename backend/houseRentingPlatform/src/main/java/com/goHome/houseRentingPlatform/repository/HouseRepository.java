@@ -15,9 +15,6 @@ import java.util.List;
 @Repository
 @EnableJpaRepositories
 public interface HouseRepository extends JpaRepository<House,Integer> {
-    
-    //@SuppressWarnings("null")
-    List<House> findAll();
 
     @Query("SELECT h.title, h.price, h.roomType FROM House AS h")
     List<House> findAllHouseSummaries();
@@ -63,5 +60,11 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
     List<House> findAllByOrderBySizeDesc();
 
     List<House> findAllByOrderBySizeAsc();
+
+    static List<House> findByUser_UserId(Integer userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByUser_UserId'");
+    }
+
 
 }

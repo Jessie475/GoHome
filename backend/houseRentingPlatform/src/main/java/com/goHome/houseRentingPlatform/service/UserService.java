@@ -4,11 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import com.goHome.houseRentingPlatform.model.A_Comment;
 import com.goHome.houseRentingPlatform.model.Article;
+import com.goHome.houseRentingPlatform.model.H_Comment;
 import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
 import com.goHome.houseRentingPlatform.model.User.Identity;
+import com.goHome.houseRentingPlatform.repository.A_CommentRepository;
 import com.goHome.houseRentingPlatform.repository.ArticleRepository;
+import com.goHome.houseRentingPlatform.repository.H_CommentRepository;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.repository.UserRepository;
 
@@ -56,14 +60,12 @@ public class UserService{
     //     return userRepository.save(user);
     // }
 
-    public User validateUser(String username, String password) {
-        Optional<User> userOptional = userRepository.findByName(username);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            // 檢查密碼
-            if (user.getPassword().equals(password)) {
-                return user;
-            }
+    public User validateUser(String email, String password) {
+        User user = userRepository.findByEmail(email);
+
+        // 檢查密碼
+        if (user.getPassword().equals(password)) {
+            return user;
         }
         return null;
     }
@@ -81,6 +83,26 @@ public class UserService{
     public List<Article> getFavoriteArticles(Integer userId) {
         User user = userRepository.findByUserId(userId).orElse(null);
         return user != null ? user.getFavoriteArticles() : null;
+    }
+
+
+    
+    public List<H_Comment> getMyHComments(Integer userId) {
+        List<H_Comment> hComment = H_CommentRepository.findByUserId(userId);
+        return hComment;
+    }
+    public List<A_Comment> getMyAComments(Integer userId) {
+        List<A_Comment> aComment = A_CommentRepository.findByUserId(userId);
+        return aComment;
+    }
+
+    public List<House> getMyHouse(Integer userId) {
+        List<House> myhouse = HouseRepository.findByUser_UserId(userId);
+        return myhouse;
+    }
+    public List<Article> getMyArticle(Integer userId) {
+        List<Article> myarticle = ArticleRepository.findByUser_UserId(userId);
+        return myarticle;
     }
     
 

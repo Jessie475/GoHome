@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 
@@ -76,6 +77,7 @@ public class House {
     //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     //private User user;
     @OneToMany(mappedBy = "house", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<H_Comment> comments;
     public House(){}
 

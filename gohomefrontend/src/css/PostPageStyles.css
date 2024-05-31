@@ -7,7 +7,8 @@
 .post-container,
 .form-textarea {
   width: 98%;
-  margin: 20px auto;
+  margin: auto;
+  margin-bottom: 20px;
   padding: 0;
 }
 
@@ -24,6 +25,13 @@
   .half-width {
     width: 100%;
   }
+}
+
+.form-group label,
+.addimg-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #C38370;
 }
 
 .form-group input {
@@ -72,14 +80,13 @@ input[type="file"] {
   border: 1px solid #F6EEE0;
   background-color: #F6EEE0;
   border-radius: 5px;
+  max-width: 200px;
 }
 
 .button-container {
   display: flex;
-  justify-content: center;
-  /* 按钮居中显示 */
+  justify-content: space-between;
   margin-top: 20px;
-  /* 与上一个元素的间距 */
 }
 
 .submit-button {
@@ -90,8 +97,9 @@ input[type="file"] {
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  max-height: 47.5px;
 }
 
 .submit-button:hover {
-  background-color: #a3968b;
+  background-color: #fbe4bd;
 }
