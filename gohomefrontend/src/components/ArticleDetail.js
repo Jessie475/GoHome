@@ -67,6 +67,24 @@ function ArticleDetail() {
     }
   };
 
+  const handleFavorite = async () => {
+    if (!user || !user.userId || !id) return;
+    try {
+      const response = await fetch(`http://localhost:8081/article/favorite/${id}?userId=${user.userId}`, {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      alert('文章已成功收藏');
+    } catch (error) {
+      console.error('Error favoriting article:', error);
+      alert('文章收藏失败，请重试');
+    }
+  };
+
   const likeComment = (commentId) => {
     setComments(comments.map(comment =>
       comment.id === commentId ? { ...comment, likes: comment.likes + 1 } : comment
@@ -90,7 +108,7 @@ function ArticleDetail() {
           <p>{article.description}</p>
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>
-            <button className="favorite-button">收藏</button>
+            <button className="favorite-button" onClick={handleFavorite}>收藏</button>
             <button className="contact-button">聯絡發文者</button>
           </div>
         </div>
