@@ -25,8 +25,8 @@ public class House {
     @Column(name = "address", nullable = false, length = 255)
     private String address;
 
-    @Column(name = "name", nullable = false, length = 255)
-    private String name;
+    @Column(name = "title", nullable = false, length = 255)
+    private String title;
 
     @Column(name = "lat", nullable = true)
     private Double lat;
@@ -62,6 +62,14 @@ public class House {
     @Column(name = "description", nullable = false, length = 255)
     private String description;
 
+    @Lob
+    @Column(name = "image", nullable = true)
+    private byte[] image;
+
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "user_id", nullable = false)
+    // private User user;
+
     //@ManyToOne
     //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     //private User user;
@@ -69,12 +77,12 @@ public class House {
     private Set<H_Comment> comments;
     public House(){}
 
-    public House(Integer house_id, String contactinfo, String address, String name, Double lat, Double lng, Double rate, 
+    public House(Integer house_id, String contactinfo, String address, String title, Double lat, Double lng, Double rate, 
     RoomType roomType, Integer price, String restriction, Double size, Boolean subsidy, LocalDate startdate, Double lease,String description ) {
         this.house_Id = house_id;
         this.contactInfo = contactinfo;
         this.address = address;
-        this.name = name;
+        this.title = title;
         this.lat = lat;
         this.lng = lng;
         this.rate = rate;
@@ -112,12 +120,12 @@ public class House {
         this.address = address;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Double getLat() {
@@ -212,6 +220,22 @@ public class House {
     public void setComments(Set<H_Comment> comments) {
         this.comments = comments;
     }
+
+    public byte[] getImage() {
+      return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    // public User getUser() {
+    //   return user;
+    // }
+
+    // public void setUser(User user) {
+    //     this.user = user;
+    // }
 
     public enum RoomType {
         STUDIO, ROOM

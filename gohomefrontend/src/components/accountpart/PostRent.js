@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+// import { UserContext } from '../contexts/UserContext';
 import Banner from '../../components/Banner';
 import '../../css/PostPageStyles.css';
 
@@ -6,19 +8,49 @@ function PostRent() {
   const [title, setTitle] = useState('');
   const [type, setType] = useState('');
   const [size, setSize] = useState('');
-  const [rent, setRent] = useState('');
+  const [price, setPrice] = useState('');
   const [subsidy, setSubsidy] = useState('');
-  const [leaseTerm, setLeaseTerm] = useState('');
+  const [lease, setLease] = useState('');
   const [startDate, setStartDate] = useState('');
   const [address, setAddress] = useState('');
   const [contactInfo, setContactInfo] = useState('');
-  const [content, setContent] = useState('');
+  const [description, setDescription] = useState('');
+  const [restriction, setRestriction] = useState('');
   const [image, setImage] = useState(null);
+  //const { user } = useContext(UserContext); // 使用 useContext 獲取用戶信息
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ title, type, size, rent, subsidy, leaseTerm, startDate, address, contactInfo, content, image });
-    // 添加提交到服务器的代码
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('type', type);
+    formData.append('size', size);
+    formData.append('price', price);
+    formData.append('subsidy', subsidy === 'true');
+    formData.append('lease', lease);
+    formData.append('startdate', startDate); // 確保字段名稱與後端匹配
+    formData.append('address', address);
+    formData.append('contactInfo', contactInfo);
+    formData.append('description', description);
+    formData.append('restriction', restriction);
+    //formData.append('userId', user.userId); // 添加用戶 ID
+    if (image) {
+      formData.append('image', image);
+    }
+    
+    try {
+      const response = await axios.post('http://localhost:8081/house/addHouse', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      
+      console.log('House added successfully:', response.data);
+      alert('已成功新增出租資訊'); // 顯示成功消息
+    } catch (error) {
+      console.error('Error adding house:', error);
+      alert('新增失敗，請重試'); // 顯示失敗消息
+    }
   };
 
   return (
@@ -35,26 +67,22 @@ function PostRent() {
               <label htmlFor="type">類型</label>
               <select id="type" value={type} onChange={e => setType(e.target.value)} className="form-control">
                 <option value="">選擇類型</option>
-                <option value="apartment">公寓</option>
-                <option value="house">獨棟房屋</option>
-                <option value="studio">工作室</option>
+                <option value="STUDIO">套房</option>
+                <option value="ROOM">雅房</option>
               </select>
             </div>
             <div className="form-group half-width">
-              <label htmlFor="rent">租金</label>
-              <input id="rent" type="text" value={rent} onChange={e => setRent(e.target.value)} className="form-control" />
+              <label htmlFor="price">租金</label>
+              <input id="price" type="text" value={price} onChange={e => setPrice(e.target.value)} className="form-control" />
             </div>
-
-
           </div>
           <div className="form-row">
             <div className="form-group half-width">
               <label htmlFor="subsidy">租屋補助</label>
-              <select id="subsidy" value={subsidy} onChange={e => setSubsidy(e.target.value)} className="form-control">
+              <select id="subsidy" value={subsidy} onChange={e => setSubsidy(e.target.value === 'true')} className="form-control">
                 <option value="">選擇租屋補助</option>
-                <option value="none">無補助</option>
-                <option value="government">政府補助</option>
-                <option value="private">私人補助</option>
+                <option value="false">無補助</option>
+                <option value="true">政府補助</option>
               </select>
             </div>
             <div className="form-group half-width">
@@ -68,8 +96,8 @@ function PostRent() {
               <input id="startDate" type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="date-input" />
             </div>
             <div className="form-group half-width">
-              <label htmlFor="leaseTerm">租期</label>
-              <input id="leaseTerm" type="text" value={leaseTerm} onChange={e => setLeaseTerm(e.target.value)} className="form-control" />
+              <label htmlFor="lease">租期</label>
+              <input id="lease" type="text" value={lease} onChange={e => setLease(e.target.value)} className="form-control" />
             </div>
           </div>
           <div className="form-group">
@@ -81,8 +109,12 @@ function PostRent() {
             <input id="contactInfo" type="text" value={contactInfo} onChange={e => setContactInfo(e.target.value)} className="form-control" />
           </div>
           <div className="form-group">
-            <label htmlFor="content">更多資訊</label>
-            <textarea id="content" value={content} onChange={e => setContent(e.target.value)} className="form-textarea" />
+            <label htmlFor="description">描述</label>
+            <textarea id="description" value={description} onChange={e => setDescription(e.target.value)} className="form-textarea" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="restriction">限制</label>
+            <textarea id="restriction" value={restriction} onChange={e => setRestriction(e.target.value)} className="form-textarea" />
           </div>
           <div className="form-group">
             <label htmlFor="image-upload" className="addimg-label">新增圖片</label>

@@ -3,7 +3,8 @@ package com.goHome.houseRentingPlatform.model;
 import java.util.Date;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,13 +15,16 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-
 @Entity
+@JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
 @Table(name = "article")
 public class Article {
 
@@ -35,7 +39,7 @@ public class Article {
     @Column(nullable = false)
     private String address;
 
-    @Column
+    @Column(nullable = true) 
     private Double rate;
 
     @Column(nullable = false, length = 2000)
@@ -50,8 +54,12 @@ public class Article {
     private Date createdAt; 
 
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+   @JsonIgnore
     private Set<A_Comment> comments;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "lat", nullable = true)
     private Double lat;
@@ -59,10 +67,14 @@ public class Article {
     @Column(name = "lng", nullable = true)
     private Double lng;
 
+    @Lob
+    @Column(name = "image", nullable = true)
+    private byte[] image;
+
     // Constructors, Getters and Setters
     public Article() {}
 
-    public Article(Long id,String title, String address, Double rate, String description, ArticleType type, Double lat, Double lng) {
+    public Article(Long id, String title, String address, Double rate, String description, ArticleType type, Double lat, Double lng) {
         this.articleId = id;
         this.title = title;
         this.address = address;
@@ -83,6 +95,14 @@ public class Article {
 
     public String getTitle() {
         return title;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setTitle(String title) {
@@ -120,6 +140,7 @@ public class Article {
     public void setType(ArticleType type) {
         this.type = type;
     }
+
     public Double getLat() {
         return lat;
     }
@@ -152,7 +173,15 @@ public class Article {
         this.comments = comments;
     }
 
-public enum ArticleType {
-    HOUSE_REVIEW, ROOMMATE_SEARCH
-}
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public enum ArticleType {
+        HOUSE_REVIEW, ROOMMATE_SEARCH
+    }
 }

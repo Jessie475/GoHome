@@ -1,9 +1,10 @@
 package com.goHome.houseRentingPlatform.controller;
 
+import java.util.Date;
 import java.util.List;
 
-import com.goHome.houseRentingPlatform.model.House;
-import com.goHome.houseRentingPlatform.repository.HouseRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.goHome.houseRentingPlatform.repository.ArticleRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
+import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
+import com.goHome.houseRentingPlatform.repository.ArticleRepository;
 import com.goHome.houseRentingPlatform.service.ArticleService;
 import com.goHome.houseRentingPlatform.service.UserService;
 
 @RestController
-@RequestMapping("/articles")
+@RequestMapping("/article")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ArticleController {
 
@@ -36,13 +39,51 @@ public class ArticleController {
     private ArticleRepository ArticleRepository;
     @Autowired
     private UserService userService;
+private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
 
     //新增文章
     @PostMapping("/addArticle")
-    public String createArticle(@RequestBody Article article,@RequestParam Integer userId) {
-        articleService.saveArticle(article,userId);
-        return  "New house is added";
+    public ResponseEntity<Article> addArticle(
+            @RequestParam("title") String title,
+            @RequestParam("address") String address,
+            @RequestParam("description") String description,
+            @RequestParam("type") ArticleType type,
+            @RequestParam("userId") Integer userId,
+            @RequestParam(value = "rate", required = false) Double rate,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
+
+        try {
+            User user = userService.getUserById(userId);
+            if (user == null) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            Article article = new Article();
+            article.setTitle(title);
+            article.setAddress(address);
+            article.setDescription(description);
+            article.setType(type);
+            article.setCreatedAt(new Date());
+            article.setUser(user); // 关联 User 对象
+
+            // 如果文章类型是HOUSE_REVIEW则设置评分
+            if (type == ArticleType.HOUSE_REVIEW) {
+                article.setRate(rate);
+            }
+
+            // 如果有图片则设置图片
+            if (image != null && !image.isEmpty()) {
+                article.setImage(image.getBytes());
+            }
+
+            Article savedArticle = articleService.saveArticle(article, userId);
+            return ResponseEntity.ok(savedArticle);
+        } catch (Exception e) {
+            logger.error("Error adding article", e);
+            return ResponseEntity.status(500).build();
+        }
     }
+
 
     //更新文章
     @PutMapping("/Update/{id}")
@@ -55,6 +96,13 @@ public class ArticleController {
     public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
         articleService.deleteArticle(id);
         return ResponseEntity.ok().build();
+    }
+
+    //特定user
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Article>> getArticlesByUserId(@PathVariable Integer userId) {
+        List<Article> articles = articleService.getArticlesByUserId(userId);
+        return ResponseEntity.ok(articles);
     }
 
     @GetMapping("/getArticle/{id}")
@@ -135,4 +183,3 @@ public class ArticleController {
 
 
 }
-
