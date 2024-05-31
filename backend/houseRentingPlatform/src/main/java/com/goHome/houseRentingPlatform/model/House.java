@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 
 import jakarta.persistence.*;
@@ -12,6 +13,7 @@ import jakarta.persistence.*;
 
 
 @Entity
+@JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
 @Table(name = "house")
 public class House {
     @Id
