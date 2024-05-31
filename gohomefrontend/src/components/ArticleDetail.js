@@ -60,10 +60,10 @@ function ArticleDetail() {
       const newComment = await response.json();
       setComments([...comments, newComment]);
       setComment('');
-      alert('评论已成功发布');
+      alert('評論已成功發佈');
     } catch (error) {
       console.error('Error submitting comment:', error);
-      alert('评论发布失败，请重试');
+      alert('評論發佈失敗，請重試');
     }
   };
 
@@ -81,7 +81,7 @@ function ArticleDetail() {
       alert('文章已成功收藏');
     } catch (error) {
       console.error('Error favoriting article:', error);
-      alert('文章收藏失败，请重试');
+      alert('文章收藏失敗，請重試');
     }
   };
 
@@ -121,7 +121,7 @@ function ArticleDetail() {
             placeholder="新增留言..."
           />
           <div className="comment-actions">
-            <button className="comment-submit-button" onClick={handleCommentSubmit}>發布</button>
+            <button className="comment-submit-button" onClick={handleCommentSubmit}>發佈</button>
           </div>
         </div>
         <div className="comments-list">
