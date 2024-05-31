@@ -107,6 +107,7 @@ private static final Logger logger = LoggerFactory.getLogger(ArticleController.c
 
     @GetMapping("/getArticle/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
+        logger.info("Received request for article with id: {}", id);
         Article article = articleService.findArticleById(id)
             .orElseThrow(() -> new RuntimeException("Article not found!"));
         return ResponseEntity.ok(article);
