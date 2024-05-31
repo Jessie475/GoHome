@@ -13,7 +13,7 @@ function ArticleDetail() {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    if (id) {
+    if (id&& id !== 'undefined') {
       fetch(`http://localhost:8081/article/getArticle/${id}`)
         .then(response => response.json())
         .then(data => {
@@ -27,10 +27,11 @@ function ArticleDetail() {
       fetch(`http://localhost:8081/A_comments/article/${id}`)
         .then(response => response.json())
         .then(data => {
-          setComments(data);
+          setComments(Array.isArray(data) ? data : []);
         })
         .catch(error => {
           console.error('Error fetching comments:', error);
+          setComments([]);
         });
     }
   }, [id]);
