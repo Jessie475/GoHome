@@ -1,6 +1,5 @@
 import axios from 'axios';
-import React, { useEffect,useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import Banner from './Banner';
 import GenericList from './GenericList';
 
@@ -167,7 +166,7 @@ function RentalList() {
       <GenericList
         items={currentItems.map(house => ({
           content: `${house.title}: ${house.description}`,
-          link: `/house/${house.house_Id}`
+          link: `/rental/${house.house_Id}`
         }))}
       />
       <div className="pagination">

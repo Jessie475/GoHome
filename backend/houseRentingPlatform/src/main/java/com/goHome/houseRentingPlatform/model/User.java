@@ -20,7 +20,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","articles"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","articles","house"})
 @Table(name = "users")
 public class User {
     @Id

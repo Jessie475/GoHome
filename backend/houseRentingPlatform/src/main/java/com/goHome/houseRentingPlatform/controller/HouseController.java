@@ -34,12 +34,11 @@ public class HouseController {
         this.houseService = houseService;
     }
 
-    @GetMapping("/getAllHouses")//出現房屋資訊OK
-    public List<House> getAllHouses(){
-        //List<House> houses = houseService.getAllHouses();
-        return houseRepository.findAll();
+    @GetMapping("/getAllHouses")
+    public ResponseEntity<List<House>> getAllHouses() {
+        List<House> houses = houseService.getAllHouses();
+        return ResponseEntity.ok(houses);
     }
-
     @GetMapping("/")
     public List<House> getHousesWithBlankLatLng() {
         return houseService.getHousesWithBlankLatLng();

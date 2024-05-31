@@ -15,9 +15,6 @@ import java.util.List;
 @Repository
 @EnableJpaRepositories
 public interface HouseRepository extends JpaRepository<House,Integer> {
-    
-    //@SuppressWarnings("null")
-    List<House> findAll();
 
     @Query("SELECT h.title, h.price, h.roomType FROM House AS h")
     List<House> findAllHouseSummaries();
