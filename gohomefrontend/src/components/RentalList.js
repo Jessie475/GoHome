@@ -3,10 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Banner from './Banner';
 import GenericList from './GenericList';
 
-
-
 function RentalList() {
-  
+
   // const rentals = [];
   // for (let i = 1; i <= 18; i++) {
   //   rentals.push({
@@ -41,7 +39,7 @@ function RentalList() {
       console.log('API Response Status:', response.status); 
       console.log('API Response Data:', response.data); 
       if (Array.isArray(response.data)) {
-       
+      
         const cleanedData = response.data.map(house => ({
           house_Id: house.id,
           contactInfo: house.contactInfo,
