@@ -44,7 +44,7 @@ function RentalList() {
       if (Array.isArray(response.data)) {
        
         const cleanedData = response.data.map(house => ({
-          house_Id: house.house_Id,
+          house_Id: house.id,
           contactInfo: house.contactInfo,
           address: house.address,
           title: house.title,

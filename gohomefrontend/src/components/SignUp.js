@@ -32,7 +32,7 @@ function SignUp() {
       if (response.ok) {
         const result = await response.json();
         console.log('User registered successfully:', result);
-        navigate('/'); // 注册成功后导航到登录页面
+        navigate('/'); // 註冊成功後到登入頁面
       } else {
         const errorText = await response.text();
         setError(errorText);
