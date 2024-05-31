@@ -7,75 +7,53 @@ import Banner from './Banner';
 import GenericList from './GenericList';
 
 function RentalDetail() {
-  const { rentalId } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-  const [listType, setListType] = useState('articles'); // 狀態
-  const [rental, setRental] = useState(null);
-  const [relatedRentals, setRelatedRentals] = useState([]);
+  const [listType, setListType] = useState('articles'); // 确保正确定义
   const [favorite, setFavorite] = useState(false);
 
-  useEffect(() => {
-    axios.get(`http://localhost:8081/house/getHouse/{id}`)
-        .then(response => setRental(response.data))
-        .catch(error => console.error(error));
+  const [house, setHouse] = useState(null);
+  const [articles, setArticles] = useState([]);
+  const [comments, setComments] = useState([]);
 
-    // axios.get(`/api/houses/${rentalId}/related`)
-    //     .then(response => setRelatedRentals(response.data))
-    //     .catch(error => console.error(error));
-}, [rentalId]);
+  useEffect(() => {
+    if (id) {
+      fetch(`http://localhost:8081/house/getHouse/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          setHouse(data);
+        })
+        .catch(error => {
+          console.error('Error fetching house:', error);
+        });
+
+      // fetch(`http://localhost:8081/getHouseArticle/${rentalId}`)
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     setArticles(data.articles || []);
+      //     setComments(data.comments || []);
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching related articles:', error);
+      //   });
+    }
+  }, [id]);
 
   const showMap = () => {
-    navigate(`/housemap/${rentalId}`);  // 跳轉
+    navigate(`/housemap/${id}`); // 跳转
   };
 
   const toggleFavorite = () => setFavorite(!favorite);
 
-  // const rental = {
-  //   title: '新光路精製雙人套房',
-  //   id: rentalId,
-  //   type: '單人房',
-  //   rent: '15000元/月',
-  //   description: '這是一間非常適合單身人士的單人房，配有現代化的設施。',
-  //   contact: {
-  //     name: '黃小姐',
-  //     phone: '0918883333',
-  //     lineId: '0918883333'
-  //   },
-  //   address: '台北市大安區和平東路二段2號2樓'
-  // };
-
-  // // 相關的租房文章
-  // const relatedRentals = [];
-  // for (let i = 1; i <= 18; i++) {
-  //   relatedRentals.push({
-  //     id: i,
-  //     name: `相關租房 ${i}`,
-  //     description: `描述 ${i}`,
-  //     link: `/rental/${i}`
-  //   });
-  // }
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  // 模擬文章和留言的數據
-  const articles = [
-    { id: 1, name: 'Article 1', description: 'Description 1', link: '/article/1' },
-    { id: 2, name: 'Article 2', description: 'Description 2', link: '/article/2' },
-  ];
-
-  const messages = [
-    { id: 1, name: 'Message 1', description: 'Message Content 1', link: '/message/1' },
-    { id: 2, name: 'Message 2', description: 'Message Content 2', link: '/message/2' },
-  ];
-
-  const currentItems = listType === 'articles' ? articles : messages; // 條件渲染
-
+  const currentItems = listType === 'articles' ? articles : comments;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  if (!rental) return <div>Loading...</div>;
+  if (!house) return <div>Loading...</div>;
 
   return (
     <div>
@@ -85,8 +63,8 @@ function RentalDetail() {
       <div className="rental-detail-container">
         <div className="rental-grid">
           <div className="rental-type">
-            <p className='rental-title'><strong>房型：</strong>{rental.name}</p>
-            <StarRatings rating={3.5} starDimension="20px" starSpacing="2px" starRatedColor="gold" />
+            <p className='rental-title'><strong>標題：</strong>{house.title}</p>
+            <StarRatings rating={house.rate} starDimension="20px" starSpacing="2px" starRatedColor="gold" />
             <div className="rental-control-buttons">
               <button className="toggle-favorite" onClick={toggleFavorite}>
                 {favorite ? "取消收藏" : "收藏"}
@@ -95,15 +73,20 @@ function RentalDetail() {
             </div>
           </div>
           <div className="contact-info">
-            <p><strong>聯絡人：</strong>{rental.contact.name}</p>
-            <p><strong>電話：</strong>{rental.contact.phone}</p>
-            <p><strong>Line ID：</strong>{rental.contact.lineId}</p>
+            <p><strong>聯絡資訊：</strong>{house.contactInfo}</p>
+            <p><strong>起租日：</strong>
+              {new Date(house.startDate).toLocaleDateString()}
+            </p>
+            <p><strong>租期：</strong>{house.lease}<strong>年</strong></p>
           </div>
           <div className="rental-info">
-            <p><strong>地址：</strong>{rental.address}</p>
-            <p><strong>房型：</strong>{rental.room_type}</p>
-            <p><strong>租金：</strong>{rental.price}</p>
-            <p><strong>詳細描述：</strong>{rental.description}</p>
+            <p><strong>地址：</strong>{house.address}</p>
+            <p><strong>房型：</strong>{house.roomType}</p>
+            <p><strong>房屋大小：</strong>{house.size}</p>
+            <p><strong>租金：</strong>{house.price}</p>
+            <p><strong>租屋補助：</strong>{house.subsidy ? '是' : '否'}</p>
+            <p><strong>詳細描述：</strong>{house.description}</p>
+            <p><strong>限制：</strong>{house.restriction}</p>
           </div>
           <div className="rental-images">
             {/* <ImageCarousel images={rental.images} /> */}
@@ -114,12 +97,29 @@ function RentalDetail() {
           <button className="switch-articles" onClick={() => setListType('articles')}>相關文章</button>
           <button className="switch-messages" onClick={() => setListType('messages')}>相關留言</button>
         </div>
-        <GenericList
-          items={currentItems.map(item => ({
-            content: `${item.name}: ${item.description}`,
-            link: item.link
-          }))}
-        />
+        
+          <GenericList
+            items={currentItems.map(item => ({
+              content: `${item.name}: ${item.description}`,
+              link: item.link
+            }))}
+          />
+        
+          {/* <div className="comments-list">
+            {comments.map(({ id, content, commentTime, likes }) => (
+              <div key={id} className="comment">
+                <div className="comment-header">
+                  <span className="commenter-id">ID: {id}</span>
+                  <span className="comment-time">{new Date(commentTime).toLocaleString()}</span>
+                </div>
+                <p>{content}</p>
+                <div className="comment-actions">
+                  <button className="comment-like-button" onClick={() => likeComment(id)}>讚 {likes}</button>
+                </div>
+              </div>
+            ))}
+          </div> */}
+        
         <div className="pagination">
           {Array.from({ length: Math.ceil(currentItems.length / itemsPerPage) }, (_, i) => (
             <button

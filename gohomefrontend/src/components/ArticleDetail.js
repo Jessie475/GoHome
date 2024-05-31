@@ -13,10 +13,13 @@ function ArticleDetail() {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    if (id) {
+    if (id && id !== 'undefined') {
+      console.log(`Fetching article with id: ${id}`);
+      
       fetch(`http://localhost:8081/article/getArticle/${id}`)
         .then(response => response.json())
         .then(data => {
+          console.log('Fetched article:', data);
           setArticle(data);
           setLikes(data.likes || 0);
         })
@@ -27,10 +30,12 @@ function ArticleDetail() {
       fetch(`http://localhost:8081/A_comments/article/${id}`)
         .then(response => response.json())
         .then(data => {
-          setComments(data);
+          console.log('Fetched comments:', data);
+          setComments(Array.isArray(data) ? data : []);
         })
         .catch(error => {
           console.error('Error fetching comments:', error);
+          setComments([]);
         });
     }
   }, [id]);
@@ -55,10 +60,28 @@ function ArticleDetail() {
       const newComment = await response.json();
       setComments([...comments, newComment]);
       setComment('');
-      alert('评论已成功发布');
+      alert('評論已成功發佈');
     } catch (error) {
       console.error('Error submitting comment:', error);
-      alert('评论发布失败，请重试');
+      alert('評論發佈失敗，請重試');
+    }
+  };
+
+  const handleFavorite = async () => {
+    if (!user || !user.userId || !id) return;
+    try {
+      const response = await fetch(`http://localhost:8081/article/favorite/${id}?userId=${user.userId}`, {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      alert('文章已成功收藏');
+    } catch (error) {
+      console.error('Error favoriting article:', error);
+      alert('文章收藏失敗，請重試');
     }
   };
 
@@ -85,7 +108,7 @@ function ArticleDetail() {
           <p>{article.description}</p>
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>
-            <button className="favorite-button">收藏</button>
+            <button className="favorite-button" onClick={handleFavorite}>收藏</button>
             <button className="contact-button">聯絡發文者</button>
           </div>
         </div>
@@ -98,14 +121,14 @@ function ArticleDetail() {
             placeholder="新增留言..."
           />
           <div className="comment-actions">
-            <button className="comment-submit-button" onClick={handleCommentSubmit}>發布</button>
+            <button className="comment-submit-button" onClick={handleCommentSubmit}>發佈</button>
           </div>
         </div>
         <div className="comments-list">
-          {comments.map(({ id, content, commentTime, likes }) => (
+          {comments.map(({ id, content, commentTime, userId }) => (
             <div key={id} className="comment">
               <div className="comment-header">
-                <span className="commenter-id">ID: {id}</span>
+                <span className="commenter-id">User ID: {userId.userId}</span>
                 <span className="comment-time">{new Date(commentTime).toLocaleString()}</span>
               </div>
               <p>{content}</p>
