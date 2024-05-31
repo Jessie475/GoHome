@@ -57,23 +57,23 @@ function Login() {
         <div className="card-body">
           {error && <h1 className="text-danger">{error}</h1>}
           <form onSubmit={handleSumbit}>
-            <div className="form-group">
+            <div className="login-form-group">
               <label htmlFor="username">用戶名</label>
               <input
                 type="text"
-                className="form-control"
+                className="login-form-control"
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.currentTarget.value)}
               />
             </div>
-            <div className="form-group">
+            <div className="login-form-group">
               <label htmlFor="password">密碼</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.currentTarget.value)}
-                className="form-control"
+                className="login-form-control"
                 id="password"
               />
             </div>
