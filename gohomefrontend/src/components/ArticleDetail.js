@@ -13,10 +13,13 @@ function ArticleDetail() {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    if (id&& id !== 'undefined') {
+    if (id && id !== 'undefined') {
+      console.log(`Fetching article with id: ${id}`);
+      
       fetch(`http://localhost:8081/article/getArticle/${id}`)
         .then(response => response.json())
         .then(data => {
+          console.log('Fetched article:', data);
           setArticle(data);
           setLikes(data.likes || 0);
         })
@@ -27,6 +30,7 @@ function ArticleDetail() {
       fetch(`http://localhost:8081/A_comments/article/${id}`)
         .then(response => response.json())
         .then(data => {
+          console.log('Fetched comments:', data);
           setComments(Array.isArray(data) ? data : []);
         })
         .catch(error => {
@@ -103,10 +107,10 @@ function ArticleDetail() {
           </div>
         </div>
         <div className="comments-list">
-          {comments.map(({ id, content, commentTime, likes }) => (
+          {comments.map(({ id, content, commentTime, userId }) => (
             <div key={id} className="comment">
               <div className="comment-header">
-                <span className="commenter-id">ID: {id}</span>
+                <span className="commenter-id">User ID: {userId.userId}</span>
                 <span className="comment-time">{new Date(commentTime).toLocaleString()}</span>
               </div>
               <p>{content}</p>
