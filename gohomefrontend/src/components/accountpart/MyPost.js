@@ -44,7 +44,7 @@ function MyPost() {
 
   useEffect(() => {
     if (user && user.userId) {
-      fetch(`http://localhost:8081/users/${user.userId}/myhouses`)
+      fetch(`http://localhost:8081/users/${user.userId}/mypost`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -67,7 +67,7 @@ function MyPost() {
         title="我的文章"
         items={posts.filter(post => post.name.includes(searchTerm)).map(post => ({
           content: `${post.name}: ${post.description}`,
-          link: `/mypost/${post.id}`  // 連接至原文
+          link: `/mypost/${post.id}`
         }))}
       />
     </div>

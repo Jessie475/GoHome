@@ -130,16 +130,16 @@ public class UserController {
         }
     }
 
-    // get我的房屋
-    @GetMapping("/{userId}/myhouse")
-    public ResponseEntity<List<House>> getMyHouse(@PathVariable Integer userId) {
-        List<House> myhouses = new ArrayList<>(userService.getMyHouse(userId));
-        if (myhouses != null && !myhouses.isEmpty()) {
-            return ResponseEntity.ok(myhouses);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    // // get我的房屋
+    // @GetMapping("/{userId}/myhouse")
+    // public ResponseEntity<List<House>> getMyHouse(@PathVariable Integer userId) {
+    //     List<House> myhouses = new ArrayList<>(userService.getMyHouse(userId));
+    //     if (myhouses != null && !myhouses.isEmpty()) {
+    //         return ResponseEntity.ok(myhouses);
+    //     } else {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    // }
 
     // get我的文章
     @GetMapping("/{userId}/myarticle")

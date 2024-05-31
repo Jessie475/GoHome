@@ -73,8 +73,6 @@ public class User {
     private List<Article> favoriteArticles;
 
 
-
-
     // Constructors, getters, and setters
     public User() {
     }
@@ -205,11 +203,6 @@ public class User {
     public void removeFavoriteArticle(Article article) {
         this.favoriteArticles.remove(article);
     }
-
-
-
-
-
 
 
 }
