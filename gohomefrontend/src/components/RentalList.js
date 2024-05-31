@@ -1,6 +1,5 @@
 import axios from 'axios';
-import React, { useEffect,useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import Banner from './Banner';
 import GenericList from './GenericList';
 
@@ -44,7 +43,7 @@ function RentalList() {
       if (Array.isArray(response.data)) {
        
         const cleanedData = response.data.map(house => ({
-          house_Id: house.house_Id,
+          house_Id: house.id,
           contactInfo: house.contactInfo,
           address: house.address,
           title: house.title,
