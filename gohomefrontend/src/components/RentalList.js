@@ -166,7 +166,7 @@ function RentalList() {
       <GenericList
         items={currentItems.map(house => ({
           content: `${house.title}: ${house.description}`,
-          link: `/house/${house.house_Id}`
+          link: `/rental/${house.house_Id}`
         }))}
       />
       <div className="pagination">
