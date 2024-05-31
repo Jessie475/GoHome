@@ -92,7 +92,6 @@
 // 
 // export default Login;
 
-
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -101,14 +100,14 @@ import '../css/Login.css';
 
 
 
-const login = async ({ username, password }) => {
+const login = async ({ email, password }) => {
   try {
     const response = await fetch('http://localhost:8081/users/login', { // 修改此處為你的後端 API 路徑
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: username, password: password }),
+      body: JSON.stringify({ email: email, password: password }),
     });
     if (!response.ok) {
       throw new Error('Invalid credentials');
@@ -123,7 +122,7 @@ const login = async ({ username, password }) => {
 };
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -134,13 +133,13 @@ function Login() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const user = await login({ username, password });
+      const user = await login({ email, password });
       setUser(user);
       setIsSubmitting(false);
       navigate('/home');  // 登錄成功後進入 Home 頁面
     } catch (error) {
-      setError('錯誤的用戶名或密碼');
-      setUsername('');
+      setError('錯誤的郵箱或密碼');
+      setEmail('');
       setPassword('');
       setIsSubmitting(false);
     }
@@ -153,13 +152,13 @@ function Login() {
           {error && <h1 className="text-danger">{error}</h1>}
           <form onSubmit={handleSumbit}>
             <div className="login-form-group">
-              <label htmlFor="username">用戶名</label>
+              <label htmlFor="email">郵箱</label>
               <input
                 type="text"
                 className="login-form-control"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.currentTarget.value)}
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.currentTarget.value)}
               />
             </div>
             <div className="login-form-group">

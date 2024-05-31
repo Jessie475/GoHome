@@ -78,7 +78,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User luser) {
         try {
-            User user = userService.validateUser(luser.getName(), luser.getPassword());
+            User user = userService.validateUser(luser.getEmail(), luser.getPassword());
             if (user != null) {
                 return ResponseEntity.ok(user); // 返回完整的用户信息
             } else {
@@ -130,15 +130,16 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{userId}/mypost")
-    public ResponseEntity<List<House>> getMyHouse(@PathVariable Integer userId) {
-        List<House> myhouses = new ArrayList<> (userService.getMyHouse(userId));
-        if (myhouses != null && !myhouses.isEmpty()) {
-            return ResponseEntity.ok(myhouses);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    // // get我的房屋
+    // @GetMapping("/{userId}/myhouse")
+    // public ResponseEntity<List<House>> getMyHouse(@PathVariable Integer userId) {
+    //     List<House> myhouses = new ArrayList<>(userService.getMyHouse(userId));
+    //     if (myhouses != null && !myhouses.isEmpty()) {
+    //         return ResponseEntity.ok(myhouses);
+    //     } else {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    // }
 
     // get我的文章
     @GetMapping("/{userId}/myarticle")
