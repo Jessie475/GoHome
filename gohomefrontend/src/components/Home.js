@@ -41,14 +41,14 @@ const GoogleMap = React.forwardRef(({ center, zoom, children, data }, ref) => {
                 }
                 const houseData = await houseResponse.json();
                 houseData.forEach(house => house.type = 'house');
-
-                const articleResponse = await fetch('http://localhost:8081/articles/getAllArticle');
+                console.log(houseData);
+                const articleResponse = await fetch('http://localhost:8081/article/getAllArticle');
                 if (!articleResponse.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const articleData = await articleResponse.json();
                 articleData.forEach(article => article.type = 'article');
-
+                console.log(articleData);
                 const combinedData = [...houseData, ...articleData];
 
                 console.log('Fetched allData:', combinedData);
@@ -132,8 +132,8 @@ const GoogleMap = React.forwardRef(({ center, zoom, children, data }, ref) => {
         const infoWind = new google.maps.InfoWindow();
 
         data.forEach((data) => {
-          const title = data.type === 'house' ? data.name : data.title;
-          const route = data.type === 'house' ? 'rental' : data.title;
+          const title = data.title;
+          const route = data.type === 'house' ? 'rental' : 'article';
             const content = `
                                 <strong>${title}</strong><br>
                                 ${data.description}<br>
@@ -187,7 +187,7 @@ const Home = () => {
     const googleMapRef = useRef(null);
     const center = { lat: 24.982, lng: 121.565 };
     const zoom = 15;
-    const googleApiKey = 'xxxxxxxxxxxxx';
+    const googleApiKey = 'AIzaSyAyqdIvF6Rk1UROBq9cuieBahgD7adDb0k';
 
     return (
         <div>

@@ -16,7 +16,6 @@
 }
 
 .list-item {
-
   background-color: #F6EEE0;
   border: 1px solid #ccc;
   margin-bottom: 20px;
@@ -25,7 +24,7 @@
 }
 
 .list-item:hover {
-  background-color: #e0e0e0;
+  background-color: #fee8d7;
   /* 懸停 */
 }
 
@@ -55,7 +54,7 @@
 }
 
 .page-link:hover {
-  background-color: #d0d0d0;
+  background-color: #fee8d7;
 }
 
 .add-button {
@@ -124,27 +123,4 @@
 
 .filter-form button:hover {
   background-color: #df5b33;
-}
-
-.clear-button {
-  padding: 8px 16px;
-  background-color: #f76c6c;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.clear-button:hover {
-  background-color: #fa8383;
-}
-
-a {
-  color: black;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }

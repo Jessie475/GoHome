@@ -1,27 +1,48 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import GenericList from './GenericList';
 import Banner from './Banner';
+import GenericList from './GenericList';
 
 function FindRoommate() {
-  const roommates = [];
-  for (let i = 1; i <= 18; i++) {
-    roommates.push({
-      id: i,
-      name: `室友 ${i}`,
-      description: `信息 ${i}`,
-      link: `/roommate/${i}`
-    });
-  }
-
+  const [roommates, setRoommates] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredRoommates = roommates.filter(roommate =>
-    roommate.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    roommate.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    fetchRoommates();
+  }, []);
+
+  const fetchRoommates = async () => {
+    try {
+      const response = await axios.get('http://localhost:8081/article/filterType/ROOMMATE_SEARCH');
+      console.log('API Response Status:', response.status); 
+      console.log('API Response Data:', response.data); 
+      if (Array.isArray(response.data)) {
+        const cleanedData = response.data.map(roommate => ({
+          articleId: roommate.articleId,
+          title: roommate.title,
+          address: roommate.address,
+          rate: roommate.rate,
+          description: roommate.description,
+          type: roommate.type,
+          createdAt: roommate.createdAt,
+          comments: roommate.comments ? roommate.comments.length : 0,
+        }));
+        setRoommates(cleanedData);
+      } else {
+        console.error('Fetched data is not an array:', response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching roommates:', error);
+    }
+  };
+
+  const filteredRoommates = Array.isArray(roommates) ? roommates.filter(roommate => {
+    return roommate.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      roommate.description.toLowerCase().includes(searchTerm.toLowerCase());
+  }) : [];
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -29,13 +50,16 @@ function FindRoommate() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  console.log('Filtered Roommates:', filteredRoommates);
+  console.log('Current Items:', currentItems);
+
   return (
     <div>
       <Banner title="尋找室友" showSearch={true} onSearch={(value) => setSearchTerm(value)} />
       <GenericList
         items={currentItems.map(roommate => ({
-          content: `${roommate.name}: ${roommate.description}`,
-          link: roommate.link
+          content: `${roommate.title}: ${roommate.description}`,
+          link: `/roommate/${roommate.articleId}`
         }))}
       />
       <div className="pagination">
@@ -53,7 +77,6 @@ function FindRoommate() {
       <div>
         <Link to="/postfindroommate" className="add-button">+</Link>
       </div>
-
     </div>
   );
 }
