@@ -46,7 +46,6 @@ function AppRoutes() {
       <Route path="/postarticle" element={<PostArticle />} />
       <Route path="/postfindroommate" element={<PostFindRoommate />} />
       <Route path="/housemap/:id" element={<HouseMap />} />  // 添加HouseMap的路由
-      <Route path="/" element={<ArticleList />} />
       <Route path="/articles" element={<ArticleList />} />
       <Route path="/articles/:id" element={<ArticleDetail />} />
       <Route path="/postarticle" element={<PostArticle />} />
