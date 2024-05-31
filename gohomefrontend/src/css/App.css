@@ -69,7 +69,7 @@
 }
 
 .home-link:hover {
-  background-color: #ffe;
+  background-color: rgb(255, 225, 206);
   /* 懸停時變淺 */
 }
 
@@ -84,11 +84,15 @@
   text-decoration: none;
   color: #F6EEE0;
   /* 連結的顏色 */
-  transition: color 0.2s ease;
+  transition: color 0.01s ease;
   /* 顏色過渡 */
 }
 
 .link-style:hover {
-  color: #e2ab15;
+  color: #685751;
   /* 懸停時連結顏色 */
 }
+
+/* .logo_gohome:hover{
+  color: #F6EEE0;
+} */

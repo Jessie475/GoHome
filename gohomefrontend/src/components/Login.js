@@ -61,7 +61,7 @@ function Login() {
               <label htmlFor="username">用戶名</label>
               <input
                 type="text"
-                className="form-control"
+                className="login-form-control"
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.currentTarget.value)}
@@ -73,7 +73,7 @@ function Login() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.currentTarget.value)}
-                className="form-control"
+                className="login-form-control"
                 id="password"
               />
             </div>
