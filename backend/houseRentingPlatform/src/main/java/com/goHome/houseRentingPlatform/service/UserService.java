@@ -60,12 +60,14 @@ public class UserService{
     //     return userRepository.save(user);
     // }
 
-    public User validateUser(String email, String password) {
-        User user = userRepository.findByEmail(email);
-
-        // 檢查密碼
-        if (user.getPassword().equals(password)) {
-            return user;
+    public User validateUser(String username, String password) {
+        Optional<User> userOptional = userRepository.findByName(username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            // 檢查密碼
+            if (user.getPassword().equals(password)) {
+                return user;
+            }
         }
         return null;
     }
@@ -97,9 +99,9 @@ public class UserService{
     }
 
     public List<House> getMyHouse(Integer userId) {
-        List<House> myhouse = HouseRepository.findByUser_UserId(userId);
-        return myhouse;
+        return houseRepository.findByUser_UserId(userId);
     }
+    
     public List<Article> getMyArticle(Integer userId) {
         List<Article> myarticle = ArticleRepository.findByUser_UserId(userId);
         return myarticle;

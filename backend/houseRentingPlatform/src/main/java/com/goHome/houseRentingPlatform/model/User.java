@@ -73,8 +73,6 @@ public class User {
     private List<Article> favoriteArticles;
 
 
-
-
     // Constructors, getters, and setters
     public User() {
     }

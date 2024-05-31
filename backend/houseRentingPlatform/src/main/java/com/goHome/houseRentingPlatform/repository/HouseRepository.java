@@ -61,10 +61,8 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
     List<House> findAllByOrderBySizeAsc();
 
-    static List<House> findByUser_UserId(Integer userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByUser_UserId'");
-    }
+    List<House> findByUser_UserId(Integer userId);
+
 
 
 }
