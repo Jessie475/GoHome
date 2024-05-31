@@ -3,34 +3,12 @@ import { Wrapper } from '@googlemaps/react-wrapper';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import '../css/Home.css';
 
-const GoogleMap = React.forwardRef(({ center, zoom, children, data }, ref) => {
+const GoogleMap = React.forwardRef(({ center, zoom,data }, ref) => {
 
     const [locations, setLocations] = useState([]);
     const mapRef = useRef(null);
     const map = useRef(null);
     const geocoder = useRef(null);
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-
-    const handleClick = async (e) => {
-        e.preventDefault();
-        const house = { name, address };
-        console.log(house);
-        fetch('http://localhost:8081/house/addHouse', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(house),
-        }).then((response) => {
-            if (response.ok) {
-                geocodeData(geocoder.current, locations);
-                showAllLocations(map.current, locations);
-            } else {
-                console.error('Server error:', response.status);
-            }
-        }).catch((error) => {
-            console.error('Fetch error:', error);
-        });
-    };
 
     useEffect(() => {
         const fetchData = async () => {

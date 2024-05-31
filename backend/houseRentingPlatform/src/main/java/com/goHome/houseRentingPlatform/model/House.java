@@ -69,17 +69,11 @@ public class House {
     @Column(name = "image", nullable = true)
     private byte[] image;
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "user_id", nullable = false)
-    // private User user;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    //@ManyToOne
-    //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    //private User user;
     @OneToMany(mappedBy = "house", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<H_Comment> comments;
@@ -237,13 +231,13 @@ public class House {
         this.image = image;
     }
 
-    // public User getUser() {
-    //   return user;
-    // }
+    public User getUser() {
+        return user;
+    }
 
-    // public void setUser(User user) {
-    //     this.user = user;
-    // }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public enum RoomType {
         STUDIO, ROOM
