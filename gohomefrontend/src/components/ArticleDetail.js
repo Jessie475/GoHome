@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
 import { UserContext } from '../contexts/UserContext';
 import '../css/DetailPage.css';
 import Banner from './Banner';
@@ -104,7 +105,15 @@ function ArticleDetail() {
       <div><Banner title="文章詳情" /></div>
       <div className="detail-page">
         <div className="content">
-          <h1>{article.title}</h1>
+          <div className="title-row">
+            <h1>{article.title}</h1>
+            <StarRatings
+              rating={article.rate || 0}
+              starDimension="20px"
+              starSpacing="2px"
+              starRatedColor="gold"
+            />
+          </div>
           <p>{article.description}</p>
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>

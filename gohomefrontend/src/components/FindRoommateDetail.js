@@ -6,7 +6,7 @@ import Banner from './Banner';
 
 function FindRoommateDetail() {
   const { id } = useParams();
-  const [roommate, setRoommate] = useState(null);
+  const [article, setArticle] = useState(null);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState(0);
@@ -17,17 +17,17 @@ function FindRoommateDetail() {
       fetch(`http://localhost:8081/article/getArticle/${id}`)
         .then(response => response.json())
         .then(data => {
-          setRoommate(data);
+          setArticle(data);
           setLikes(data.likes || 0);
         })
         .catch(error => {
-          console.error('Error fetching roommate:', error);
+          console.error('Error fetching article:', error);
         });
 
       fetch(`http://localhost:8081/A_comments/article/${id}`)
         .then(response => response.json())
         .then(data => {
-          setComments(Array.isArray(data) ? data : []);
+          setComments(data);
         })
         .catch(error => {
           console.error('Error fetching comments:', error);
@@ -72,17 +72,17 @@ function FindRoommateDetail() {
     setLikes(likes + 1);
   };
 
-  if (!roommate) {
+  if (!article) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <div><Banner title="尋找室友" /></div>
+      <div><Banner title="文章詳情" /></div>
       <div className="detail-page">
         <div className="content">
-          <h1>{roommate.title}</h1>
-          <p>{roommate.description}</p>
+          <h1>{article.title}</h1>
+          <p>{article.description}</p>
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>
             <button className="favorite-button">收藏</button>
