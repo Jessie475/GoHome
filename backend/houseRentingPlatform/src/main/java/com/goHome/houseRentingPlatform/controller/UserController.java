@@ -1,4 +1,18 @@
 package com.goHome.houseRentingPlatform.controller;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.goHome.houseRentingPlatform.model.A_Comment;
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.H_Comment;
@@ -9,20 +23,6 @@ import com.goHome.houseRentingPlatform.service.ACommentService;
 import com.goHome.houseRentingPlatform.service.H_CommentService;
 //import com.goHome.houseRentingPlatform.service.HouseService;
 import com.goHome.houseRentingPlatform.service.UserService;
-
-import org.hibernate.mapping.Set;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.xml.stream.events.Comment;
 
 
 @RestController
@@ -142,15 +142,15 @@ public class UserController {
     // }
 
     // get我的文章
-    @GetMapping("/{userId}/myarticle")
-    public ResponseEntity<List<Article>> getMyArticle(@PathVariable Integer userId) {
-        List<Article> myarticles = new ArrayList<>(userService.getMyArticle(userId));
-        if (myarticles != null && !myarticles.isEmpty()) {
-            return ResponseEntity.ok(myarticles);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+  //  @GetMapping("/{userId}/myarticle")
+  //  public ResponseEntity<List<Article>> getMyArticle(@PathVariable Integer userId) {
+  //      List<Article> myarticles = new ArrayList<>(userService.getMyArticle(userId));
+     //   if (myarticles != null && !myarticles.isEmpty()) {
+     //       return ResponseEntity.ok(myarticles);
+    //    } else {
+    //        return ResponseEntity.notFound().build();
+    //    }
+   // }
 
 
     //add+remove house & article

@@ -144,8 +144,9 @@
 
 package com.goHome.houseRentingPlatform.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.goHome.houseRentingPlatform.model.A_Comment;
@@ -159,9 +160,6 @@ import com.goHome.houseRentingPlatform.repository.ArticleRepository;
 import com.goHome.houseRentingPlatform.repository.H_CommentRepository;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.repository.UserRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService{
@@ -243,10 +241,15 @@ public class UserService{
     //     return myhouse;
     // }
 
-    public List<Article> getMyArticle(Integer userId) {
-        List<Article> myarticle = ArticleRepository.findByUser_UserId(userId);
-        return myarticle;
-    }
+  //  public List<Article> getMyArticle(Integer userId) {
+     //   try {
+       //     return articleRepository.findByUserUserId(userId);
+       // } catch (Exception e) {
+            // 添加日志记录
+       //     e.printStackTrace();
+       //     throw new RuntimeException("Error retrieving articles for user id: " + userId, e);
+      //  }
+   // }
     
 
     public void addFavHouseToUser(User user, Integer houseId) {

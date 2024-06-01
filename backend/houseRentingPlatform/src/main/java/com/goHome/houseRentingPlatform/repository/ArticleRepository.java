@@ -17,7 +17,6 @@ import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 @CrossOrigin(origins = "http://localhost:3000")
 public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByType(ArticleType type);
-
     List<Article> findByTypeAndRateBetween(ArticleType type, Double minRate, Double maxRate);
 
     Page<Article> findAllByOrderByCreatedAtDesc(Pageable pageable);
@@ -27,10 +26,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByAddressContainingIgnoreCase(String address);
     
     List<Article> findByAddress(String address);
-    static List<Article> findByUser_UserId(Integer userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByUser_UserId'");
-    }
+
+    List<Article> findByUserUserId(Integer userId);
     
     Article getArticleById(Long id);
 
