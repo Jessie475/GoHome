@@ -72,6 +72,18 @@ import '../css/Account.css';
 
 function Account() {
   const { user } = useContext(UserContext);
+  const [email, setEmail] = useState('XXXXXXXXXXXXXXXX');
+  const [phone, setPhone] = useState('09XXXXXXXX');
+
+  // 處理修改的輸入
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
+  };
+
 
   return (
     <div className="account-container">
@@ -84,6 +96,15 @@ function Account() {
             <div>姓名: {user.name}</div>
             <div>性別: {user.gender}</div>
             <div>帳號: {user.email}</div>
+            <div>
+              <label>Email:</label>
+              <input type="email" value={email} onChange={handleEmailChange} />
+            </div>
+            <div>
+              <label>電話：</label>
+              <input type="text" value={phone} onChange={handlePhoneChange} />
+            </div>
+            <button type="submit">更新資訊</button>
           </>
         ) : (
           <div>尚未登入</div>

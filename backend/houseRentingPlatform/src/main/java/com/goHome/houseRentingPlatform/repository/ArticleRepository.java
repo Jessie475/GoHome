@@ -17,7 +17,6 @@ import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 @CrossOrigin(origins = "http://localhost:3000")
 public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByType(ArticleType type);
-
     List<Article> findByTypeAndRateBetween(ArticleType type, Double minRate, Double maxRate);
 
     Page<Article> findAllByOrderByCreatedAtDesc(Pageable pageable);
