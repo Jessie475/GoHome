@@ -50,11 +50,12 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+ 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Article> articles;
 
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    // private List<House> houses;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<House> houses;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

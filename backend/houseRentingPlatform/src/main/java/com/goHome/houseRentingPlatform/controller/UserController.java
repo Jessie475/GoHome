@@ -130,27 +130,29 @@ public class UserController {
         }
     }
 
-    // // get我的房屋
-    // @GetMapping("/{userId}/myhouse")
-    // public ResponseEntity<List<House>> getMyHouse(@PathVariable Integer userId) {
-    //     List<House> myhouses = new ArrayList<>(userService.getMyHouse(userId));
-    //     if (myhouses != null && !myhouses.isEmpty()) {
-    //         return ResponseEntity.ok(myhouses);
-    //     } else {
-    //         return ResponseEntity.notFound().build();
-    //     }
-    // }
-
-    // get我的文章
-    @GetMapping("/{userId}/myarticle")
-    public ResponseEntity<List<Article>> getMyArticle(@PathVariable Integer userId) {
-        List<Article> myarticles = new ArrayList<>(userService.getMyArticle(userId));
-        if (myarticles != null && !myarticles.isEmpty()) {
-            return ResponseEntity.ok(myarticles);
+    // get我的房屋
+    @GetMapping("/{userId}/myhouses")
+    public ResponseEntity<List<House>> getMyHouse(@PathVariable Integer userId) {
+        List<House> myhouses = userService.getMyHouses(userId);
+        if (myhouses != null && !myhouses.isEmpty()) {
+            return ResponseEntity.ok(myhouses);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
+    
+    @GetMapping("/{userId}/myArticles")
+    public ResponseEntity<List<Article>> getMyArticles(@PathVariable Integer userId) {
+        System.out.println("Received request for userId: " + userId);
+        List<Article> myArticles = userService.getMyArticles(userId);
+        if (myArticles != null && !myArticles.isEmpty()) {
+            return ResponseEntity.ok(myArticles);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
 
 
     //add+remove house & article

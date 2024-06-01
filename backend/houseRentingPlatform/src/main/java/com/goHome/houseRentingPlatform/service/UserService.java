@@ -168,17 +168,21 @@ public class UserService{
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private HouseRepository houseRepository;
-    @Autowired
-    private ArticleRepository articleRepository;
 
+    private HouseRepository houseRepository;
+    private ArticleRepository articleRepository;
 
     public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository) {
         this.userRepository = userRepository;
         this.houseRepository = houseRepository;
         this.articleRepository = articleRepository;
     }
+// 
+//     public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository) {
+//         this.userRepository = userRepository;
+//         this.houseRepository = houseRepository;
+//         this.articleRepository = articleRepository;
+//     }
 
     public User createUser(String username, String email, String password, String name, String phone, String gender, Identity identity) {
 
@@ -238,16 +242,14 @@ public class UserService{
         return aComment;
     }
 
-    // public List<House> getMyHouse(Integer userId) {
-    //     List<House> myhouse = HouseRepository.findByUser_UserId(userId);
-    //     return myhouse;
-    // }
 
-    public List<Article> getMyArticle(Integer userId) {
-        List<Article> myarticle = ArticleRepository.findByUser_UserId(userId);
-        return myarticle;
+    public List<House> getMyHouses(Integer userId) {
+        return houseRepository.findByUser_UserId(userId);
     }
-    
+
+    public List<Article> getMyArticles(Integer userId) {
+        return articleRepository.findByUser_UserId(userId);
+    }
 
     public void addFavHouseToUser(User user, Integer houseId) {
         House house = houseRepository.findById(houseId)

@@ -31,9 +31,9 @@ public class HouseService {
         return houseRepository.findAll();
     }
 
-    // public List<House> getHousesByUserId(Integer userId) {
-    //     return houseRepository.findByUser_UserId(userId);
-    // }
+    public List<House> getHousesByUserId(Integer userId) {
+        return houseRepository.findByUser_UserId(userId);
+    }
 
     public House updateHouse(Integer id, House housedetail) {//更新房子資訊
         return houseRepository.findById(id)

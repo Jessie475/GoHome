@@ -44,7 +44,7 @@ public class ArticleService {
     }
 
     public List<Article> getArticlesByUserId(Integer userId) {
-        return ArticleRepository.findByUser_UserId(userId);
+        return articleRepository.findByUser_UserId(userId);
     }
 
     public void deleteArticle(Long articleId) {

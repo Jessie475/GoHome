@@ -70,9 +70,9 @@ public class House {
     private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
 
     @OneToMany(mappedBy = "house", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore

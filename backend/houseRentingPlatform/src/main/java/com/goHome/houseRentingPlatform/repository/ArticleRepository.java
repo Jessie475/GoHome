@@ -27,10 +27,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByAddressContainingIgnoreCase(String address);
     
     List<Article> findByAddress(String address);
-    static List<Article> findByUser_UserId(Integer userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByUser_UserId'");
-    }
+
+    List<Article> findByUser_UserId(Integer userId);
+
     
     Article getArticleById(Long id);
 
