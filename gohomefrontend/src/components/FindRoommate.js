@@ -21,7 +21,7 @@ function FindRoommate() {
       console.log('API Response Data:', response.data); 
       if (Array.isArray(response.data)) {
         const cleanedData = response.data.map(roommate => ({
-          articleId: roommate.articleId,
+          articleId: roommate.id,
           title: roommate.title,
           address: roommate.address,
           rate: roommate.rate,

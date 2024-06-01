@@ -1,5 +1,7 @@
 package com.goHome.houseRentingPlatform.controller;
 
+import com.goHome.houseRentingPlatform.model.User;
+import com.goHome.houseRentingPlatform.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.goHome.houseRentingPlatform.model.Article;
@@ -7,7 +9,6 @@ import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.House.RoomType;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.service.HouseService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -28,6 +28,9 @@ public class HouseController {
     private HouseRepository houseRepository;
     @Autowired
     private HouseService houseService;
+
+    @Autowired
+    private UserService userService;
 
     public HouseController(HouseService houseService, HouseRepository houseRepository) {
         this.houseRepository = houseRepository;
@@ -242,7 +245,10 @@ public class HouseController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("House not found");
         }
     }
-    
-    
-    
+    @PostMapping("/favorite/{houseId}")
+    public ResponseEntity<Void> addFavoriteHouse(@PathVariable int houseId, @RequestParam Integer userId) {
+        User user = userService.getUserById(userId);
+        userService.addFavHouseToUser(user, houseId);
+        return ResponseEntity.ok().build();
+    }
 }

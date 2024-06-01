@@ -61,4 +61,8 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
     List<House> findAllByOrderBySizeAsc();
 
+    List<House> findByUser_UserId(Integer userId);
+
+
+
 }
