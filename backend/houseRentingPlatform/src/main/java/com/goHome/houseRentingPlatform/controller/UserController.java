@@ -1,5 +1,6 @@
 package com.goHome.houseRentingPlatform.controller;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import com.goHome.houseRentingPlatform.model.H_Comment;
 import com.goHome.houseRentingPlatform.model.House;
 //import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
+import com.goHome.houseRentingPlatform.model.UserUpdateRequest;
 import com.goHome.houseRentingPlatform.service.ACommentService;
 import com.goHome.houseRentingPlatform.service.H_CommentService;
 //import com.goHome.houseRentingPlatform.service.HouseService;
@@ -88,8 +91,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
+    //update 
+    @PutMapping("/{userId}/update")
+    public ResponseEntity<?> updateUser(@PathVariable Integer userId, @RequestBody UserUpdateRequest request) {
+        boolean success = userService.updateUser(userId, request.getEmail(), request.getPhone());
+        if (success) {
+            return ResponseEntity.ok().body(Collections.singletonMap("success", true));
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("success", false));
+        }
+    }
+    
     // get favhouse/favarticle/mycomment/myhouse/
 
     // get收藏房屋

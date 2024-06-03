@@ -1,32 +1,4 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-// import '../css/Account.css';
-// 
-// 
-// function Account() {
-//   return (
-//     <div className="account-container">
-//       <header className="account-header">
-//         <h1>我的帳號</h1>
-//       </header>
-//       <div className="account-info">
-//         <div>姓名: XXX</div>
-//         <div>性別: 男/女</div>
-//         <div>帳號: XXXXXXXXXXXXXXXX</div>
-//       </div>
-//       <div className="account-links">
-//         <Link to="/savedhouse" className="account-link">收藏的房屋</Link>
-//         <Link to="/mypost" className="account-link">我的文章</Link>
-//         <Link to="/postrent" className="account-link">新增出租</Link>
-//         <Link to="/savedarticle" className="account-link">收藏的文章</Link>
-//         <Link to="/mycomment" className="account-link">我的留言</Link>
-//         <Link to="/postedrent" className="account-link">已發布房屋</Link>
-//       </div>
-//     </div>
-//   );
-// }
-// 
-// export default Account;
+
 // 
 // import React, { useContext } from 'react';
 // import { Link } from 'react-router-dom';
@@ -65,17 +37,79 @@
 // }
 // 
 // export default Account;
-import React, { useContext,useState } from 'react';
+
+// 
+// import React, { useContext,useState } from 'react';
+// import { Link } from 'react-router-dom';
+// import { UserContext } from '../contexts/UserContext';
+// import '../css/Account.css';
+// 
+// function Account() {
+//   const { user } = useContext(UserContext);
+//   const [email, setEmail] = useState('XXXXXXXXXXXXXXXX');
+//   const [phone, setPhone] = useState('09XXXXXXXX');
+// 
+//   // 處理修改的輸入
+//   const handleEmailChange = (e) => {
+//     setEmail(e.target.value);
+//   };
+// 
+//   const handlePhoneChange = (e) => {
+//     setPhone(e.target.value);
+//   };
+// 
+// 
+//   return (
+//     <div className="account-container">
+//       <header className="account-header">
+//         <h1>我的帳號</h1>
+//       </header>
+//       <div className="account-info">
+//         {user ? (
+//           <>
+//             <div>姓名: {user.name}</div>
+//             <div>性別: {user.gender}</div>
+//             <div>帳號: {user.email}</div>
+//             <div>
+//               <label>Email:</label>
+//               <input type="email" value={email} onChange={handleEmailChange} />
+//             </div>
+//             <div>
+//               <label>電話：</label>
+//               <input type="text" value={phone} onChange={handlePhoneChange} />
+//             </div>
+//             <button type="submit">更新資訊</button>
+//           </>
+//         ) : (
+//           <div>尚未登入</div>
+//         )}
+//       </div>
+//       <div className="account-links">
+//         <Link to="/savedhouse" className="account-link">收藏的房屋</Link>
+//         <Link to="/mypost" className="account-link">我的文章</Link>
+//         <Link to="/postrent" className="account-link">新增出租</Link>
+//         <Link to="/savedarticle" className="account-link">收藏的文章</Link>
+//         <Link to="/mycomment" className="account-link">我的留言</Link>
+//         <Link to="/postedrent" className="account-link">已發布房屋</Link>
+//       </div>
+//     </div>
+//   );
+// }
+// 
+// export default Account;
+
+
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import '../css/Account.css';
 
 function Account() {
-  const { user } = useContext(UserContext);
-  const [email, setEmail] = useState('XXXXXXXXXXXXXXXX');
-  const [phone, setPhone] = useState('09XXXXXXXX');
+  const { user, setUser } = useContext(UserContext);  // 确保可以更新用户上下文
+  const [email, setEmail] = useState(user ? user.email : 'XXXXXXXXXXXXXXXX');
+  const [phone, setPhone] = useState(user ? user.phone : '09XXXXXXXX');
+  const [message, setMessage] = useState('');
 
-  // 處理修改的輸入
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -84,6 +118,30 @@ function Account() {
     setPhone(e.target.value);
   };
 
+  const handleUpdate = () => {
+    // 假设后端API为 http://localhost:8081/users/update
+    fetch(`http://localhost:8081/users/${user.userId}/update`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, phone }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // 更新用户上下文
+          setUser({ ...user, email, phone });
+          setMessage('更新成功');
+        } else {
+          setMessage('更新失败');
+        }
+      })
+      .catch(error => {
+        console.error('更新时出错:', error);
+        setMessage('更新时出错');
+      });
+  };
 
   return (
     <div className="account-container">
@@ -104,7 +162,8 @@ function Account() {
               <label>電話：</label>
               <input type="text" value={phone} onChange={handlePhoneChange} />
             </div>
-            <button type="submit">更新資訊</button>
+            <button type="submit" onClick={handleUpdate}>更新資訊</button>
+            {message && <div>{message}</div>}
           </>
         ) : (
           <div>尚未登入</div>
@@ -123,3 +182,4 @@ function Account() {
 }
 
 export default Account;
+

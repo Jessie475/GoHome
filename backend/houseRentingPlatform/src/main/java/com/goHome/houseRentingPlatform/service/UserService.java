@@ -276,6 +276,18 @@ public class UserService{
         user.removeFavoriteArticle(article);
         userRepository.save(user);
     }
+    
+    public boolean updateUser(Integer userId, String email, String phone) {
+        try {
+            User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+            user.setEmail(email);
+            user.setPhone(phone);
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /*private User findUserByIdentity(String username) {
         return null;
