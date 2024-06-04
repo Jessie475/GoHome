@@ -11,6 +11,9 @@ import com.goHome.houseRentingPlatform.model.A_Comment;
 @CrossOrigin(origins = "http://localhost:3000")
 public interface A_CommentRepository extends JpaRepository<A_Comment, Long>{
     List<A_Comment> findByArticleId(Long articleId);
-    List<A_Comment> findByUserId(Integer userId) ;
+    static List<A_Comment> findByUserId(Integer userId)  {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByUserId'");
+    }
 
 }
