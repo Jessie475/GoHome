@@ -36,7 +36,7 @@ public class ACommentService {
     }
 
     public List<A_Comment> getAcommentsByUserId(Integer userId) {
-        return commentRepository.findByUserId(userId);
+        return A_CommentRepository.findByUserId(userId);
     }
 
 
