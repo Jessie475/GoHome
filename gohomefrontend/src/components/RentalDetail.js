@@ -6,38 +6,45 @@ import '../css/RentalDetail.css';
 import Banner from './Banner';
 import GenericList from './GenericList';
 import dayjs from 'dayjs';  // 导入 Day.js
+import { Link } from 'react-router-dom';
+
 
 function RentalDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-  const [listType, setListType] = useState('articles'); // 确保正确定义
+  //const [listType, setListType] = useState('articles'); // 确保正确定义
   const [favorite, setFavorite] = useState(false);
-
+  
   const [house, setHouse] = useState(null);
   const [articles, setArticles] = useState([]);
-  const [comments, setComments] = useState([]);
-
+  
+  //const [comments, setComments] = useState([]);
+  
   useEffect(() => {
-    if (id) {
+    if (id && id !== 'undefined') {
+      console.log(`Fetching house with id: ${id}`);
+
       fetch(`http://localhost:8081/house/getHouse/${id}`)
         .then(response => response.json())
         .then(data => {
+          console.log('Fetched house:', data);
           setHouse(data);
         })
         .catch(error => {
           console.error('Error fetching house:', error);
         });
 
-      fetch(`http://localhost:8081/getHouseArticle/${id}`)
+      fetch(`http://localhost:8081/house/getHouseArticle/${id}`)
         .then(response => response.json())
         .then(data => {
-          setArticles(data.articles || []);
-          // setComments(data.comments || []);
+          console.log('Fetched articles:', data); // 确认数据结构
+          setArticles(Array.isArray(data) ? data : []);
         })
         .catch(error => {
           console.error('Error fetching related articles:', error);
+          setArticles([]);
         });
     }
   }, [id]);
@@ -46,13 +53,15 @@ function RentalDetail() {
     navigate(`/housemap/${id}`); // 跳转
   };
 
+  const currentItems = articles;
+  console.log(currentItems);
   const toggleFavorite = () => setFavorite(!favorite);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentItems = listType === 'articles' ? articles : comments;
 
+  
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   if (!house) return <div>Loading...</div>;
 
@@ -94,33 +103,20 @@ function RentalDetail() {
             <p>我是圖片!!!</p>
           </div>
         </div>
-        <div className="switch-buttons">
+        {/* <div className="switch-buttons">
           <button className="switch-articles" onClick={() => setListType('articles')}>相關文章</button>
           <button className="switch-messages" onClick={() => setListType('messages')}>相關留言</button>
-        </div>
+        </div> */}
         
-          <GenericList
-            items={currentItems.map(item => ({
-              content: `${item.name}: ${item.description}`,
-              link: item.link
-            }))}
-          />
-        
-          <div className="comments-list">
-            {articles.map(({ id, title, description, likes }) => (
-              <div key={id} className="comment">
-                <div className="comment-header">
-                  <span className="commenter-id">ID: {id}</span>
-                  <span className="comment-time">Title: {title}</span>
-                  <span className="comment-time">Description: {description}</span>
-                </div>
-                <p>{content}</p>
-                {/* <div className="comment-actions">
-                  <button className="comment-like-button" onClick={() => likeComment(id)}>讚 {likes}</button>
-                </div> */}
-              </div>
-            ))}
-          </div>
+
+        <GenericList
+          title="文章列表"
+          items={currentItems.map(articles => ({
+            content: `${articles.title}: ${articles.description}`,
+            link: `/articles/${articles.id}` // 确保链接正确指向文章详细页面
+          }))}
+        />
+
         
         <div className="pagination">
           {Array.from({ length: Math.ceil(currentItems.length / itemsPerPage) }, (_, i) => (
