@@ -31,6 +31,11 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private H_CommentService H_CommentService;
+    @Autowired
+    private ACommentService ACommentService;
+
 
 
 //     @PostMapping("/signup")
