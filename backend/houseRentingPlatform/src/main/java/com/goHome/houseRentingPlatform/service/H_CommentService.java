@@ -27,7 +27,7 @@ public class H_CommentService {
     }
     
     public static List<H_Comment> getHcommentsByUserId(Integer userId) {
-        return H_CommentRepository.findByUserId(userId);
+        return commentRepository.findByUserId(userId);
     }
 
 }

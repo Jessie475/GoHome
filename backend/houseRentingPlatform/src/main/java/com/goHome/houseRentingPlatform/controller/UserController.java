@@ -125,20 +125,23 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    // get comment
     @GetMapping("/{userId}/mycomment")
     public ResponseEntity<List<Object>> getMyComment(@PathVariable Integer userId) {
-        List<H_Comment> h_comments = new ArrayList<>(H_CommentService.getHcommentsByUserId(userId));
-        List<A_Comment> a_comments = new ArrayList<>(ACommentService.getAcommentsByUserId(userId));
-        List<Object> allComments = new ArrayList<>();
-        allComments.addAll(h_comments);
-        allComments.addAll(a_comments);
+        try {
+            List<H_Comment> h_comments = new ArrayList<>(H_CommentService.getHcommentsByUserId(userId));
+            List<A_Comment> a_comments = new ArrayList<>(ACommentService.getAcommentsByUserId(userId));
+            List<Object> allComments = new ArrayList<>();
+            allComments.addAll(h_comments);
+            allComments.addAll(a_comments);
 
-        if (allComments != null && !allComments.isEmpty()) {
-            return ResponseEntity.ok(allComments);
-        } else {
-            return ResponseEntity.notFound().build();
+            if (!allComments.isEmpty()) {
+                return ResponseEntity.ok(allComments);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // 打印异常信息以便于调试
+            return ResponseEntity.status(500).body(null); // 返回 500 状态码
         }
     }
 

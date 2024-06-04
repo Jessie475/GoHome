@@ -169,11 +169,15 @@ public class UserService{
 
     private HouseRepository houseRepository;
     private ArticleRepository articleRepository;
+    private H_CommentRepository hCommentRepository;
+    private A_CommentRepository aCommentRepository;
 
-    public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository) {
+    public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository, H_CommentRepository hCommentRepository,A_CommentRepository aCommentRepository) {
         this.userRepository = userRepository;
         this.houseRepository = houseRepository;
         this.articleRepository = articleRepository;
+        this.hCommentRepository = hCommentRepository;
+        this.aCommentRepository = aCommentRepository;
     }
 // 
 //     public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository) {
@@ -232,11 +236,11 @@ public class UserService{
 
     
     public List<H_Comment> getMyHComments(Integer userId) {
-        List<H_Comment> hComment = H_CommentRepository.findByUserId(userId);
+        List<H_Comment> hComment = hCommentRepository.findByUserId(userId);
         return hComment;
     }
     public List<A_Comment> getMyAComments(Integer userId) {
-        List<A_Comment> aComment = A_CommentRepository.findByUserId(userId);
+        List<A_Comment> aComment = aCommentRepository.findByUserId(userId);
         return aComment;
     }
 
@@ -276,7 +280,7 @@ public class UserService{
         user.removeFavoriteArticle(article);
         userRepository.save(user);
     }
-    
+
     public boolean updateUser(Integer userId, String email, String phone) {
         try {
             User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
