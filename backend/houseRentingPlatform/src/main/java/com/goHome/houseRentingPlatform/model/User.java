@@ -50,11 +50,12 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+ 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Article> articles;
 
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    // private List<House> houses;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<House> houses;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -71,8 +72,6 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "article_id", referencedColumnName = "article_id")
     )
     private List<Article> favoriteArticles;
-
-
 
 
     // Constructors, getters, and setters
@@ -205,11 +204,6 @@ public class User {
     public void removeFavoriteArticle(Article article) {
         this.favoriteArticles.remove(article);
     }
-
-
-
-
-
 
 
 }

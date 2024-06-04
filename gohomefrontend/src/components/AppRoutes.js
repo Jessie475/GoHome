@@ -48,13 +48,16 @@ function AppRoutes() {
       <Route path="/housemap/:id" element={<HouseMap />} />  // 添加HouseMap的路由
       <Route path="/articles" element={<ArticleList />} />
       <Route path="/articles/:id" element={<ArticleDetail />} />
+      <Route path="/mypost/:id" element={<ArticleDetail />} />
       <Route path="/postarticle" element={<PostArticle />} />
       
+      <Route path="/mypost/:id" element={<ArticleDetail/>} />
+
+      <Route path="/postedrent/:id" element={<RentalDetail />} /> 
       <Route path="/savedarticle/:id" element={<ArticleDetail />} /> 
       <Route path="/savedhouse/:id" element={<RentalDetail />} />
 
       <Route path="/article/:id" element={<ArticleDetail />} />
-      <Route path="/savedhouse/:id" element={<RentalDetail />} />
 
     </Routes>
   );

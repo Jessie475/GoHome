@@ -1,28 +1,31 @@
 package com.goHome.houseRentingPlatform.controller;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.goHome.houseRentingPlatform.model.A_Comment;
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.H_Comment;
 import com.goHome.houseRentingPlatform.model.House;
 //import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
+import com.goHome.houseRentingPlatform.model.UserUpdateRequest;
 import com.goHome.houseRentingPlatform.service.ACommentService;
 import com.goHome.houseRentingPlatform.service.H_CommentService;
 //import com.goHome.houseRentingPlatform.service.HouseService;
 import com.goHome.houseRentingPlatform.service.UserService;
-
-import org.hibernate.mapping.Set;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.xml.stream.events.Comment;
 
 
 @RestController
@@ -88,8 +91,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
+    //update 
+    @PutMapping("/{userId}/update")
+    public ResponseEntity<?> updateUser(@PathVariable Integer userId, @RequestBody UserUpdateRequest request) {
+        boolean success = userService.updateUser(userId, request.getEmail(), request.getPhone());
+        if (success) {
+            return ResponseEntity.ok().body(Collections.singletonMap("success", true));
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("success", false));
+        }
+    }
+    
     // get favhouse/favarticle/mycomment/myhouse/
 
     // get收藏房屋
@@ -131,9 +143,9 @@ public class UserController {
     }
 
     // get我的房屋
-    @GetMapping("/{userId}/myhouse")
+    @GetMapping("/{userId}/myhouses")
     public ResponseEntity<List<House>> getMyHouse(@PathVariable Integer userId) {
-        List<House> myhouses = new ArrayList<>(userService.getMyHouse(userId));
+        List<House> myhouses = userService.getMyHouses(userId);
         if (myhouses != null && !myhouses.isEmpty()) {
             return ResponseEntity.ok(myhouses);
         } else {
@@ -141,16 +153,18 @@ public class UserController {
         }
     }
 
-    // get我的文章
-    @GetMapping("/{userId}/myarticle")
-    public ResponseEntity<List<Article>> getMyArticle(@PathVariable Integer userId) {
-        List<Article> myarticles = new ArrayList<>(userService.getMyArticle(userId));
-        if (myarticles != null && !myarticles.isEmpty()) {
-            return ResponseEntity.ok(myarticles);
+    
+    @GetMapping("/{userId}/myArticles")
+    public ResponseEntity<List<Article>> getMyArticles(@PathVariable Integer userId) {
+        System.out.println("Received request for userId: " + userId);
+        List<Article> myArticles = userService.getMyArticles(userId);
+        if (myArticles != null && !myArticles.isEmpty()) {
+            return ResponseEntity.ok(myArticles);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+    
 
 
     //add+remove house & article
