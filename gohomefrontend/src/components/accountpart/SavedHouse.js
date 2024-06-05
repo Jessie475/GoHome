@@ -73,7 +73,7 @@ function SavedHouse() {
         title="我的收藏房屋"
         items={savedHouses.map(savedHouse => ({
           content: `${savedHouse.title}: ${savedHouse.description}`,
-          link: `/savedhouse/${savedHouse.id}` // 传递正确的链接路径
+          link: `/savedhouse/${savedHouse.id}` // 傳遞正確的路徑
         }))}
       />
     </div>

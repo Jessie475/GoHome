@@ -72,8 +72,8 @@ function ArticleList() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  console.log('Filtered Articles:', filteredArticles); // 打印过滤后的文章
-  console.log('Current Items:', currentItems); // 打印当前页的数据
+  console.log('Filtered Articles:', filteredArticles); // 打印過濾後的文章
+  console.log('Current Items:', currentItems); // 打印當前頁的數據
 
   return (
     <div>

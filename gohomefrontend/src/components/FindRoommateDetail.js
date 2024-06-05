@@ -57,10 +57,10 @@ function FindRoommateDetail() {
       const newComment = await response.json();
       setComments([...comments, newComment]);
       setComment('');
-      alert('评论已成功发布');
+      alert('評論已成功發布');
     } catch (error) {
       console.error('Error submitting comment:', error);
-      alert('评论发布失败，请重试');
+      alert('評論已成功發布，請重試');
     }
   };
 

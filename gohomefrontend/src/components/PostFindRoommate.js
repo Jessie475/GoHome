@@ -46,10 +46,10 @@ function PostFindRoommate() {
                 }
             });
             console.log(response.data);
-            alert('已成功上傳');  // 显示成功消息
+            alert('已成功上傳');  // 顯示成功訊息
         } catch (error) {
             console.error('Error submitting article:', error);
-            alert('失敗，請重試');  // 显示失败消息
+            alert('失敗，請重試');  // 顯示失敗訊息
         }
 
         // Clear all fields
