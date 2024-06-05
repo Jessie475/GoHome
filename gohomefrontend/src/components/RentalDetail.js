@@ -108,16 +108,14 @@ function RentalDetail() {
   
   return (
     <div>
-    <div>
         <Banner title="租房詳情" />
-    </div>
         <div className="rental-detail-container">
         <div className="rental-grid">
         <div className="rental-type">
         <p className='rental-title'><strong>{house.title}</strong></p>
             <StarRatings rating={house.rate} starDimension="20px" starSpacing="2px" starRatedColor="gold" />
             <div className="rental-control-buttons"></div>
-            <button className="toggle-favorite" onClick={handleFavorite}>收藏</button>
+            <button className="toggle-favorite" onClick={handleFavorite}> {favorite ? "取消收藏" : "收藏"}</button>
             <button className="show-map" onClick={showMap}>在地圖中顯示</button>
             </div>
         </div>
@@ -136,15 +134,11 @@ function RentalDetail() {
             <p><strong>限制：</strong>{house.restriction}</p>
         </div>
         <div className="rental-images">
-            {/* <ImageCarousel images={rental.images} /> */}
-            <p>我是圖片!!!</p>
+            {house.imagePath && (
+            <img src={`http://localhost:8081/images/${house.imagePath.split('/').pop()}`} alt="House" width="300" height="300" />
+            )}
         </div>
-        {/* <div className="switch-buttons">
-          <button className="switch-articles" onClick={() => setListType('articles')}>相關文章</button>
-          <button className="switch-messages" onClick={() => setListType('messages')}>相關留言</button>
-        </div> */}
         
-
         <GenericList
           title="相關文章"
           items={currentItems.map(articles => ({
