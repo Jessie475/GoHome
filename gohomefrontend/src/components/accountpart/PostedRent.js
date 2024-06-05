@@ -48,8 +48,8 @@ function PostedRent() {
     .filter(post => post.title && post.title.includes(searchTerm))
     .map(post => ({
       ...post,
-      content: `${post.title}: ${post.description}`,
-      link: `/postedrent/${post.id}`
+      content: `${post.title}`,
+      link: `/rental/${post.id}`
     }));
 
   return (
