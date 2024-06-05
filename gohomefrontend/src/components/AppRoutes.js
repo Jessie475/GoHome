@@ -9,6 +9,7 @@ import FindRoommateDetail from './FindRoommateDetail';
 import Home from './Home';
 import HouseMap from './HouseMap';
 import Login from './Login';
+import ModifyRent from './ModifyRent';
 import PostArticle from './PostArticle';
 import PostFindRoommate from './PostFindRoommate';
 import RentalDetail from './RentalDetail';
@@ -59,6 +60,7 @@ function AppRoutes() {
       {/* <Route path="/mycomment/:id" element={<ArticleDetail />} /> */}
 
       <Route path="/article/:id" element={<ArticleDetail />} />
+      <Route path="/modifyrent" element={<ModifyRent />} />
 
     </Routes>
   );

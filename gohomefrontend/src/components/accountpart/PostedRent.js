@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Banner from '../../components/Banner';
 import { UserContext } from '../../contexts/UserContext';
 
@@ -60,6 +61,11 @@ function PostedRent() {
             <a href={item.link} style={{ textDecoration: 'none', margin: '10px', color: 'black', flex: 1 }}>
               {item.content}
             </a>
+            <Link to={`/modifyrent/`} style={{ textDecoration: 'none' }}> {/* 使用 Link 元素 */}
+        <button style={{ padding: '5px 10px', backgroundColor: '#db6845', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', transition: 'background-color 0.3s' }}>
+          修改
+        </button>
+      </Link>
             <button style={{ padding: '5px 10px', backgroundColor: '#db6845', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', transition: 'background-color 0.3s' }} onClick={() => handleDelete(item.id)}>
               删除
             </button>
