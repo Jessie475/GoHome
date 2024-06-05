@@ -64,7 +64,11 @@ function RentalDetail() {
 
         try {
             const checkResponse = await fetch(`http://localhost:8081/users/${user.userId}/favhouses`);
-            const favoriteHouses = await checkResponse.json();
+            let favoriteHouses = [];
+            if (checkResponse.ok) {
+                favoriteHouses = await checkResponse.json();
+            }
+
             const isFavorited = favoriteHouses.some(house => house.id === parseInt(id));
 
             if (isFavorited) {
@@ -91,12 +95,12 @@ function RentalDetail() {
                     throw new Error('Network response was not ok');
                 }
 
-                alert('文章已成功收藏');
+                alert('房屋已成功收藏');
                 setFavorite(true);
             }
         } catch (error) {
             console.error('Error handling favorite:', error);
-            alert('文章收藏失敗，請重試');
+            alert('房屋收藏失敗，請重試');
         }
     };
 
@@ -144,10 +148,6 @@ function RentalDetail() {
                         )}
                     </div>
                 </div>
-                {/* <div className="switch-buttons">
-                <button className="switch-articles" onClick={() => setListType('articles')}>相關文章</button>
-                <button className="switch-messages" onClick={() => setListType('messages')}>相關留言</button>
-            </div> */}
                 <GenericList
                     title="相關文章"
                     items={currentItems.map(article => ({
