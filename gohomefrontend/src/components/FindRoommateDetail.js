@@ -13,7 +13,6 @@ function FindRoommateDetail() {
   const { user } = useContext(UserContext);
   const [favorite, setFavorite] = useState([]);
 
-
   useEffect(() => {
     if (id) {
       fetch(`http://localhost:8081/article/getArticle/${id}`)
@@ -73,44 +72,46 @@ function FindRoommateDetail() {
   const handleLike = () => {
     setLikes(likes + 1);
   };
+
   const handleFavorite = async () => {
     if (!user || !user.userId || !id) {
       alert('未登入！請先登入！');
       return;
     }
-  
+
     try {
-      // Fetch the current favorite houses
       const checkResponse = await fetch(`http://localhost:8081/users/${user.userId}/favarticles`);
-      const favoriteHouses = await checkResponse.json();
-      const isFavorited = favoriteHouses.some(house => house.id === parseInt(id));
-  
+      let favoriteArticles = [];
+      if (checkResponse.ok) {
+        favoriteArticles = await checkResponse.json();
+      }
+
+      const isFavorited = favoriteArticles.some(article => article.id === parseInt(id));
+
       if (isFavorited) {
         const confirmUnfavorite = window.confirm('已收藏，要取消收藏嗎？');
         if (!confirmUnfavorite) {
           return;
         }
-        // Cancel the favorite
         const unfavoriteResponse = await fetch(`http://localhost:8081/users/${user.userId}/favorite-articles/${id}`, {
           method: 'DELETE',
         });
-  
+
         if (!unfavoriteResponse.ok) {
           throw new Error('Network response was not ok');
         }
-  
+
         alert('收藏已取消');
         setFavorite(false);
       } else {
-        // Add the favorite
         const favoriteResponse = await fetch(`http://localhost:8081/users/${user.userId}/favorite-articles/${id}`, {
           method: 'POST',
         });
-  
+
         if (!favoriteResponse.ok) {
           throw new Error('Network response was not ok');
         }
-  
+
         alert('文章已成功收藏');
         setFavorite(true);
       }
@@ -119,6 +120,7 @@ function FindRoommateDetail() {
       alert('文章收藏失敗，請重試');
     }
   };
+
   if (!article) {
     return <div>Loading...</div>;
   }

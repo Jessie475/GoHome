@@ -78,7 +78,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer userId, Identity identity, String name, String phone, String gender, String email, String password) {
+    public User(Integer userId, Identity identity, String name, String phone, String gender, String email, String password,List<Article> favoriteArticles,List<House> favoriteHouses) {
         this.userId = userId;
         this.identity = identity;
         this.name = name;
@@ -87,6 +87,8 @@ public class User {
         this.gender = gender;
         this.email = email;
         this.password = password;
+        this.favoriteArticles = favoriteArticles;
+        this.favoriteHouses = favoriteHouses;
     }
 
     public enum Identity {

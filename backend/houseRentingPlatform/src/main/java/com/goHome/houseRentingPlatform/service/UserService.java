@@ -50,7 +50,6 @@ public class UserService{
         newUser.setGender(gender);
         newUser.setIdentity(identity);
         //newUser.setNationality(nationality);
-
         return userRepository.save(newUser);
     }
 

@@ -1,3 +1,5 @@
+// 
+// 
 // import React, { useContext, useEffect, useState } from 'react';
 // import { useParams } from 'react-router-dom';
 // import StarRatings from 'react-star-ratings';
@@ -7,11 +9,13 @@
 // 
 // function ArticleDetail() {
 //   const { id } = useParams();
+//   const { user } = useContext(UserContext);
 //   const [article, setArticle] = useState(null);
 //   const [comment, setComment] = useState('');
 //   const [comments, setComments] = useState([]);
 //   const [likes, setLikes] = useState(0);
-//   const { user } = useContext(UserContext);
+//   const [favorite, setFavorite] = useState([]);
+// 
 // 
 //   useEffect(() => {
 //     if (id && id !== 'undefined') {
@@ -69,19 +73,48 @@
 //   };
 // 
 //   const handleFavorite = async () => {
-//     if (!user || !user.userId || !id) return;
+//     if (!user || !user.userId || !id) {
+//       alert('未登入！請先登入！');
+//       return;
+//     }
+//   
 //     try {
-//       const response = await fetch(`http://localhost:8081/article/favorite/${id}?userId=${user.userId}`, {
-//         method: 'POST',
-//       });
-// 
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
+//       // Fetch the current favorite houses
+//       const checkResponse = await fetch(`http://localhost:8081/users/${user.userId}/favarticles`);
+//       const favoriteHouses = await checkResponse.json();
+//       const isFavorited = favoriteHouses.some(house => house.id === parseInt(id));
+//   
+//       if (isFavorited) {
+//         const confirmUnfavorite = window.confirm('已收藏，要取消收藏嗎？');
+//         if (!confirmUnfavorite) {
+//           return;
+//         }
+//         // Cancel the favorite
+//         const unfavoriteResponse = await fetch(`http://localhost:8081/users/${user.userId}/favorite-articles/${id}`, {
+//           method: 'DELETE',
+//         });
+//   
+//         if (!unfavoriteResponse.ok) {
+//           throw new Error('Network response was not ok');
+//         }
+//   
+//         alert('收藏已取消');
+//         setFavorite(false);
+//       } else {
+//         // Add the favorite
+//         const favoriteResponse = await fetch(`http://localhost:8081/users/${user.userId}/favorite-articles/${id}`, {
+//           method: 'POST',
+//         });
+//   
+//         if (!favoriteResponse.ok) {
+//           throw new Error('Network response was not ok');
+//         }
+//   
+//         alert('文章已成功收藏');
+//         setFavorite(true);
 //       }
-// 
-//       alert('文章已成功收藏');
 //     } catch (error) {
-//       console.error('Error favoriting article:', error);
+//       console.error('Error handling favorite:', error);
 //       alert('文章收藏失敗，請重試');
 //     }
 //   };
@@ -102,7 +135,7 @@
 // 
 //   return (
 //     <div>
-//       <div><Banner title="文章詳情" /></div>
+//       <Banner title="文章詳情" />
 //       <div className="detail-page">
 //         <div className="content">
 //           <div className="title-row">
@@ -114,11 +147,15 @@
 //               starRatedColor="gold"
 //             />
 //           </div>
+//           {article.imagePath && (
+//             <img src={`http://localhost:8081/images/${article.imagePath.split('/').pop()}`} alt="Article" width="300" height="300" />
+//           )}
 //           <p>{article.description}</p>
+//           {/* <p>聯絡電話：{user.phone}</p> */}
 //           <div className='action-buttons'>
 //             <button className="like-button" onClick={handleLike}>讚 {likes}</button>
 //             <button className="favorite-button" onClick={handleFavorite}>收藏</button>
-//             <button className="contact-button">聯絡發文者</button>
+//             {/* <button className="contact-button">聯絡發文者</button> */}
 //           </div>
 //         </div>
 //         <div className="comment-section">
@@ -153,8 +190,6 @@
 // }
 // 
 // export default ArticleDetail;
-
-
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
@@ -169,8 +204,7 @@ function ArticleDetail() {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState(0);
-  const [favorite, setFavorite] = useState([]);
-
+  const [favorite, setFavorite] = useState(false);
 
   useEffect(() => {
     if (id && id !== 'undefined') {
@@ -234,10 +268,14 @@ function ArticleDetail() {
     }
   
     try {
-      // Fetch the current favorite houses
+      // Fetch the current favorite articles
       const checkResponse = await fetch(`http://localhost:8081/users/${user.userId}/favarticles`);
-      const favoriteHouses = await checkResponse.json();
-      const isFavorited = favoriteHouses.some(house => house.id === parseInt(id));
+      let favoriteArticles = [];
+      if (checkResponse.ok) {
+        favoriteArticles = await checkResponse.json();
+      }
+
+      const isFavorited = favoriteArticles.some(article => article.id === parseInt(id));
   
       if (isFavorited) {
         const confirmUnfavorite = window.confirm('已收藏，要取消收藏嗎？');
@@ -306,10 +344,11 @@ function ArticleDetail() {
             <img src={`http://localhost:8081/images/${article.imagePath.split('/').pop()}`} alt="Article" width="300" height="300" />
           )}
           <p>{article.description}</p>
+          {/* <p>聯絡電話：{user.phone}</p> */}
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>
             <button className="favorite-button" onClick={handleFavorite}>收藏</button>
-            <button className="contact-button">聯絡發文者</button>
+            {/* <button className="contact-button">聯絡發文者</button> */}
           </div>
         </div>
         <div className="comment-section">
@@ -344,3 +383,4 @@ function ArticleDetail() {
 }
 
 export default ArticleDetail;
+
