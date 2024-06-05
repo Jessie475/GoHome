@@ -21,9 +21,6 @@ import PostedRent from './accountpart/PostedRent';
 import SavedArticle from './accountpart/SavedArticle';
 import SavedHouse from './accountpart/SavedHouse';
 
-
-
-
 function AppRoutes() {
   return (
     <Routes>
@@ -45,19 +42,12 @@ function AppRoutes() {
       <Route path="/roommate/:id" element={<FindRoommateDetail />} />
       <Route path="/postarticle" element={<PostArticle />} />
       <Route path="/postfindroommate" element={<PostFindRoommate />} />
-      <Route path="/housemap/:id" element={<HouseMap />} />  // 添加HouseMap的路由
-      <Route path="/articles" element={<ArticleList />} />
-      <Route path="/articles/:id" element={<ArticleDetail />} />
-      <Route path="/mypost/:id" element={<ArticleDetail />} />
-      <Route path="/postarticle" element={<PostArticle />} />
-      
+      <Route path="/housemap/:id" element={<HouseMap />} />  // 添加HouseMap的路由      
       <Route path="/mypost/:id" element={<ArticleDetail/>} />
-
       <Route path="/postedrent/:id" element={<RentalDetail />} /> 
       <Route path="/savedarticle/:id" element={<ArticleDetail />} /> 
       <Route path="/savedhouse/:id" element={<RentalDetail />} />
       {/* <Route path="/mycomment/:id" element={<ArticleDetail />} /> */}
-
       <Route path="/article/:id" element={<ArticleDetail />} />
 
     </Routes>
