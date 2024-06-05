@@ -95,7 +95,7 @@ public class UserService{
     //     return hComment;
     // }
     public List<A_Comment> getMyAComments(Integer userId) {
-        List<A_Comment> aComment = aCommentRepository.findByUserId(userId);
+        List<A_Comment> aComment = aCommentRepository.findByUser_UserId(userId);
         return aComment;
     }
 
