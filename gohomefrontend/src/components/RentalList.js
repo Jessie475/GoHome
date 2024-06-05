@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Banner from './Banner';
 import GenericList from './GenericList';
 
@@ -21,7 +22,7 @@ function RentalList() {
   //     rating: 4 + (i % 2)
   //   });
   //}
-  const [houses, setHouses] = useState([]); 
+  const [houses, setHouses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [filters, setFilters] = useState({});
@@ -36,10 +37,10 @@ function RentalList() {
   const fetchHouses = async () => {
     try {
       const response = await axios.get('http://localhost:8081/house/getAllHouses');
-      console.log('API Response Status:', response.status); 
-      console.log('API Response Data:', response.data); 
+      console.log('API Response Status:', response.status);
+      console.log('API Response Data:', response.data);
       if (Array.isArray(response.data)) {
-      
+
         const cleanedData = response.data.map(house => ({
           house_Id: house.id,
           contactInfo: house.contactInfo,
@@ -56,7 +57,7 @@ function RentalList() {
           subsidy: house.subsidy,
           startdate: house.startdate,
           lease: house.lease,
-          description: house.description, 
+          description: house.description,
         }));
         setHouses(cleanedData);
       } else {
@@ -180,6 +181,9 @@ function RentalList() {
             {i + 1}
           </button>
         ))}
+      </div>
+      <div>
+        <Link to="/postrent" className="add-button">+</Link>
       </div>
     </div>
   );

@@ -220,7 +220,7 @@ public class HouseController {
             // 如果有图片则设置图片
            if (image != null && !image.isEmpty()) {
             String fileName = image.getOriginalFilename();
-            String filePath = "/Users/raxhel/Desktop/pic/" + fileName; //改你自己的路徑
+            String filePath = "/Users/jessiekuo/Desktop/pic/" + fileName; //改你自己的路徑
             File file = new File(filePath);
             image.transferTo(file);
             house.setImagePath("images/" + fileName);

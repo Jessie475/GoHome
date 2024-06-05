@@ -27,6 +27,16 @@
   gap: 20px
 }
 
+.account-link-group {
+  grid-column: span 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+#addrent {
+  margin-right: 10px;
+}
+
 .account-link {
   display: flex;
   align-items: center;
