@@ -26,7 +26,7 @@ public class H_CommentService {
         return commentRepository.findByHouseId(houseId);
     }
     
-    public static List<H_Comment> getHcommentsByUserId(Integer userId) {
+    public List<H_Comment> getHcommentsByUserId(Integer userId) {
         return H_CommentRepository.findByUserId(userId);
     }
 

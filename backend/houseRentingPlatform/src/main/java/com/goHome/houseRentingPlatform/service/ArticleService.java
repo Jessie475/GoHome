@@ -44,7 +44,7 @@ public class ArticleService {
     }
 
     public List<Article> getArticlesByUserId(Integer userId) {
-        return articleRepository.findByUserUserId(userId);
+        return articleRepository.findByUser_UserId(userId);
     }
     
 

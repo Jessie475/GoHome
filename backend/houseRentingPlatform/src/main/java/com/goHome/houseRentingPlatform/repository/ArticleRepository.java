@@ -27,7 +27,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     
     List<Article> findByAddress(String address);
 
-    List<Article> findByUserUserId(Integer userId);
+    List<Article> findByUser_UserId(Integer userId);
+
     
     Article getArticleById(Long id);
 
