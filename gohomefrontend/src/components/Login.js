@@ -82,7 +82,7 @@ function Login() {
               <Link className="link-style-sign_up" to="/signup">註冊帳號</Link>
             </div>
             <button type="submit" className="btn-block" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit'}
+              {isSubmitting ? 'Submitting...' : '登入'}
             </button>
           </form>
         </div>
