@@ -178,19 +178,20 @@ function MyComment() {
     }
   }, [user]);
 
-  const handleDelete = (id) => {
-    fetch(`http://localhost:8081/A_comments/delete/${id}`, {
+  const handleDelete = (commentId) => {
+    fetch(`http://localhost:8081/A_comments/${commentId}`, {
       method: 'DELETE',
     })
       .then(response => {
         if (response.ok) {
-          setComments(comments.filter(comment => comment.aCommentId !== id));
+          setComments(comments.filter(comment => comment.aCommentId !== commentId));
         } else {
           console.error('Error deleting comment');
         }
       })
       .catch(error => console.error('Error deleting comment:', error));
   };
+
 
   const filteredComments = comments
     .filter(comment => comment.content && comment.content.includes(searchTerm))
