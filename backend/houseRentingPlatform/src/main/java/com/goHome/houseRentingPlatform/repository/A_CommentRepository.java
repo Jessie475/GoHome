@@ -11,7 +11,8 @@ import com.goHome.houseRentingPlatform.model.A_Comment;
 @Repository
 @CrossOrigin(origins = "http://localhost:3000")
 public interface A_CommentRepository extends JpaRepository<A_Comment, Long>{
-    List<A_Comment> findByArticleId(Long articleId);
+    // List<A_Comment> findByArticleId(Long articleId);
+    List<A_Comment> findByArticle_Id(Long articleId);
 
     List<A_Comment> findByUser_UserId(Integer userId);
     Optional<A_Comment> findById(Integer id);

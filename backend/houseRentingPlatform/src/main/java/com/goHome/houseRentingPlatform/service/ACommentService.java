@@ -35,7 +35,7 @@ public class ACommentService {
 
 
     public List<A_Comment> getCommentsByArticleId(Long articleId) {
-        return commentRepository.findByArticleId(articleId);
+        return commentRepository.findByArticle_Id(articleId);
     }
 
 
