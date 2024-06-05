@@ -30,7 +30,7 @@ function PostArticle() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user || !user.userId) {
-      alert('请先登录再发布文章');
+      alert('請先登錄再發布文章');
       return;
     }
 

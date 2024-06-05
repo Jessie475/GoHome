@@ -57,10 +57,10 @@ function FindRoommateDetail() {
       const newComment = await response.json();
       setComments([...comments, newComment]);
       setComment('');
-      alert('评论已成功发布');
+      alert('評論已成功發布');
     } catch (error) {
       console.error('Error submitting comment:', error);
-      alert('评论发布失败，请重试');
+      alert('評論已成功發布，請重試');
     }
   };
 
@@ -130,10 +130,11 @@ function FindRoommateDetail() {
         <div className="content">
           <h1>{article.title}</h1>
           <p>{article.description}</p>
+          <p>{user.contactInfo}</p>
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>
             <button className="favorite-button" onClick={handleFavorite}>收藏</button>
-            <button className="contact-button">聯絡發文者</button>
+            {/* <button className="contact-button">聯絡發文者</button> */}
           </div>
         </div>
         <div className="comment-section">

@@ -133,12 +133,12 @@ function Account() {
           setUser({ ...user, email, phone });
           setMessage('更新成功');
         } else {
-          setMessage('更新失败');
+          setMessage('更新失敗');
         }
       })
       .catch(error => {
-        console.error('更新时出错:', error);
-        setMessage('更新时出错');
+        console.error('更新時錯誤:', error);
+        setMessage('更新時出錯');
       });
   };
 

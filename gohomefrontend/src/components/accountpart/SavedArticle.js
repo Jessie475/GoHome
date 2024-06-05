@@ -180,7 +180,7 @@ function SavedArticle() {
         title="我的收藏文章"
         items={savedArticles.map(savedArticle => ({
           content: `${savedArticle.title}: ${savedArticle.description}`,
-          link: `/savedarticle/${savedArticle.id}` // 传递正确的ID
+          link: `/savedarticle/${savedArticle.id}` // 傳遞正確的id
         }))}
       />
     </div>
