@@ -62,8 +62,6 @@ import com.goHome.houseRentingPlatform.service.UserService;
         public ResponseEntity<List<A_Comment>> getCommentsByArticleId(@PathVariable Long articleId) {
             List<A_Comment> comments = ACommentService.getCommentsByArticleId(articleId);
             return ResponseEntity.ok(comments);
-        
-
         }
     }
 

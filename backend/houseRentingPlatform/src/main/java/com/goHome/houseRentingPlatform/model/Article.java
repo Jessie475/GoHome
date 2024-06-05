@@ -31,7 +31,7 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id")
-    private Long articleId;
+    private Long article_id;
 
     @Column(nullable = false)
     private String title;
@@ -77,8 +77,8 @@ public class Article {
     // Constructors, Getters and Setters
     public Article() {}
 
-    public Article(Long id, String title, String address, Double rate, String description, ArticleType type, Double lat, Double lng) {
-        this.articleId = id;
+    public Article(Long article_id, String title, String address, Double rate, String description, ArticleType type, Double lat, Double lng) {
+        this.article_id = article_id;
         this.title = title;
         this.address = address;
         this.rate = rate;
@@ -89,11 +89,11 @@ public class Article {
     }
 
     public Long getId() {
-        return articleId;
+        return article_id;
     }
 
-    public void setId(Long id) {
-        this.articleId = id;
+    public void setId(Long article_id) {
+        this.article_id = article_id;
     }
 
     public String getTitle() {

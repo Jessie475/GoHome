@@ -35,7 +35,7 @@ public class UserController {
     // @Autowired
     // private H_CommentService H_CommentService;
     @Autowired
-    private ACommentService ACommentService;
+    private ACommentService aCommentService;
 
 
 
@@ -106,20 +106,27 @@ public class UserController {
     }
 
     // get comment
-    @GetMapping("/{userId}/mycomment")
+    @GetMapping("/{userId}/mycomments")
     public ResponseEntity<List<A_Comment>> getMyComment(@PathVariable Integer userId) {
-        // List<H_Comment> h_comments = new ArrayList<>(H_CommentService.getHcommentsByUserId(userId));
         List<A_Comment> a_comments = new ArrayList<>(userService.getMyAComments(userId));
-        // List<Object> allComments = new ArrayList<>();
-        // allComments.addAll(h_comments);
-        // allComments.addAll(a_comments);
-
         if (a_comments != null && !a_comments.isEmpty()) {
             return ResponseEntity.ok(a_comments);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // @DeleteMapping("/deletecomments/{commentId}")
+    // public ResponseEntity<String> deleteComment(@PathVariable Long commentId) {
+    //     boolean isDeleted = aCommentService.deleteComment(commentId);
+    //     if (isDeleted) {
+    //         return ResponseEntity.ok("Comment deleted successfully");
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment not found or you do not have permission to delete it");
+    //     }
+    // }
+
+
 
     // get我的房屋
     @GetMapping("/{userId}/myhouse")

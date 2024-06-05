@@ -51,7 +51,6 @@ function AppRoutes() {
       <Route path="/mypost/:id" element={<ArticleDetail />} />
       <Route path="/postarticle" element={<PostArticle />} />
       
-      <Route path="/mypost/:id" element={<ArticleDetail/>} />
 
       <Route path="/postedrent/:id" element={<RentalDetail />} /> 
       <Route path="/savedarticle/:id" element={<ArticleDetail />} /> 
