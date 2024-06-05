@@ -4,23 +4,6 @@ import Banner from './Banner';
 import GenericList from './GenericList';
 
 function RentalList() {
-
-  // const rentals = [];
-  // for (let i = 1; i <= 18; i++) {
-  //   rentals.push({
-  //     id: i,
-  //     name: `${i}號房`,
-  //     address: `SomeAddress ${i}`,
-  //     img: `/images/room${i}.jpg`,
-  //     description: `描述 ${i}`,
-  //     link: `/rental/${i}`,
-  //     rent: i * 1000,
-  //     type: i % 2 === 0 ? "單人" : "雙人",
-  //     subsidy: i % 3 === 0 ? "有" : "無",
-  //     size: 3 + i,
-  //     rating: 4 + (i % 2)
-  //   });
-  //}
   const [houses, setHouses] = useState([]); 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -39,7 +22,6 @@ function RentalList() {
       console.log('API Response Status:', response.status); 
       console.log('API Response Data:', response.data); 
       if (Array.isArray(response.data)) {
-      
         const cleanedData = response.data.map(house => ({
           house_Id: house.id,
           contactInfo: house.contactInfo,
@@ -76,13 +58,20 @@ function RentalList() {
   };
 
   const sortedFilteredItems = Array.isArray(houses) ? houses.filter(house => {
-    return (filters.price ? house.price <= parseInt(filters.price, 10) : true) &&
-      //(filters.type ? house.type === filters.type : true) &&
+    return (
+      (filters.price === '0-5000' ? house.price <= 5000 : true) &&
+      (filters.price === '5000-10000' ? house.price > 5000 && house.price <= 10000 : true) &&
+      (filters.price === '10000-20000' ? house.price > 10000 && house.price <= 20000 : true) &&
       (filters.subsidy !== undefined ? house.subsidy === (filters.subsidy === '1') : true) &&
-      (filters.size ? house.size <= parseInt(filters.size, 10) : true) &&
-      (filters.rate ? (filters.rate === '3' ? house.rate < 3 || house.rate === null : house.rate >= parseInt(filters.rate, 10) && house.rate < parseInt(filters.rate, 10) + 1) : true) &&
+      (filters.size === '0-5' ? house.size <= 5 : true) &&
+      (filters.size === '5-10' ? house.size > 5 && house.size <= 10 : true) &&
+      (filters.size === '10+' ? house.size > 10 : true) &&
+      (filters.rate === '4-5' ? house.rate >= 4 && house.rate <= 5 : true) &&
+      (filters.rate === '3-4' ? house.rate >= 3 && house.rate < 4 : true) &&
+      (filters.rate === 'below-3' ? house.rate < 3 : true) &&
       (filters.roomType ? house.roomType === filters.roomType : true) &&
-      (addressSearch ? house.address.toLowerCase().includes(addressSearch.toLowerCase()) : true);
+      (addressSearch ? house.address.toLowerCase().includes(addressSearch.toLowerCase()) : true)
+    );
   }).sort((a, b) => {
     if (!sortField) return 0;
     if (a[sortField] < b[sortField]) {
@@ -93,7 +82,6 @@ function RentalList() {
     }
     return 0;
   }) : [];
-
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -127,9 +115,9 @@ function RentalList() {
         />
         <select name="price" onChange={handleFilterChange}>
           <option value="">房租區間</option>
-          <option value="5000">0~5000</option>
-          <option value="10000">5001~10000</option>
-          <option value="20000">10001~20000</option>
+          <option value="0-5000">0~5000</option>
+          <option value="5000-10000">5000~10000</option>
+          <option value="10000-20000">10000~20000</option>
         </select>
         <select name="roomType" onChange={handleFilterChange}>
           <option value="">所有類型</option>
@@ -143,14 +131,15 @@ function RentalList() {
         </select>
         <select name="size" onChange={handleFilterChange}>
           <option value="">坪數區間</option>
-          <option value="5">0~5</option>
-          <option value="10">5~10</option>
+          <option value="0-5">0~5</option>
+          <option value="5-10">5~10</option>
+          <option value="10+">10以上</option>
         </select>
         <select name="rate" onChange={handleFilterChange}>
           <option value="">評價區間</option>
-          <option value="5">4~5顆星</option>
-          <option value="4">3~4顆星</option>
-          <option value="3">3顆星以下</option>
+          <option value="4-5">4~5顆星</option>
+          <option value="3-4">3~4顆星</option>
+          <option value="below-3">3顆星以下</option>
         </select>
         <select onChange={handleSortChange}>
           <option value="">排序方式</option>

@@ -100,6 +100,17 @@ function RentalDetail() {
         }
     };
 
+    const translateRoomType = (type) => {
+        switch (type) {
+            case 'STUDIO':
+                return '套房';
+            case 'ROOM':
+                return '雅房';
+            default:
+                return type;
+        }
+    };
+
     return (
         <div>
             <Banner title="租房詳情" />
@@ -120,7 +131,7 @@ function RentalDetail() {
                     </div>
                     <div className="rental-info">
                         <p><strong>地址：</strong>{house.address}</p>
-                        <p><strong>房型：</strong>{house.roomType}</p>
+                        <p><strong>房型：</strong>{translateRoomType(house.roomType)}</p> {/* 使用翻译函数 */}
                         <p><strong>房屋大小：</strong>{house.size}</p>
                         <p><strong>租金：</strong>{house.price}</p>
                         <p><strong>租屋補助：</strong>{house.subsidy ? '是' : '否'}</p>

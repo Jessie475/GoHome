@@ -220,7 +220,7 @@ public class HouseController {
             // 如果有图片则设置图片
            if (image != null && !image.isEmpty()) {
             String fileName = image.getOriginalFilename();
-            String filePath = "/Users/raxhel/Desktop/pic/" + fileName; //改你自己的路徑
+            String filePath = "/Users/Fanny/Desktop/pic/" + fileName; //改你自己的路徑
             File file = new File(filePath);
             image.transferTo(file);
             house.setImagePath("images/" + fileName);
@@ -233,10 +233,63 @@ public class HouseController {
     }
     
 
-    @PutMapping("/Update/{id}")//更新房屋資訊 ok
-    public ResponseEntity<House> updateHouse(@PathVariable("id") Integer id, @RequestBody House housedetail) {
-        return ResponseEntity.ok(houseService.updateHouse(id, housedetail));
+    @PutMapping("/update/{id}")
+public ResponseEntity<House> updateHouse(
+    @PathVariable("id") Integer id,
+    @RequestParam("title") String title,
+    @RequestParam("type") RoomType type,
+    @RequestParam("size") Double size,
+    @RequestParam("price") Integer price,
+    @RequestParam("subsidy") Boolean subsidy,
+    @RequestParam("lease") Double lease,
+    @RequestParam("startdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+    @RequestParam("address") String address,
+    @RequestParam("contactInfo") String contactInfo,
+    @RequestParam("description") String description,
+    @RequestParam("restriction") String restriction,
+    @RequestParam("userId") Integer userId,
+    @RequestParam(value = "image", required = false) MultipartFile image) {
+
+    try {
+        House house = houseService.getHouseById(id);
+        if (house == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        house.setTitle(title);
+        house.setroomType(type);
+        house.setsize(size);
+        house.setprice(price);
+        house.setsubsidy(subsidy);
+        house.setlease(lease);
+        house.setstartdate(startDate);
+        house.setAddress(address);
+        house.setcontactInfo(contactInfo);
+        house.setdescription(description);
+        house.setrestriction(restriction);
+        house.setUser(user);
+
+        // 如果有图片则设置图片
+        if (image != null && !image.isEmpty()) {
+            String fileName = image.getOriginalFilename();
+            String filePath = "/Users/Fanny/Desktop/pic/" + fileName; // 改为你自己的路径
+            File file = new File(filePath);
+            image.transferTo(file);
+            house.setImagePath("images/" + fileName);
+        }
+
+        House updatedHouse = houseService.updateHouse(id,house);
+        return ResponseEntity.ok(updatedHouse);
+    } catch (Exception e) {
+        // logger.error("Error updating house", e);
+        return ResponseEntity.status(500).build();
     }
+}
 
     @PutMapping("/updateLatLng/{id}")
     public ResponseEntity<House> updateLatLng(@PathVariable("id") Integer id, @RequestBody House houseDetails) {

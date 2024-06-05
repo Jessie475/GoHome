@@ -77,7 +77,7 @@ private static final Logger logger = LoggerFactory.getLogger(ArticleController.c
            // 保存图片到本地文件系统
            if (image != null && !image.isEmpty()) {
             String fileName = image.getOriginalFilename();
-            String filePath = "/Users/raxhel/Desktop/pic/" + fileName; //改你自己的路徑
+            String filePath = "/Users/Fanny/Desktop/pic/" + fileName; //改你自己的路徑
             File file = new File(filePath);
             image.transferTo(file);
             article.setImagePath("images/" + fileName); // 存储相对路径

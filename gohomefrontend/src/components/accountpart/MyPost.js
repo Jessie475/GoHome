@@ -87,6 +87,7 @@ function MyPost() {
     .then(response => {
       if (response.ok) {
         setPosts(posts.filter(post => post.id !== id));
+        alert('該房屋已刪除');
       } else {
         console.error('Error deleting article');
       }
