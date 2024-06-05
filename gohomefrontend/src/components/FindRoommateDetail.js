@@ -150,10 +150,10 @@ function FindRoommateDetail() {
           </div>
         </div>
         <div className="comments-list">
-          {comments.map(({ id, content, commentTime, likes }) => (
+          {comments.map(({ id, content, commentTime, likes, userId  }) => (
             <div key={id} className="comment">
               <div className="comment-header">
-                <span className="commenter-id">ID: {id}</span>
+                <span className="commenter-id">User ID: {userId.userId}</span>
                 <span className="comment-time">{new Date(commentTime).toLocaleString()}</span>
               </div>
               <p>{content}</p>
