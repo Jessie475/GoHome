@@ -58,7 +58,6 @@ function MyComment() {
         .then(data => {
           console.log(data); // 打印 data 确认数据格式
           setComments(data);
-          console.log(data)
         })
         .catch(error => {
           console.error('There was a problem with the fetch operation:', error);
@@ -86,7 +85,7 @@ function MyComment() {
     .filter(comment => comment.content && comment.content.includes(searchTerm))
     .map(comment => ({
       ...comment,
-      id: comment.id,
+      id: `${comment.acomment_id}`,
       content: `${comment.content}`,
       link: `/articles/${comment.articleId}`,
       // id: comment.id /                                                                                         / 确保id在这里被传递
