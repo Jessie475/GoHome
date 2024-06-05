@@ -15,6 +15,7 @@ function RentalDetail() {
     const [house, setHouse] = useState(null);
     const [articles, setArticles] = useState([]);
     const [favorite, setFavorite] = useState([]);
+    const [listType, setListType] = useState('articles'); // 添加此行
 
     useEffect(() => {
         if (id && id !== 'undefined') {
@@ -100,14 +101,13 @@ function RentalDetail() {
     };
 
     return (
-        <div>
+        <div className="rental-detail-container">
             <Banner title="租房詳情" />
-            <div className="rental-detail-container">
-                <div className="rental-grid">
-                    <div className="rental-type">
-                        <p className='rental-title'><strong>{house.title}</strong></p>
-                        <StarRatings rating={house.rate} starDimension="20px" starSpacing="2px" starRatedColor="gold" />
-                        <div className="rental-control-buttons"></div>
+            <div className="rental-grid">
+                <div className="rental-type">
+                    <p className='rental-title'><strong>{house.title}</strong></p>
+                    <StarRatings rating={house.rate} starDimension="20px" starSpacing="2px" starRatedColor="gold" />
+                    <div className="rental-control-buttons">
                         <button className="toggle-favorite" onClick={handleFavorite}>收藏</button>
                         <button className="show-map" onClick={showMap}>在地圖中顯示</button>
                     </div>
@@ -131,25 +131,29 @@ function RentalDetail() {
                         <img src={`http://localhost:8081/images/${house.imagePath.split('/').pop()}`} alt="House" width="300" height="300" />
                     )}
                 </div>
-                <GenericList
-                    title="相關文章"
-                    items={currentItems.map(article => ({
-                        content: `${article.title}: ${article.description}`,
-                        link: `/articles/${article.id}`
-                    }))}
-                />
-                <div className="pagination">
-                    {Array.from({ length: Math.ceil(currentItems.length / itemsPerPage) }, (_, i) => (
-                        <button
-                            key={i + 1}
-                            onClick={() => paginate(i + 1)}
-                            disabled={currentPage === i + 1}
-                            className="page-link"
-                        >
-                            {i + 1}
-                        </button>
-                    ))}
-                </div>
+            </div>
+            <div className="switch-buttons">
+                <button className="switch-articles" onClick={() => setListType('articles')}>相關文章</button>
+                <button className="switch-messages" onClick={() => setListType('messages')}>相關留言</button>
+            </div>
+            <GenericList
+                title="相關文章"
+                items={currentItems.map(article => ({
+                    content: `${article.title}: ${article.description}`,
+                    link: `/articles/${article.id}`
+                }))}
+            />
+            <div className="pagination">
+                {Array.from({ length: Math.ceil(currentItems.length / itemsPerPage) }, (_, i) => (
+                    <button
+                        key={i + 1}
+                        onClick={() => paginate(i + 1)}
+                        disabled={currentPage === i + 1}
+                        className="page-link"
+                    >
+                        {i + 1}
+                    </button>
+                ))}
             </div>
         </div>
     );
