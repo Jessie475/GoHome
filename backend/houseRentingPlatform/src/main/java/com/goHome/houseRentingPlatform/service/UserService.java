@@ -141,4 +141,16 @@ public class UserService{
         return null;
     }*/
 
+    public User updateUser(Integer userId, String email, String phone) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setEmail(email);
+            user.setPhone(phone);
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
 }

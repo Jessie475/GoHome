@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.xml.stream.events.Comment;
@@ -67,6 +68,18 @@ public class UserController {
         }
     }
 
+    @PutMapping("/{userId}/update")
+    public ResponseEntity<?> updateUser(@PathVariable Integer userId, @RequestBody Map<String, String> updates) {
+        try {
+            String email = updates.get("email");
+            String phone = updates.get("phone");
+            User updatedUser = userService.updateUser(userId, email, phone);
+            return ResponseEntity.ok().body(Map.of("success", true, "user", updatedUser));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("success", false, "message", e.getMessage()));
+        }
+    }
+
 
     // get favhouse/favarticle/mycomment/myhouse/
 
@@ -94,15 +107,15 @@ public class UserController {
 
     // get comment
     @GetMapping("/{userId}/mycomment")
-    public ResponseEntity<List<Object>> getMyComment(@PathVariable Integer userId) {
+    public ResponseEntity<List<A_Comment>> getMyComment(@PathVariable Integer userId) {
         // List<H_Comment> h_comments = new ArrayList<>(H_CommentService.getHcommentsByUserId(userId));
         List<A_Comment> a_comments = new ArrayList<>(userService.getMyAComments(userId));
-        List<Object> allComments = new ArrayList<>();
+        // List<Object> allComments = new ArrayList<>();
         // allComments.addAll(h_comments);
-        allComments.addAll(a_comments);
+        // allComments.addAll(a_comments);
 
-        if (allComments != null && !allComments.isEmpty()) {
-            return ResponseEntity.ok(allComments);
+        if (a_comments != null && !a_comments.isEmpty()) {
+            return ResponseEntity.ok(a_comments);
         } else {
             return ResponseEntity.notFound().build();
         }

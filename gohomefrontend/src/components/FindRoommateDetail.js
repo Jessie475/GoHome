@@ -130,6 +130,7 @@ function FindRoommateDetail() {
         <div className="content">
           <h1>{article.title}</h1>
           <p>{article.description}</p>
+          <p>{user.contactInfo}</p>
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>
             <button className="favorite-button" onClick={handleFavorite}>收藏</button>

@@ -309,7 +309,7 @@ function ArticleDetail() {
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>
             <button className="favorite-button" onClick={handleFavorite}>收藏</button>
-            <button className="contact-button">聯絡發文者</button>
+            {/* <button className="contact-button">聯絡發文者</button> */}
           </div>
         </div>
         <div className="comment-section">

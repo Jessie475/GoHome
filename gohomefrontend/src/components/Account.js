@@ -119,7 +119,6 @@ function Account() {
   };
 
   const handleUpdate = () => {
-    // 假设后端API为 http://localhost:8081/users/update
     fetch(`http://localhost:8081/users/${user.userId}/update`, {
       method: 'PUT',
       headers: {
