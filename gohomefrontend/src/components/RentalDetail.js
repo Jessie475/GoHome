@@ -132,10 +132,10 @@ function RentalDetail() {
                     )}
                 </div>
             </div>
-            <div className="switch-buttons">
+            {/* <div className="switch-buttons">
                 <button className="switch-articles" onClick={() => setListType('articles')}>相關文章</button>
                 <button className="switch-messages" onClick={() => setListType('messages')}>相關留言</button>
-            </div>
+            </div> */}
             <GenericList
                 title="相關文章"
                 items={currentItems.map(article => ({
