@@ -12,6 +12,6 @@ import com.goHome.houseRentingPlatform.model.A_Comment;
 public interface A_CommentRepository extends JpaRepository<A_Comment, Long>{
     List<A_Comment> findByArticleId(Long articleId);
 
-    List<A_Comment> findByUser_UserId(Integer userId);
+    List<A_Comment> findByUserId(Integer userId);
 
 }

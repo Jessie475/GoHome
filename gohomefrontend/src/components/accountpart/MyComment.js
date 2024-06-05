@@ -37,7 +37,7 @@
 // 
 // 
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Banner from '../../components/Banner';
 import { UserContext } from '../../contexts/UserContext';
 
@@ -57,7 +57,7 @@ function MyComment() {
         })
         .then(data => {
           setComments(data);
-          console.log(data.article_id)
+          console.log(data)
         })
         .catch(error => {
           console.error('There was a problem with the fetch operation:', error);
@@ -67,7 +67,7 @@ function MyComment() {
 
   const handleDelete = (id) => {
     console.log('Deleting comment with id:', id); // 確保函數被調用
-    fetch(`http://localhost:8081/comment/delete/${id}`, {
+    fetch(`http://localhost:8081/A_comment/${id}`, {
       method: 'DELETE',
     })
     .then(response => {
@@ -85,6 +85,7 @@ function MyComment() {
     .filter(comment => comment.content && comment.content.includes(searchTerm))
     .map(comment => ({
       ...comment,
+      id: comment.id,
       content: `${comment.content}`,
       link: `/articles/${comment.article_id}` 
       // 確保鏈接指向文章頁面
