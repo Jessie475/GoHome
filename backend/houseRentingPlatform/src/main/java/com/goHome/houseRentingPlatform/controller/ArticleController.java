@@ -74,9 +74,6 @@ private static final Logger logger = LoggerFactory.getLogger(ArticleController.c
             }
 
             // 如果有图片则设置图片
-            if (image != null && !image.isEmpty()) {
-                article.setImage(image.getBytes());
-            }
            // 保存图片到本地文件系统
            if (image != null && !image.isEmpty()) {
             String fileName = image.getOriginalFilename();
@@ -117,10 +114,6 @@ private static final Logger logger = LoggerFactory.getLogger(ArticleController.c
 
     @GetMapping("/getArticle/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
-      // logger.info("Received request for article with id: {}", id);
-        Article article = articleService.findArticleById(id)
-            .orElseThrow(() -> new RuntimeException("Article not found!"));
-        return ResponseEntity.ok(article);
         Optional<Article> articleOptional = articleService.findArticleById(id);
         if (articleOptional.isPresent()) {
             Article article = articleOptional.get();
