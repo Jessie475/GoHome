@@ -184,6 +184,7 @@ function MyComment() {
     })
       .then(response => {
         if (response.ok) {
+          alert('該留言已刪除');
           setComments(comments.filter(comment => comment.aCommentId !== commentId));
         } else {
           console.error('Error deleting comment');

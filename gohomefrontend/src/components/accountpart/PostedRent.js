@@ -33,7 +33,9 @@ function PostedRent() {
     })
     .then(response => {
       if (response.ok) {
-        console.log('House deleted successfully:', id); // 确保服务器返回正确响应
+        console.log('House deleted successfully:', id); 
+        alert('該房屋已刪除');
+        // 确保服务器返回正确响应
         setPosted(posted.filter(post => post.id !== id));
       } else {
         console.error('Error deleting house'); // 处理错误情况

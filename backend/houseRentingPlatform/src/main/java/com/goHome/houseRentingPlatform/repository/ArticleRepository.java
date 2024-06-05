@@ -28,8 +28,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByAddress(String address);
 
     List<Article> findByUser_UserId(Integer userId);
-    void deleteById(Long id);
-    
     Article getArticleById(Long id);
 
     //@Query("SELECT a FROM Article a JOIN a.users u GROUP BY a ORDER BY COUNT(u) DESC")
