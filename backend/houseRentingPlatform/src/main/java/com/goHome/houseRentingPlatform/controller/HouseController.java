@@ -1,24 +1,32 @@
 package com.goHome.houseRentingPlatform.controller;
 
-import com.goHome.houseRentingPlatform.model.User;
-import com.goHome.houseRentingPlatform.service.UserService;
+import java.io.File;
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.House.RoomType;
+import com.goHome.houseRentingPlatform.model.User;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.service.HouseService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.ResponseEntity;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
+import com.goHome.houseRentingPlatform.service.UserService;
 
 @RestController
 @RequestMapping("/house")
@@ -187,9 +195,14 @@ public class HouseController {
         @RequestParam("contactInfo") String contactInfo,
         @RequestParam("description") String description,
         @RequestParam("restriction") String restriction,
+        @RequestParam("userId") Integer userId,
         @RequestParam(value = "image", required = false) MultipartFile image)  {
         
         try {
+            User user = userService.getUserById(userId);
+            if (user == null) {
+                return ResponseEntity.badRequest().build();
+            }
             House house = new House();
             house.setTitle(title);
             house.setroomType(type);
@@ -202,21 +215,19 @@ public class HouseController {
             house.setcontactInfo(contactInfo);
             house.setdescription(description);;
             house.setrestriction(restriction);;
+            house.setUser(user);
 
             // 如果有图片则设置图片
-            if (image != null && !image.isEmpty()) {
-                house.setImage(image.getBytes());
-            }
-
-            House savedHouse = houseService.saveHouse(house);
-            return ResponseEntity.ok(savedHouse);
-        } catch (IOException e) {
-            // 处理图片字节转换错误
-            //logger.error("Error saving house image", e);
-            return ResponseEntity.status(500).build();
-        } catch (Exception e) {
-            // 处理其他可能的错误
-            //logger.error("Error adding house", e);
+           if (image != null && !image.isEmpty()) {
+            String fileName = image.getOriginalFilename();
+            String filePath = "/Users/raxhel/Desktop/pic/" + fileName; //改你自己的路徑
+            File file = new File(filePath);
+            image.transferTo(file);
+            house.setImagePath("images/" + fileName);
+           }  House savedHouse = houseService.saveHouse(house,userId);
+           return ResponseEntity.ok(savedHouse);
+        }catch (Exception e) {
+           // logger.error("Error adding house", e);
             return ResponseEntity.status(500).build();
         }
     }

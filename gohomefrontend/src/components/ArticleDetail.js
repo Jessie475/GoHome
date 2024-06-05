@@ -114,6 +114,9 @@ function ArticleDetail() {
               starRatedColor="gold"
             />
           </div>
+          {article.imagePath && (
+            <img src={`http://localhost:8081/images/${article.imagePath.split('/').pop()}`} alt="Article" width="300" height="300" />
+          )}
           <p>{article.description}</p>
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>

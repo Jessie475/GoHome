@@ -1,7 +1,9 @@
 package com.goHome.houseRentingPlatform.controller;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,9 +74,14 @@ private static final Logger logger = LoggerFactory.getLogger(ArticleController.c
             }
 
             // 如果有图片则设置图片
-            if (image != null && !image.isEmpty()) {
-                article.setImage(image.getBytes());
-            }
+           // 保存图片到本地文件系统
+           if (image != null && !image.isEmpty()) {
+            String fileName = image.getOriginalFilename();
+            String filePath = "/Users/raxhel/Desktop/pic/" + fileName; //改你自己的路徑
+            File file = new File(filePath);
+            image.transferTo(file);
+            article.setImagePath("images/" + fileName); // 存储相对路径
+        }
 
             Article savedArticle = articleService.saveArticle(article, userId);
             return ResponseEntity.ok(savedArticle);
@@ -107,10 +114,13 @@ private static final Logger logger = LoggerFactory.getLogger(ArticleController.c
 
     @GetMapping("/getArticle/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
-      // logger.info("Received request for article with id: {}", id);
-        Article article = articleService.findArticleById(id)
-            .orElseThrow(() -> new RuntimeException("Article not found!"));
-        return ResponseEntity.ok(article);
+        Optional<Article> articleOptional = articleService.findArticleById(id);
+        if (articleOptional.isPresent()) {
+            Article article = articleOptional.get();
+            return ResponseEntity.ok(article);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/filterType/{type}")

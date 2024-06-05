@@ -71,6 +71,9 @@ public class Article {
     @Column(name = "image", nullable = true)
     private byte[] image;
 
+    @Column(name = "image_path", nullable = true)
+    private String imagePath;
+
     // Constructors, Getters and Setters
     public Article() {}
 
@@ -181,6 +184,14 @@ public class Article {
         this.image = image;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+    
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+    
     public enum ArticleType {
         HOUSE_REVIEW, ROOMMATE_SEARCH
     }

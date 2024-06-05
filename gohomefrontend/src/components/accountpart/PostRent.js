@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-// import { UserContext } from '../contexts/UserContext';
+import React, { useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Banner from '../../components/Banner';
+import { UserContext } from '../../contexts/UserContext';
 import '../../css/PostPageStyles.css';
 
 function PostRent() {
@@ -17,10 +18,24 @@ function PostRent() {
   const [description, setDescription] = useState('');
   const [restriction, setRestriction] = useState('');
   const [image, setImage] = useState(null);
-  //const { user } = useContext(UserContext); // 使用 useContext 獲取用戶信息
+  const { user } = useContext(UserContext); // 使用 useContext 獲取用戶信息
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const uniqueFileName = uuidv4() + '.' + file.name.split('.').pop();
+      const uniqueFile = new File([file], uniqueFileName, { type: file.type });
+      setImage(uniqueFile);
+    }
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user || !user.userId) {
+      alert('请先登录再发布文章');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('type', type);
@@ -33,7 +48,7 @@ function PostRent() {
     formData.append('contactInfo', contactInfo);
     formData.append('description', description);
     formData.append('restriction', restriction);
-    //formData.append('userId', user.userId); // 添加用戶 ID
+     formData.append('userId', user.userId);
     if (image) {
       formData.append('image', image);
     }
