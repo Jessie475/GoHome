@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import StarRatings from 'react-star-ratings';
+import { v4 as uuidv4 } from 'uuid';
 import { UserContext } from '../contexts/UserContext';
 import '../css/PostPageStyles.css';
 import Banner from './Banner';
@@ -17,19 +18,34 @@ function PostArticle() {
     setRating(newRating);
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const uniqueFileName = uuidv4() + '.' + file.name.split('.').pop();
+      const uniqueFile = new File([file], uniqueFileName, { type: file.type });
+      setImage(uniqueFile);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user || !user.userId) {
+      alert('请先登录再发布文章');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('address', address);
     formData.append('description', content);
-    formData.append('type', 'HOUSE_REVIEW'); // 默认类型为 HOUSE_REVIEW
+    formData.append('type', 'HOUSE_REVIEW');
     formData.append('userId', user.userId);
-    formData.append('rate', rating); // 始终包含评分字段
+    formData.append('rate', rating);
+
     if (image) {
       formData.append('image', image);
     }
-  
+
     try {
       const response = await axios.post('http://localhost:8081/article/addArticle', formData, {
         headers: {
@@ -37,10 +53,10 @@ function PostArticle() {
         }
       });
       console.log(response.data);
-      alert('已成功上傳');  // 显示成功消息
+      alert('已成功上傳');
     } catch (error) {
       console.error('Error submitting article:', error);
-      alert('失敗，請重試');  // 显示失败消息
+      alert('失敗，請重試');
     }
   };
 
@@ -93,7 +109,7 @@ function PostArticle() {
             <input
               id="image-upload"
               type="file"
-              onChange={e => setImage(e.target.files[0])}
+              onChange={handleFileChange}
               className="form-control"
             />
             <button type="submit" className="submit-button">發佈</button>

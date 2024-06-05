@@ -1,16 +1,27 @@
 package com.goHome.houseRentingPlatform.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 
-import jakarta.persistence.*;
 //import jakarta.persistence.JoinColumn;
 //import jakarta.persistence.ManyToOne;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 
 @Entity
@@ -68,6 +79,9 @@ public class House {
     @Lob
     @Column(name = "image", nullable = true)
     private byte[] image;
+
+    @Column(name = "image_path", nullable = true)
+    private String imagePath;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -242,4 +256,14 @@ public class House {
     public enum RoomType {
         STUDIO, ROOM
     }
+
+    // Getters and Setters
+public String getImagePath() {
+  return imagePath;
+}
+
+public void setImagePath(String imagePath) {
+  this.imagePath = imagePath;
+}
+
 }

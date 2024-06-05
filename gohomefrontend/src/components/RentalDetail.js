@@ -11,91 +11,94 @@ function RentalDetail() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const [listType, setListType] = useState('articles'); // 确保正确定义
     const { user } = useContext(UserContext);
     const [house, setHouse] = useState(null);
     const [articles, setArticles] = useState([]);
     const [favorite, setFavorite] = useState([]);
+    const [listType, setListType] = useState('articles'); // 添加此行
 
-  useEffect(() => {
-    if (id && id !== 'undefined') {
-      console.log(`Fetching house with id: ${id}`);
-      fetch(`http://localhost:8081/house/getHouse/${id}`)
-        .then(response => response.json())
-        .then(data => {
-          console.log('Fetched house:', data);
-          setHouse(data);
-        })
-        .catch(error => {
-          console.error('Error fetching house:', error);
-        });
+    useEffect(() => {
+        if (id && id !== 'undefined') {
+            console.log(`Fetching house with id: ${id}`);
+            fetch(`http://localhost:8081/house/getHouse/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched house:', data);
+                    setHouse(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching house:', error);
+                });
 
-      fetch(`http://localhost:8081/house/getHouseArticle/${id}`)
-        .then(response => response.json())
-        .then(data => {
-          console.log('Fetched articles:', data);
-          setArticles(Array.isArray(data) ? data : []);
-        })
-        .catch(error => {
-          console.error('Error fetching related articles:', error);
-          setArticles([]);
-        });
-    }
-}, [id]);
-
-  const showMap = () => {
-    navigate(`/housemap/${id}`); // 跳转
-  };
-
-  const currentItems = articles;
-  console.log(currentItems);
-  const toggleFavorite = () => setFavorite(!favorite);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-
-  
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  if (!house) return <div>Loading...</div>;
-
-  const handleFavorite = async () => {
-    if (!user || !user.userId || !id) {
-      alert('未登入！請先登入！');
-      return;
-    }
-  
-    try {
-      // Fetch the current favorite houses
-      const checkResponse = await fetch(`http://localhost:8081/users/${user.userId}/favhouses`);
-      const favoriteHouses = await checkResponse.json();
-      const isFavorited = favoriteHouses.some(house => house.id === parseInt(id));
-  
-      if (isFavorited) {
-        const confirmUnfavorite = window.confirm('已收藏，要取消收藏嗎？');
-        if (!confirmUnfavorite) {
-          return;
+            fetch(`http://localhost:8081/house/getHouseArticle/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched articles:', data);
+                    setArticles(Array.isArray(data) ? data : []);
+                })
+                .catch(error => {
+                    console.error('Error fetching related articles:', error);
+                    setArticles([]);
+                });
         }
-        // Cancel the favorite
-        const unfavoriteResponse = await fetch(`http://localhost:8081/users/${user.userId}/favorite-houses/${id}`, {
-          method: 'DELETE',
-        });
-  
-        if (!unfavoriteResponse.ok) {
-          throw new Error('Network response was not ok');
+    }, [id]);
+
+    const showMap = () => {
+        navigate(`/housemap/${id}`);
+    };
+
+    const currentItems = articles;
+    const toggleFavorite = () => setFavorite(!favorite);
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    if (!house) return <div>Loading...</div>;
+
+    const handleFavorite = async () => {
+        if (!user || !user.userId || !id) {
+            alert('未登入！請先登入！');
+            return;
         }
-  
-        alert('收藏已取消');
-        setFavorite(false);
-      } else {
-        // Add the favorite
-        const favoriteResponse = await fetch(`http://localhost:8081/users/${user.userId}/favorite-houses/${id}`, {
-          method: 'POST',
-        });
-  
-        if (!favoriteResponse.ok) {
-          throw new Error('Network response was not ok');
+
+        try {
+            const checkResponse = await fetch(`http://localhost:8081/users/${user.userId}/favhouses`);
+            const favoriteHouses = await checkResponse.json();
+            const isFavorited = favoriteHouses.some(house => house.id === parseInt(id));
+
+            if (isFavorited) {
+                const confirmUnfavorite = window.confirm('已收藏，要取消收藏嗎？');
+                if (!confirmUnfavorite) {
+                    return;
+                }
+                const unfavoriteResponse = await fetch(`http://localhost:8081/users/${user.userId}/favorite-houses/${id}`, {
+                    method: 'DELETE',
+                });
+
+                if (!unfavoriteResponse.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                alert('收藏已取消');
+                setFavorite(false);
+            } else {
+                const favoriteResponse = await fetch(`http://localhost:8081/users/${user.userId}/favorite-houses/${id}`, {
+                    method: 'POST',
+                });
+
+                if (!favoriteResponse.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                alert('文章已成功收藏');
+                setFavorite(true);
+            }
+        } catch (error) {
+            console.error('Error handling favorite:', error);
+            alert('文章收藏失敗，請重試');
         }
+<<<<<<< HEAD
   
         alert('文章已成功收藏');
         setFavorite(true);
@@ -163,6 +166,67 @@ function RentalDetail() {
     </div>
     </div>
 );
+=======
+    };
+
+    return (
+        <div className="rental-detail-container">
+            <Banner title="租房詳情" />
+            <div className="rental-grid">
+                <div className="rental-type">
+                    <p className='rental-title'><strong>{house.title}</strong></p>
+                    <StarRatings rating={house.rate} starDimension="20px" starSpacing="2px" starRatedColor="gold" />
+                    <div className="rental-control-buttons">
+                        <button className="toggle-favorite" onClick={handleFavorite}>收藏</button>
+                        <button className="show-map" onClick={showMap}>在地圖中顯示</button>
+                    </div>
+                </div>
+                <div className="contact-info">
+                    <p><strong>聯絡資訊：</strong>{house.contactInfo}</p>
+                    <p><strong>起租日：</strong>{new Date(house.startdate).toLocaleDateString()}</p>
+                    <p><strong>租期：</strong>{house.lease}<strong>年</strong></p>
+                </div>
+                <div className="rental-info">
+                    <p><strong>地址：</strong>{house.address}</p>
+                    <p><strong>房型：</strong>{house.roomType}</p>
+                    <p><strong>房屋大小：</strong>{house.size}</p>
+                    <p><strong>租金：</strong>{house.price}</p>
+                    <p><strong>租屋補助：</strong>{house.subsidy ? '是' : '否'}</p>
+                    <p><strong>詳細描述：</strong>{house.description}</p>
+                    <p><strong>限制：</strong>{house.restriction}</p>
+                </div>   
+                <div className="rental-images">
+                    {house.imagePath && (
+                        <img src={`http://localhost:8081/images/${house.imagePath.split('/').pop()}`} alt="House" width="300" height="300" />
+                    )}
+                </div>
+            </div>
+            <div className="switch-buttons">
+                <button className="switch-articles" onClick={() => setListType('articles')}>相關文章</button>
+                <button className="switch-messages" onClick={() => setListType('messages')}>相關留言</button>
+            </div>
+            <GenericList
+                title="相關文章"
+                items={currentItems.map(article => ({
+                    content: `${article.title}: ${article.description}`,
+                    link: `/articles/${article.id}`
+                }))}
+            />
+            <div className="pagination">
+                {Array.from({ length: Math.ceil(currentItems.length / itemsPerPage) }, (_, i) => (
+                    <button
+                        key={i + 1}
+                        onClick={() => paginate(i + 1)}
+                        disabled={currentPage === i + 1}
+                        className="page-link"
+                    >
+                        {i + 1}
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+>>>>>>> d6a06341469a22906cef5d6d06ea48a700ef45b0
 }
 
 export default RentalDetail;

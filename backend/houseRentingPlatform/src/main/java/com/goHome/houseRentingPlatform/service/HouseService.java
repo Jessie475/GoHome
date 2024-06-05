@@ -1,17 +1,17 @@
 package com.goHome.houseRentingPlatform.service;
 
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.goHome.houseRentingPlatform.model.Article;
 import com.goHome.houseRentingPlatform.model.Article.ArticleType;
 import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.repository.ArticleRepository;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.repository.UserRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 @Service
 public class HouseService {
 
@@ -23,7 +23,7 @@ public class HouseService {
     private UserRepository userRepository;
 
     
-    public House saveHouse(House house) {//新增房子
+    public House saveHouse(House house,Integer userId) {//新增房子
         return houseRepository.save(house);
     }
 
