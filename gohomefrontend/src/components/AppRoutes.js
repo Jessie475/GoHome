@@ -50,6 +50,7 @@ function AppRoutes() {
       <Route path="/savedhouse/:id" element={<RentalDetail />} />
       {/* <Route path="/mycomment/:id" element={<ArticleDetail />} /> */}
       <Route path="/article/:id" element={<ArticleDetail />} />
+      <Route path="/modifyrent/:id" element={<ModifyRent />} />
 
     </Routes>
   );
