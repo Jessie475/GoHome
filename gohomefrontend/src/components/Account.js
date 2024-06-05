@@ -131,9 +131,9 @@ function Account() {
         if (data.success) {
           // 更新用户上下文
           setUser({ ...user, email, phone });
-          setMessage('更新成功');
+          alert('更新成功');
         } else {
-          setMessage('更新失敗');
+          alert('更新失敗');
         }
       })
       .catch(error => {

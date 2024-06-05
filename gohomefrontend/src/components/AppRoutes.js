@@ -5,7 +5,6 @@ import Account from './Account';
 import ArticleDetail from './ArticleDetail';
 import ArticleList from './ArticleList';
 import FindRoommate from './FindRoommate';
-import FindRoommateDetail from './FindRoommateDetail';
 import Home from './Home';
 import HouseMap from './HouseMap';
 import Login from './Login';
@@ -40,7 +39,7 @@ function AppRoutes() {
       <Route path="/mycomment" element={<MyComment />} />
       <Route path="/postedrent" element={<PostedRent />} />
       <Route path="/findroommate" element={<FindRoommate />} />
-      <Route path="/roommate/:id" element={<FindRoommateDetail />} />
+      <Route path="/roommate/:id" element={<ArticleDetail />} />
       <Route path="/postarticle" element={<PostArticle />} />
       <Route path="/postfindroommate" element={<PostFindRoommate />} />
       <Route path="/housemap/:id" element={<HouseMap />} />  // 添加HouseMap的路由      

@@ -101,7 +101,6 @@ function ArticleList() {
         <button onClick={handleClearFilters}>清除设置</button>
       </div>
       <GenericList
-        title="文章列表"
         items={currentItems.map(article => ({
           content: `${article.title}: ${article.description}`,
           link: `/articles/${article.articleId}` // 确保链接正确指向文章详细页面

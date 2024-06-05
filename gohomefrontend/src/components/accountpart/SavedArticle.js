@@ -140,11 +140,11 @@
 // export default SavedArticle;
 
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import GenericList from '../GenericList';
 import Banner from '../../components/Banner';
 import { UserContext } from '../../contexts/UserContext';
+import GenericList from '../GenericList';
 
 function SavedArticle() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -177,7 +177,6 @@ function SavedArticle() {
         <Banner title="收藏的文章" showSearch={true} onSearch={(value) => setSearchTerm(value)} />
       </div>
       <GenericList
-        title="我的收藏文章"
         items={savedArticles.map(savedArticle => ({
           content: `${savedArticle.title}: ${savedArticle.description}`,
           link: `/savedarticle/${savedArticle.id}` // 傳遞正確的id

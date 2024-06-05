@@ -36,10 +36,10 @@
 // export default SavedHouse;
 
 
-import React, { useState, useEffect, useContext } from 'react';
-import GenericList from '../GenericList';
+import React, { useContext, useEffect, useState } from 'react';
 import Banner from '../../components/Banner';
 import { UserContext } from '../../contexts/UserContext';
+import GenericList from '../GenericList';
 
 function SavedHouse() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -70,7 +70,6 @@ function SavedHouse() {
         <Banner title="收藏的房屋" showSearch={true} onSearch={(value) => setSearchTerm(value)} />
       </div>
       <GenericList
-        title="我的收藏房屋"
         items={savedHouses.map(savedHouse => ({
           content: `${savedHouse.title}: ${savedHouse.description}`,
           link: `/savedhouse/${savedHouse.id}` // 傳遞正確的路徑
