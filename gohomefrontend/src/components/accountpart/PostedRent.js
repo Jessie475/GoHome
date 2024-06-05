@@ -62,7 +62,7 @@ function PostedRent() {
             <a href={item.link} style={{ textDecoration: 'none', margin: '10px', color: 'black', flex: 1 }}>
               {item.content}
             </a>
-            <Link to={`/modifyrent/${item.id}`} style={{ textDecoration: 'none' }}> {/* 在这里传递房屋ID */}
+            <Link to={`/modifyrent/${item.id}`} style={{ textDecoration: 'none', marginRight: '10px' }}> {/* 在这里传递房屋ID */}
               <button style={{ padding: '5px 10px', backgroundColor: '#db6845', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', transition: 'background-color 0.3s' }}>
                 修改
               </button>
