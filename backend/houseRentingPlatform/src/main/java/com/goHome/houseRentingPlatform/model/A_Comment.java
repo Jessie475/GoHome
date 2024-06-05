@@ -24,6 +24,7 @@ public class A_Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "acomment_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -50,7 +51,13 @@ public class A_Comment {
         this.user = userId;
         this.content = content;
     }
+    public Long getaCommentId() {
+        return id;
+    }
 
+    public void setaCommentId(Long aCommentId) {
+        this.id = aCommentId;
+    }
     public User getUserId() {
         return user;
     }

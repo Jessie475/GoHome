@@ -119,7 +119,6 @@ function Account() {
   };
 
   const handleUpdate = () => {
-    // 假设后端API为 http://localhost:8081/users/update
     fetch(`http://localhost:8081/users/${user.userId}/update`, {
       method: 'PUT',
       headers: {
@@ -172,7 +171,10 @@ function Account() {
       <div className="account-links">
         <Link to="/savedhouse" className="account-link">收藏的房屋</Link>
         <Link to="/mypost" className="account-link">我的文章</Link>
-        <Link to="/postrent" className="account-link">新增出租</Link>
+        <div className="account-link-group">
+          <Link to="/postrent" className="account-link" id="addrent">新增出租</Link>
+          <Link to="/postarticle" className="account-link" id="addpost">新增文章</Link>
+        </div>
         <Link to="/savedarticle" className="account-link">收藏的文章</Link>
         <Link to="/mycomment" className="account-link">我的留言</Link>
         <Link to="/postedrent" className="account-link">已發布房屋</Link>

@@ -1,9 +1,27 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Banner from './Banner';
 import GenericList from './GenericList';
 
 function RentalList() {
+
+  // const rentals = [];
+  // for (let i = 1; i <= 18; i++) {
+  //   rentals.push({
+  //     id: i,
+  //     name: `${i}號房`,
+  //     address: `SomeAddress ${i}`,
+  //     img: `/images/room${i}.jpg`,
+  //     description: `描述 ${i}`,
+  //     link: `/rental/${i}`,
+  //     rent: i * 1000,
+  //     type: i % 2 === 0 ? "單人" : "雙人",
+  //     subsidy: i % 3 === 0 ? "有" : "無",
+  //     size: 3 + i,
+  //     rating: 4 + (i % 2)
+  //   });
+  //}
   const [houses, setHouses] = useState([]); 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -19,9 +37,10 @@ function RentalList() {
   const fetchHouses = async () => {
     try {
       const response = await axios.get('http://localhost:8081/house/getAllHouses');
-      console.log('API Response Status:', response.status); 
-      console.log('API Response Data:', response.data); 
+      console.log('API Response Status:', response.status);
+      console.log('API Response Data:', response.data);
       if (Array.isArray(response.data)) {
+      
         const cleanedData = response.data.map(house => ({
           house_Id: house.id,
           contactInfo: house.contactInfo,
@@ -38,7 +57,7 @@ function RentalList() {
           subsidy: house.subsidy,
           startdate: house.startdate,
           lease: house.lease,
-          description: house.description, 
+          description: house.description,
         }));
         setHouses(cleanedData);
       } else {
@@ -169,6 +188,9 @@ function RentalList() {
             {i + 1}
           </button>
         ))}
+      </div>
+      <div>
+        <Link to="/postrent" className="add-button">+</Link>
       </div>
     </div>
   );
