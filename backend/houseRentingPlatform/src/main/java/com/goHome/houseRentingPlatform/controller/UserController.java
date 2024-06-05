@@ -6,7 +6,7 @@ import com.goHome.houseRentingPlatform.model.House;
 //import com.goHome.houseRentingPlatform.model.House;
 import com.goHome.houseRentingPlatform.model.User;
 import com.goHome.houseRentingPlatform.service.ACommentService;
-import com.goHome.houseRentingPlatform.service.H_CommentService;
+// import com.goHome.houseRentingPlatform.service.H_CommentService;
 //import com.goHome.houseRentingPlatform.service.HouseService;
 import com.goHome.houseRentingPlatform.service.UserService;
 
@@ -31,39 +31,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private H_CommentService H_CommentService;
+    // @Autowired
+    // private H_CommentService H_CommentService;
     @Autowired
     private ACommentService ACommentService;
 
 
-
-//     @PostMapping("/signup")
-//     public ResponseEntity<?> registerUser(@RequestBody User user) throws Exception {
-//         List<String> errors = new ArrayList<>();
-//         if (user.getName() == null || user.getName().isEmpty()) {
-//             errors.add("Name is required.");
-//         }
-//         if (user.getEmail() == null || user.getEmail().isEmpty()) {
-//             errors.add("Email is required.");
-//         }
-//         else if (userService.emailExists(user.getEmail())) {
-//             errors.add("Email is already in use.");
-//         }
-//         if (user.getPassword() == null || user.getPassword().isEmpty()) {
-//             errors.add("Password is required.");
-//         }
-//         if (!errors.isEmpty()) {
-//             return ResponseEntity.badRequest().body(String.join(", ", errors));
-//         }
-// 
-//         try {
-//             User registeredUser = userService.registerUser(user);
-//             return ResponseEntity.ok(registeredUser);
-//         }catch (Exception e) {
-//             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-//         }
-//     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody User newUser) {
@@ -122,10 +95,10 @@ public class UserController {
     // get comment
     @GetMapping("/{userId}/mycomment")
     public ResponseEntity<List<Object>> getMyComment(@PathVariable Integer userId) {
-        List<H_Comment> h_comments = new ArrayList<>(H_CommentService.getHcommentsByUserId(userId));
-        List<A_Comment> a_comments = new ArrayList<>(ACommentService.getAcommentsByUserId(userId));
+        // List<H_Comment> h_comments = new ArrayList<>(H_CommentService.getHcommentsByUserId(userId));
+        List<A_Comment> a_comments = new ArrayList<>(userService.getMyAComments(userId));
         List<Object> allComments = new ArrayList<>();
-        allComments.addAll(h_comments);
+        // allComments.addAll(h_comments);
         allComments.addAll(a_comments);
 
         if (allComments != null && !allComments.isEmpty()) {

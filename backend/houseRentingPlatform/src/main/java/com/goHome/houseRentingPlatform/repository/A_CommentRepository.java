@@ -12,9 +12,6 @@ import com.goHome.houseRentingPlatform.model.A_Comment;
 public interface A_CommentRepository extends JpaRepository<A_Comment, Long>{
     List<A_Comment> findByArticleId(Long articleId);
 
-    static List<A_Comment> findByUserId(Integer userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByUserId'");
-    }
+    List<A_Comment> findByUser_UserId(Integer userId);
 
 }

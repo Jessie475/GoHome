@@ -9,7 +9,7 @@ function PostedRent() {
 
   useEffect(() => {
     if (user && user.userId) {
-      fetch(`http://localhost:8081/users/${user.userId}/myhouses`)
+      fetch(`http://localhost:8081/users/${user.userId}/myhouse`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');

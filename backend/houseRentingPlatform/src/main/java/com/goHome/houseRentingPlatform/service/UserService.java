@@ -12,7 +12,7 @@ import com.goHome.houseRentingPlatform.model.User;
 import com.goHome.houseRentingPlatform.model.User.Identity;
 import com.goHome.houseRentingPlatform.repository.A_CommentRepository;
 import com.goHome.houseRentingPlatform.repository.ArticleRepository;
-import com.goHome.houseRentingPlatform.repository.H_CommentRepository;
+// import com.goHome.houseRentingPlatform.repository.H_CommentRepository;
 import com.goHome.houseRentingPlatform.repository.HouseRepository;
 import com.goHome.houseRentingPlatform.repository.UserRepository;
 
@@ -28,12 +28,15 @@ public class UserService{
     private HouseRepository houseRepository;
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private A_CommentRepository aCommentRepository;
 
 
-    public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository) {
+    public UserService(UserRepository userRepository, HouseRepository houseRepository, ArticleRepository articleRepository,A_CommentRepository aCommentRepository) {
         this.userRepository = userRepository;
         this.houseRepository = houseRepository;
         this.articleRepository = articleRepository;
+        this.aCommentRepository = aCommentRepository;
     }
 
     public User createUser(String username, String email, String password, String name, String phone, String gender, Identity identity) {
@@ -87,12 +90,12 @@ public class UserService{
 
 
     
-    public List<H_Comment> getMyHComments(Integer userId) {
-        List<H_Comment> hComment = H_CommentRepository.findByUserId(userId);
-        return hComment;
-    }
+    // public List<H_Comment> getMyHComments(Integer userId) {
+    //     List<H_Comment> hComment = H_CommentRepository.findByUserId(userId);
+    //     return hComment;
+    // }
     public List<A_Comment> getMyAComments(Integer userId) {
-        List<A_Comment> aComment = A_CommentRepository.findByUserId(userId);
+        List<A_Comment> aComment = aCommentRepository.findByUser_UserId(userId);
         return aComment;
     }
 
