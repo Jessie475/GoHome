@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Banner from '../../components/Banner';
 import { UserContext } from '../../contexts/UserContext';
@@ -19,6 +20,7 @@ function PostRent() {
   const [restriction, setRestriction] = useState('');
   const [image, setImage] = useState(null);
   const { user } = useContext(UserContext); // 使用 useContext 獲取用戶信息
+  const history = useHistory();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -30,6 +32,7 @@ function PostRent() {
   };
   
   const handleSubmit = async (e) => {
+    history.push('/rentals');
     e.preventDefault();
     if (!user || !user.userId) {
       alert('请先登录再发布文章');
@@ -48,7 +51,7 @@ function PostRent() {
     formData.append('contactInfo', contactInfo);
     formData.append('description', description);
     formData.append('restriction', restriction);
-     formData.append('userId', user.userId);
+    formData.append('userId', user.userId);
     if (image) {
       formData.append('image', image);
     }
@@ -136,7 +139,7 @@ function PostRent() {
             <input id="image-upload" type="file" onChange={e => setImage(e.target.files[0])} className="form-control" />
           </div>
           <div className="button-container">
-            <button type="submit" className="submit-button">發佈</button>
+          <button type="submit" className="submit-button">發佈</button>
           </div>
         </form>
       </div>
