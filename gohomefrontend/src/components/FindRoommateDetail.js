@@ -130,11 +130,11 @@ function FindRoommateDetail() {
         <div className="content">
           <h1>{article.title}</h1>
           <p>{article.description}</p>
-          <p>{user.contactInfo}</p>
+          <p>聯絡電話：{user.phone}</p>
           <div className='action-buttons'>
             <button className="like-button" onClick={handleLike}>讚 {likes}</button>
             <button className="favorite-button" onClick={handleFavorite}>收藏</button>
-            <button className="contact-button">聯絡發文者</button>
+            {/* <button className="contact-button">聯絡發文者</button> */}
           </div>
         </div>
         <div className="comment-section">
