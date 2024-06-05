@@ -10,6 +10,7 @@ const GoogleMap = React.forwardRef(({ zoom }, ref) => {
     const [location, setLocation] = useState(null);
     const mapRef = useRef(null);
     const map = useRef(null);
+    // const geocoder = useRef(null);
 
     useEffect(() => {
         if (id) {
