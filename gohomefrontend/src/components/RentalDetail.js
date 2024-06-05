@@ -98,75 +98,6 @@ function RentalDetail() {
             console.error('Error handling favorite:', error);
             alert('文章收藏失敗，請重試');
         }
-<<<<<<< HEAD
-  
-        alert('文章已成功收藏');
-        setFavorite(true);
-      }
-    } catch (error) {
-      console.error('Error handling favorite:', error);
-      alert('文章收藏失敗，請重試');
-    }
-  };
-  
-  return (
-    <div>
-        <Banner title="租房詳情" />
-        <div className="rental-detail-container">
-        <div className="rental-grid">
-        <div className="rental-type">
-        <p className='rental-title'><strong>{house.title}</strong></p>
-            <StarRatings rating={house.rate} starDimension="20px" starSpacing="2px" starRatedColor="gold" />
-            <div className="rental-control-buttons"></div>
-            <button className="toggle-favorite" onClick={handleFavorite}> {favorite ? "取消收藏" : "收藏"}</button>
-            <button className="show-map" onClick={showMap}>在地圖中顯示</button>
-            </div>
-        </div>
-        <div className="contact-info">
-            <p><strong>聯絡資訊：</strong>{house.contactInfo}</p>
-            <p><strong>起租日：</strong>{new Date(house.startdate).toLocaleDateString()}</p>
-            <p><strong>租期：</strong>{house.lease}<strong>年</strong></p>
-        </div>
-        <div className="rental-info">
-            <p><strong>地址：</strong>{house.address}</p>
-            <p><strong>房型：</strong>{house.roomType}</p>
-            <p><strong>房屋大小：</strong>{house.size}</p>
-            <p><strong>租金：</strong>{house.price}</p>
-            <p><strong>租屋補助：</strong>{house.subsidy ? '是' : '否'}</p>
-            <p><strong>詳細描述：</strong>{house.description}</p>
-            <p><strong>限制：</strong>{house.restriction}</p>
-        </div>
-        <div className="rental-images">
-            {house.imagePath && (
-            <img src={`http://localhost:8081/images/${house.imagePath.split('/').pop()}`} alt="House" width="300" height="300" />
-            )}
-        </div>
-        
-        <GenericList
-          title="相關文章"
-          items={currentItems.map(articles => ({
-            content: `${articles.title}: ${articles.description}`,
-            link: `/articles/${articles.id}` // 确保链接正确指向文章详细页面
-          }))}
-        />
-
-        
-        <div className="pagination">
-        {Array.from({ length: Math.ceil(currentItems.length / itemsPerPage) }, (_, i) => (
-            <button
-            key={i + 1}
-            onClick={() => paginate(i + 1)}
-            disabled={currentPage === i + 1}
-            className="page-link"
-            >
-            {i + 1}
-            </button>
-        ))}
-        </div>
-    </div>
-    </div>
-);
-=======
     };
 
     return (
@@ -201,10 +132,10 @@ function RentalDetail() {
                     )}
                 </div>
             </div>
-            <div className="switch-buttons">
+            {/* <div className="switch-buttons">
                 <button className="switch-articles" onClick={() => setListType('articles')}>相關文章</button>
                 <button className="switch-messages" onClick={() => setListType('messages')}>相關留言</button>
-            </div>
+            </div> */}
             <GenericList
                 title="相關文章"
                 items={currentItems.map(article => ({
@@ -226,7 +157,6 @@ function RentalDetail() {
             </div>
         </div>
     );
->>>>>>> d6a06341469a22906cef5d6d06ea48a700ef45b0
 }
 
 export default RentalDetail;
