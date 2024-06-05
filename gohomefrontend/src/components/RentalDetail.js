@@ -125,7 +125,7 @@ function RentalDetail() {
                     <p><strong>租屋補助：</strong>{house.subsidy ? '是' : '否'}</p>
                     <p><strong>詳細描述：</strong>{house.description}</p>
                     <p><strong>限制：</strong>{house.restriction}</p>
-                </div>
+                </div>   
                 <div className="rental-images">
                     {house.imagePath && (
                         <img src={`http://localhost:8081/images/${house.imagePath.split('/').pop()}`} alt="House" width="300" height="300" />
