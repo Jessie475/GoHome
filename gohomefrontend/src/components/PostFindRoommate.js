@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { UserContext } from '../contexts/UserContext';
 import '../css/PostPageStyles.css';
 import Banner from './Banner';
@@ -15,6 +16,15 @@ function PostFindRoommate() {
         return <div>请先登录</div>;
     }
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const uniqueFileName = uuidv4() + '.' + file.name.split('.').pop();
+          const uniqueFile = new File([file], uniqueFileName, { type: file.type });
+          setImage(uniqueFile);
+        }
+      };
+      
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -46,7 +56,6 @@ function PostFindRoommate() {
         setTitle('');
         setAddress('');
         setContent('');
-        setImage(null);
     };
 
     return (
