@@ -28,7 +28,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByAddress(String address);
 
     List<Article> findByUser_UserId(Integer userId);
-
+    void deleteById(Long id);
     
     Article getArticleById(Long id);
 

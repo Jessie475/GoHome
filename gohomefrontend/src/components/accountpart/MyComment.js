@@ -150,7 +150,7 @@
 // 
 // export default MyComment;
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Banner from '../../components/Banner';
 import { UserContext } from '../../contexts/UserContext';
 
@@ -206,7 +206,6 @@ function MyComment() {
     <div>
       <Banner title="我的留言" showSearch={true} onSearch={(value) => setSearchTerm(value)} />
       <div style={{ width: '97%', margin: '20px auto', padding: '0', listStyleType: 'none' }}>
-        <h2>我的留言</h2>
         {filteredComments.map((item, index) => (
           <div key={index} style={{ backgroundColor: '#F6EEE0', border: '1px solid #ccc', marginBottom: '20px', padding: '10px', transition: 'background-color 0.3s', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <a href={item.link} style={{ textDecoration: 'none', margin: '10px', color: 'black', flex: 1 }}>

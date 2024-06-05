@@ -63,6 +63,7 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
     List<House> findByUser_UserId(Integer userId);
 
+    void deleteById(Integer id);
 
 
 }

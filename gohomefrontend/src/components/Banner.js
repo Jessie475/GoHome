@@ -4,10 +4,13 @@ import '../css/Banner.css';
 
 function Banner({ title, showSearch, onSearch }) {
     const navigate = useNavigate();
-
+    const handleBackButtonClick = () => {
+        window.location.reload(); // Reload the page
+        navigate(-1);
+    };
     return (
         <div className="banner">
-            <button className="back-button" onClick={() => navigate(-1)}>上一頁</button>
+            <button className="back-button" onClick={handleBackButtonClick}>上一頁</button>
             <p>{title}</p>
             {showSearch ? (
                 <div className="search-container">
