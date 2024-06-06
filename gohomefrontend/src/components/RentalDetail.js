@@ -29,8 +29,8 @@ function RentalDetail() {
                 .catch(error => {
                     console.error('Error fetching house:', error);
                 });
-
-            fetch(`http://localhost:8081/house/getHouseArticle/${id}`)
+            
+                fetch(`http://localhost:8081/house/getHouseArticle/${id}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log('Fetched articles:', data);

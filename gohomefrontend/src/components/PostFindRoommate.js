@@ -13,7 +13,7 @@ function PostFindRoommate() {
     const { user } = useContext(UserContext);
 
     if (!user) {
-        return <div>请先登录</div>;
+        return <div>請先登入</div>;
     }
 
     const handleFileChange = (e) => {

@@ -58,7 +58,7 @@ function ModifyRent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user || !user.userId) {
-      alert('请先登录再修改信息');
+      alert('請先登入再修改訊息');
       return;
     }
 
