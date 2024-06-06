@@ -37,16 +37,30 @@
   margin-right: 10px;
 }
 
+#favhouse, #favarticle{
+  background-color: #f0d7d0;
+}
+
+#addrent, #addpost{
+  background-color: #efccc3;
+}
+
+#myArticle, #myComment, #myHouse{
+  background-color:#e6bdb0
+  ;
+}
+
+
 .account-link {
   flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #d8cec3;
+ 
   padding: 10px;
   text-align: center;
   text-decoration: none;
-  color: #C38370;
+  color: #b87763;
   transition: background-color 0.3s ease;
   font-size: 30px;
 }

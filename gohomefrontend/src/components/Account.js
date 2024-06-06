@@ -169,15 +169,15 @@ function Account() {
         )}
       </div>
       <div className="account-links">
-        <Link to="/savedhouse" className="account-link">收藏的房屋</Link>
-        <Link to="/mypost" className="account-link">我的文章</Link>
+        <Link to="/savedhouse" className="account-link" id="favhouse">收藏的房屋</Link>
+        <Link to="/savedarticle" className="account-link" id="favarticle">收藏的文章</Link>
         <div className="account-link-group">
           <Link to="/postrent" className="account-link" id="addrent">新增出租</Link>
           <Link to="/postarticle" className="account-link" id="addpost">新增文章</Link>
         </div>
-        <Link to="/savedarticle" className="account-link">收藏的文章</Link>
-        <Link to="/mycomment" className="account-link">我的留言</Link>
-        <Link to="/postedrent" className="account-link">已發布房屋</Link>
+        <Link to="/mypost" className="account-link" id="myArticle">我的文章</Link>
+        <Link to="/mycomment" className="account-link" id="myComment">我的留言</Link>
+        <Link to="/postedrent" className="account-link" id="myHouse">我的房屋</Link>
       </div>
     </div>
   );
