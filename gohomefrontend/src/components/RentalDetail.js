@@ -29,6 +29,17 @@ function RentalDetail() {
                 .catch(error => {
                     console.error('Error fetching house:', error);
                 });
+            
+                fetch(`http://localhost:8081/house/getHouseArticle/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched articles:', data);
+                    setArticles(Array.isArray(data) ? data : []);
+                })
+                .catch(error => {
+                    console.error('Error fetching related articles:', error);
+                    setArticles([]);
+                });
         }
     }, [id]);
 
