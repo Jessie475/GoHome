@@ -111,7 +111,7 @@ function PostRent() {
               <input id="startDate" type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="date-input" />
             </div>
             <div className="form-group half-width">
-              <label htmlFor="lease">租期</label>
+              <label htmlFor="lease">租期(年)</label>
               <input id="lease" type="text" value={lease} onChange={e => setLease(e.target.value)} className="form-control" />
             </div>
           </div>

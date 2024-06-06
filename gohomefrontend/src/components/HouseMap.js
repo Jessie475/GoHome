@@ -149,7 +149,6 @@ const HouseMap = () => {
     const googleMapRef = useRef(null);
     const zoom = 16;
     const googleApiKey = 'AIzaSyAyqdIvF6Rk1UROBq9cuieBahgD7adDb0k'; // replace with your actual API key
-
     return (
         <div>
             <Banner title="尋找房屋 "/>
